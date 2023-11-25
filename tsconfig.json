@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "baseUrl": "./",
-    "target": "ES6",
+    "target": "ESNext",
     "module": "CommonJS",
     "moduleResolution": "Node",
     "strict": true,

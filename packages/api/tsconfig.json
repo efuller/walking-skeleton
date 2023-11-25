@@ -1,6 +1,10 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "types": ["jest", "node"]
+    "outDir": "dist",
+    "lib": ["esnext"],
+    "types": ["jest", "node"],
+    "esModuleInterop": true,
+    "skipLibCheck": true
   }
 }

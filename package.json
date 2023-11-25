@@ -7,6 +7,7 @@
     "db:up:test": "npm run db:up:test -w packages/api",
     "test:unit": "jest -c jest.config.unit.ts",
     "test:infra": "jest -c jest.config.infra.ts",
+    "test:infra:watch": "jest -c jest.config.infra.ts --watchAll",
     "test:e2e": "jest -c jest.config.e2e.ts",
     "lint": "eslint \"**/*.ts\""
   },
