@@ -11,8 +11,17 @@ export class ApiServer {
   constructor() {
     this.server = null;
     this.app = express();
+    this.app.use(express.json());
     this.port = 3000;
     this.running = false;
+
+    this.setupRoutes();
+  }
+
+  private setupRoutes() {
+    this.app.get('/health', (req, res) => {
+      res.send({ ok: true }).status(200);
+    });
   }
 
   async start() {
@@ -43,5 +52,12 @@ export class ApiServer {
 
   isRunning() {
     return this.running;
+  }
+
+  getServer() {
+    if (!this.isRunning()) {
+      throw new Error('Server is not running');
+    }
+    return this.server;
   }
 }
