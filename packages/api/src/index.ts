@@ -3,7 +3,7 @@ import express from 'express';
 const app = express();
 
 app.get('/health', (req, res) => {
-  res.send('OK');
+  res.send({ ok: true }).status(200);
 })
 
 app.listen(3000, () => {
