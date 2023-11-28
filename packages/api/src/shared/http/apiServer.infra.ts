@@ -1,5 +1,5 @@
 import { ApiServer } from './apiServer';
-import { RestApiDriver } from './RestApiDriver';
+import { RestApiDriver } from './restApiDriver';
 import { Server } from 'http';
 
 describe('Web Server', () => {
