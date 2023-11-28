@@ -1,11 +1,4 @@
-import express from 'express';
+import { ApiServer } from './shared/http/apiServer';
 
-const app = express();
-
-app.get('/health', (req, res) => {
-  res.send({ ok: true }).status(200);
-})
-
-app.listen(3000, () => {
-  console.log('Server is running on port 3000');
-});
+const apiServer = new ApiServer();
+apiServer.start();
