@@ -22,6 +22,15 @@ export class ApiServer {
     this.app.get('/health', (req, res) => {
       res.send({ ok: true }).status(200);
     });
+
+    this.app.post('/food', async (req, res) => {
+      const responseDto = {
+        success: true,
+        error: null,
+        data: {name: 'steak'},
+      }
+      res.status(201).json(responseDto);
+    });
   }
 
   async start() {
