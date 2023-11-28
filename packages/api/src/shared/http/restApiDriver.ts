@@ -8,4 +8,9 @@ export class RestApiDriver {
     const response =  request(this.http).get(path);
     return response;
   }
+
+  post(path: string, data: Record<string, any>) {
+    const response =  request(this.http).post(path).set('Accept', 'application/json').send(data);
+    return response;
+  }
 }
