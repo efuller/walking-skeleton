@@ -12,5 +12,9 @@
   "license": "ISC",
   "devDependencies": {
     "rimraf": "^5.0.5"
+  },
+  "dependencies": {
+    "dotenv-cli": "^7.3.0",
+    "exec-sh": "^0.4.0"
   }
 }
