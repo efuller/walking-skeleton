@@ -29,7 +29,7 @@ defineFeature(feature, (test) => {
     });
 
     then('The user should be able to verify that the journal entry is added to the list', () => {
-      expect(response.body.data).toEqual({ name: 'Today is a great day' });
+      expect(response.body.data).toEqual({ title: 'Today is a great day' });
     });
   });
 });
