@@ -1,7 +1,7 @@
 import { Server } from 'http';
 import express, { Application } from 'express';
-import { ProcessService } from '@efuller/shared';
 import { Database } from '../persistence/database/database';
+import { ProcessService } from '@efuller/shared/src';
 
 export class ApiServer {
   private server: Server | null;
