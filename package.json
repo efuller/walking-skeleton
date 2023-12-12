@@ -13,7 +13,8 @@
     "lint": "eslint \"**/*.ts\"",
     "build:shared": "npm run build -w packages/shared",
     "build:api": "npm run build -w packages/api",
-    "start:api": "npm run build:api && npm run start -w packages/api"
+    "start:api": "npm run build:api && npm run start -w packages/api",
+    "staging:test:infra": "jest -c jest.config.staging.infra.ts"
   },
   "keywords": [],
   "author": "",
