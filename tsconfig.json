@@ -1,9 +1,8 @@
 {
   "compilerOptions": {
     "baseUrl": "./",
-    "target": "ESNext",
-    "module": "CommonJS",
-    "moduleResolution": "Node",
+    "target": "esnext",
+    "module": "commonjs",
     "strict": true,
     "esModuleInterop": true,
     "types": ["node", "jest"],
