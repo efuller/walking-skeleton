@@ -12,7 +12,8 @@
     "test:e2e:watch": "jest -c jest.config.e2e.ts --watchAll",
     "lint": "eslint \"**/*.ts\"",
     "build:shared": "npm run build -w packages/shared",
-    "start:api": "npm run start -w packages/api"
+    "build:api": "npm run build -w packages/api",
+    "start:api": "npm run build:api && npm run start -w packages/api"
   },
   "keywords": [],
   "author": "",
