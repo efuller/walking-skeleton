@@ -23,11 +23,11 @@ export class ApiServer {
       res.send({ ok: true }).status(200);
     });
 
-    this.app.post('/food', async (req, res) => {
+    this.app.post('/journal', async (req, res) => {
       const responseDto = {
         success: true,
         error: null,
-        data: {name: 'steak'},
+        data: { name: 'Today is a great day' },
       }
       res.status(201).json(responseDto);
     });

@@ -3,10 +3,10 @@ import { ApiServer } from '../../../src/shared/http/apiServer';
 import { RestApiDriver } from '../../../src/shared/http/restApiDriver';
 import { Server } from 'http';
 
-const feature = loadFeature('./packages/shared/tests/food/e2e/addFood.feature');
+const feature = loadFeature('./packages/shared/tests/journal/e2e/addJournal.feature');
 
 defineFeature(feature, (test) => {
-  test('Adding a food', ({ given, when, then }) => {
+  test('Adding a new journal entry', ({ given, when, then }) => {
     const apiServer = new ApiServer();
     let apiDriver: RestApiDriver;
     let response: any;
@@ -24,12 +24,12 @@ defineFeature(feature, (test) => {
       expect(apiServer.isRunning()).toBeTruthy();
     });
 
-    when('The user adds a new food called steak', async () => {
-      response = await apiDriver.post('/food', { name: 'steak' });
+    when('The user adds a new journal entry of "Today is a great day"', async () => {
+      response = await apiDriver.post('/journal', { title: 'Today is a great day' });
     });
 
-    then('The user should be able to verify that steak is added to the list', () => {
-      expect(response.body.data).toEqual({ name: 'steak' });
+    then('The user should be able to verify that the journal entry is added to the list', () => {
+      expect(response.body.data).toEqual({ name: 'Today is a great day' });
     });
   });
 });
