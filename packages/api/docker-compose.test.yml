@@ -8,10 +8,10 @@ services:
     ports:
       - 5435:5432
     volumes:
-      - db_data:/var/lib/postgresql/data
+      - ./db_data:/var/lib/postgresql/data/infra
     networks:
       - testing
 networks:
   testing:
 volumes:
-  db_data:
+  db_infra:

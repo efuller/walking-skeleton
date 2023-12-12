@@ -5,7 +5,7 @@ import { setupEnvVars } from '@efuller/shared/tests/utils/setupEnvVars';
 
 export default async () => {
   const rootCwd = path.join(__dirname, './api');
-  await startDockerDB('docker-compose.infra.yml', path.join(rootCwd, '../../'));
+  await startDockerDB('docker-compose.test.yml', path.join(rootCwd, '../../'));
   setupEnvVars('./packages/api/.env.test');
   await generatePrismaClient('.env.test', rootCwd);
 };
