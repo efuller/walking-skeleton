@@ -1,7 +1,7 @@
 import { Server } from 'http';
 import express, { Application } from 'express';
 import { Database } from '../persistence/database/database';
-import { ProcessService } from '@efuller/shared/src';
+// import { ProcessService } from '@efuller/shared/src';
 
 export class ApiServer {
   private server: Server | null;
@@ -47,7 +47,7 @@ export class ApiServer {
   }
 
   async start() {
-    await ProcessService.killProcessOnPort(this.port);
+    // await ProcessService.killProcessOnPort(this.port);
     return new Promise((resolve) => {
       this.server = this.app.listen(
         this.port,
