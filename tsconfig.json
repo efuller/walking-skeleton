@@ -7,6 +7,10 @@
     "strict": true,
     "esModuleInterop": true,
     "types": ["node", "jest"],
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "paths": {
+      "@efuller/api/*": ["./packages/api/*"],
+      "@efuller/shared/*": ["./packages/shared/*"],
+    }
   }
 }
