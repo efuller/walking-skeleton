@@ -27,4 +27,4 @@
           run: npm ci
 
         - name: Run tests
-          run: npm run test:infra
+          run: npm run staging:test:infra
