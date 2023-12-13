@@ -26,5 +26,8 @@
         - name: Install dependencies
           run: npm ci
 
+        - name: Build packages
+          run: npm run build:api && npm run build:shared
+
         - name: Run tests
           run: npm run staging:test:infra
