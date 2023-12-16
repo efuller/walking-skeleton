@@ -22,3 +22,6 @@ jobs:
 
       - name: Run tests
         run: npm run test:staging:e2e
+        with:
+          env:
+            DATABASE_URL: ${{ secrets.DATABASE_URL }}
