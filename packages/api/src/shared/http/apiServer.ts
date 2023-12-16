@@ -1,6 +1,6 @@
 import { Server } from 'http';
 import express, { Application } from 'express';
-// import { Database } from '../persistence/database/database';
+import { Database } from '../persistence/database/database';
 import { ProcessService } from '@efuller/shared';
 
 export class ApiServer {
@@ -8,7 +8,7 @@ export class ApiServer {
   private app: Application;
   private readonly port: number;
   private running: boolean;
-  // private readonly db: Database;
+  private readonly db: Database;
 
   constructor() {
     this.server = null;
@@ -16,7 +16,7 @@ export class ApiServer {
     this.app.use(express.json());
     this.port = 3000;
     this.running = false;
-    // this.db = new Database();
+    this.db = new Database();
 
     this.setupRoutes();
   }
@@ -30,24 +30,24 @@ export class ApiServer {
       res.send({ ok: true }).status(200);
     });
 
-    // this.app.post('/journal', async (req, res) => {
-    //   const { title } = req.body;
-    //
-    //   const result = await this.db.getClient().journal.create({
-    //     data: {
-    //       title,
-    //       content: 'This is a journal entry',
-    //     },
-    //   });
-    //
-    //   console.log('RESULT', result);
-    //   const responseDto = {
-    //     success: true,
-    //     error: null,
-    //     data: { title: result.title },
-    //   }
-    //   res.status(201).json(responseDto);
-    // });
+    this.app.post('/journal', async (req, res) => {
+      const { title } = req.body;
+
+      const result = await this.db.getClient().journal.create({
+        data: {
+          title,
+          content: 'This is a journal entry',
+        },
+      });
+
+      console.log('RESULT', result);
+      const responseDto = {
+        success: true,
+        error: null,
+        data: { title: result.title },
+      }
+      res.status(201).json(responseDto);
+    });
   }
 
   async start() {
