@@ -9,6 +9,7 @@
     "test:infra": "jest -c jest.config.infra.ts",
     "test:infra:watch": "jest -c jest.config.infra.ts --watchAll",
     "test:e2e": "jest -c jest.config.e2e.ts",
+    "test:staging:e2e": "jest -c jest.config.staging.e2e.ts",
     "test:e2e:watch": "jest -c jest.config.e2e.ts --watchAll",
     "lint": "eslint \"**/*.ts\"",
     "build:shared": "npm run build -w packages/shared",
