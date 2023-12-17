@@ -21,4 +21,4 @@ jobs:
         run: npm run build:api
 
       - name: Run E2E tests
-        run: npm run test:e2e
+        run: npm run test:staging:e2e
