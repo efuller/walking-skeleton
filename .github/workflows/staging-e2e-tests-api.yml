@@ -20,7 +20,5 @@ jobs:
       - name: Build shared and api
         run: npm run build:api
 
-      - name: Run tests
-        run: npm run test:staging:e2e
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      - name: Run E2E tests
+        run: npm run test:e2e
