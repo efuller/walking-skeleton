@@ -30,4 +30,4 @@
           run: npm run build:api && npm run build:shared
 
         - name: Run tests
-          run: npm run staging:test:infra
+          run: npm run staging:test:integration

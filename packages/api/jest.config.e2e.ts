@@ -6,5 +6,5 @@ export default async (): Promise<JestConfigWithTsJest> => ({
   transform: {
     '^.+\\.(t|j)sx?$': ['ts-jest', {}],
   },
-  globalSetup: './tests/setupInfraTestingEnv.ts',
+  globalSetup: './tests/setupLocalTestingEnv.ts',
 });

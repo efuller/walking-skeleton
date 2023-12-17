@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test:unit": "jest -c jest.config.unit.ts",
-    "test:infra": "jest -c jest.config.infra.ts",
-    "test:infra:watch": "jest -c jest.config.infra.ts --watchAll",
+    "test:integration": "jest -c jest.config.integration.ts",
+    "test:integration:watch": "jest -c jest.config.integration.ts --watchAll",
     "test:e2e": "jest -c jest.config.e2e.ts",
     "test:staging:e2e": "jest -c jest.config.staging.ts",
     "test:e2e:watch": "jest -c jest.config.e2e.ts --watchAll",
@@ -14,7 +14,7 @@
     "build:shared": "npm run build -w packages/shared",
     "build:api": "npm run build:shared && npm run build -w packages/api",
     "start:api": "npm run start -w packages/api",
-    "staging:test:infra": "jest -c jest.config.staging.ts",
+    "staging:test:integration": "jest -c jest.config.staging.ts",
     "staging:prisma:generate": "npm run prisma:generate -w packages/api",
     "staging:prisma:reset": "npm run prisma:generate -w packages/api"
   },
