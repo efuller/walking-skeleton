@@ -7,6 +7,6 @@ export default async () => {
   console.log('[setupInfraTestingEnv] environment: ', environment);
 
   const rootCwd = path.join(__dirname, './api');
-  setupEnvVars(`.env.${environment}}`);
+  setupEnvVars(`./packages/api/.env.${environment}}`);
   await generatePrismaClient(`.env.${environment}`, rootCwd);
 };
