@@ -6,8 +6,6 @@ export const setupEnvVars = (envFile: string) => {
   console.log('Loading env vars from ', envFile);
   console.log('-----------------------------------');
 
-  console.log('----Resolved path----', path.resolve(envFile));
-
   dotenv.config({ path: path.resolve(envFile) });
 
   console.log('-----------------------------------');
