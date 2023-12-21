@@ -5,9 +5,8 @@ import { setupEnvVars } from '@efuller/shared/tests/utils/setupEnvVars';
 
 export default async function setupDevEnv() {
   const rootCwd = path.join(__dirname);
-  console.log('rootCwd: ', rootCwd);
   await startDockerDB('docker-compose.develop.yml', rootCwd);
-  setupEnvVars('./packages/api/.env.development');
+  setupEnvVars('.env.development'); // This doesn't seem to be working or setting env vars for the server.
   await generatePrismaClient('.env.development', rootCwd);
 }
 setupDevEnv();
