@@ -1,14 +1,14 @@
 import { loadFeature, defineFeature } from 'jest-cucumber';
 import { RestApiDriver } from '../../../src/shared/http/restApiDriver';
 import { Server } from 'http';
-import { AppRoot } from '@efuller/api/src/shared/appRoot/appRoot';
+import { CompositionRoot } from '@efuller/api/src/shared/composition/compositionRoot';
 
 const feature = loadFeature('./packages/shared/tests/journal/e2e/addJournal.feature');
 
 defineFeature(feature, (test) => {
   test('Adding a new journal entry', ({ given, when, then }) => {
-    const appRoot = new AppRoot();
-    const apiServer = appRoot.getApiServer();
+    const compositionRoot = new CompositionRoot();
+    const apiServer = compositionRoot.getApiServer();
     let apiDriver: RestApiDriver;
     let response: any;
 

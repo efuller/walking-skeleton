@@ -1,4 +1,10 @@
-import { ApiServer } from './shared/http/apiServer';
+import { CompositionRoot } from '@efuller/api/src/shared/composition/compositionRoot';
 
-const apiServer = new ApiServer();
-apiServer.start();
+const compositionRoot = new CompositionRoot();
+const apiServer = compositionRoot.getApiServer();
+
+async function bootstrap() {
+  await apiServer.start();
+}
+
+bootstrap();
