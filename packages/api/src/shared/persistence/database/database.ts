@@ -3,7 +3,7 @@ import execSh from 'exec-sh';
 import path from 'path';
 
 export class Database {
-  private prismaClient: PrismaClient;
+  private readonly prismaClient: PrismaClient;
 
   constructor() {
     this.prismaClient = new PrismaClient();
