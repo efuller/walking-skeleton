@@ -11,10 +11,11 @@ export class ApiServer {
   private readonly db: Database;
 
   constructor() {
+    const env = process.env.NODE_ENV || 'development';
     this.server = null;
     this.app = express();
     this.app.use(express.json());
-    this.port = 3000;
+    this.port = env === 'development' ? 3000 : 3001;
     this.running = false;
     this.db = new Database();
 
