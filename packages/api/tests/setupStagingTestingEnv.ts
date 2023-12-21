@@ -3,7 +3,8 @@ import { generatePrismaClient } from '@efuller/shared/tests/utils/generatePrisma
 import { setupEnvVars } from '@efuller/shared/tests/utils/setupEnvVars';
 
 export default async () => {
-  const rootCwd = path.join(__dirname, './api');
+  const rootCwd = path.join(__dirname, '../');
+
   setupEnvVars('./packages/api/.env.test');
   await generatePrismaClient('.env.test', rootCwd);
 };
