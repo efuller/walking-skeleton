@@ -9,6 +9,7 @@ defineFeature(feature, (test) => {
   test('Adding a new journal entry', ({ given, when, then }) => {
     const compositionRoot = new CompositionRoot();
     const apiServer = compositionRoot.getApiServer();
+    const db = compositionRoot.getDatabase();
     let apiDriver: RestApiDriver;
     let response: any;
 
@@ -19,6 +20,7 @@ defineFeature(feature, (test) => {
 
     afterAll(async () => {
       await apiServer.stop();
+      await db.reset();
     });
 
     given('The app can be accessed', async () => {
