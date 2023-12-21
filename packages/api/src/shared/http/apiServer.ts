@@ -1,5 +1,6 @@
 import { Server } from 'http';
 import express, { Application } from 'express';
+import cors from 'cors';
 import { Database } from '../persistence/database/database';
 import { ProcessService } from '@efuller/shared';
 
@@ -10,13 +11,16 @@ export class ApiServer {
   private running: boolean;
   private readonly db: Database;
 
-  constructor() {
+  // TODO: This dependency should be removed.
+  constructor(db: Database) {
+    const env = process.env.NODE_ENV || 'development';
     this.server = null;
     this.app = express();
     this.app.use(express.json());
-    this.port = 3000;
+    this.app.use(cors());
+    this.port = env === 'development' ? 3000 : 3001;
     this.running = false;
-    this.db = new Database();
+    this.db = db;
 
     this.setupRoutes();
   }

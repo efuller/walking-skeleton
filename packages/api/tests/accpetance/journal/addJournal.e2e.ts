@@ -1,13 +1,15 @@
 import { loadFeature, defineFeature } from 'jest-cucumber';
-import { ApiServer } from '../../../src/shared/http/apiServer';
 import { RestApiDriver } from '../../../src/shared/http/restApiDriver';
 import { Server } from 'http';
+import { CompositionRoot } from '@efuller/api/src/shared/composition/compositionRoot';
 
 const feature = loadFeature('./packages/shared/tests/journal/e2e/addJournal.feature');
 
 defineFeature(feature, (test) => {
   test('Adding a new journal entry', ({ given, when, then }) => {
-    const apiServer = new ApiServer();
+    const compositionRoot = new CompositionRoot();
+    const apiServer = compositionRoot.getApiServer();
+    const db = compositionRoot.getDatabase();
     let apiDriver: RestApiDriver;
     let response: any;
 
@@ -18,6 +20,7 @@ defineFeature(feature, (test) => {
 
     afterAll(async () => {
       await apiServer.stop();
+      await db.reset();
     });
 
     given('The app can be accessed', async () => {
