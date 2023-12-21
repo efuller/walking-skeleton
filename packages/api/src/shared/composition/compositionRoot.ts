@@ -1,6 +1,6 @@
 import { ApiServer } from '../http/apiServer';
 
-export class AppRoot {
+export class CompositionRoot {
   private readonly apiServer: ApiServer;
 
   constructor() {
