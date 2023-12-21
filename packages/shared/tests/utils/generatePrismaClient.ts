@@ -14,7 +14,7 @@ export const generatePrismaClient = async (
   const out = await execSh.promise(
     `dotenv -e ${envPath} -- prisma generate --schema=${schemaPath}`,
     {
-      cwd: path.join(rootCwd, '../../'),
+      cwd: rootCwd,
     },
   );
   console.log(out.stdout, out.stderr);
