@@ -11,7 +11,8 @@ export class ApiServer {
   private running: boolean;
   private readonly db: Database;
 
-  constructor() {
+  // TODO: This dependency should be removed.
+  constructor(db: Database) {
     const env = process.env.NODE_ENV || 'development';
     this.server = null;
     this.app = express();
@@ -19,7 +20,7 @@ export class ApiServer {
     this.app.use(cors());
     this.port = env === 'development' ? 3000 : 3001;
     this.running = false;
-    this.db = new Database();
+    this.db = db;
 
     this.setupRoutes();
   }

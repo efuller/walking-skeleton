@@ -1,9 +1,12 @@
 import { ApiServer } from './apiServer';
 import { RestApiDriver } from './restApiDriver';
 import { Server } from 'http';
+import { Database } from '@efuller/api/src/shared/persistence/database/database';
 
 describe('Web Server', () => {
-  const apiServer = new ApiServer();
+  const db = new Database();
+  // TODO: Need to remove this dependency on the database
+  const apiServer = new ApiServer(db);
 
   beforeEach(async () => {
     await apiServer.stop();
