@@ -1,5 +1,7 @@
 import { ApiServer } from '../http/apiServer';
 import { Database } from '@efuller/api/src/shared/persistence/database/database';
+import { JournalController } from '@efuller/api/src/modules/journals/journal.controller';
+import { JournalService } from '@efuller/api/src/modules/journals/journal.service';
 
 export class CompositionRoot {
   private readonly db: Database;
@@ -11,7 +13,10 @@ export class CompositionRoot {
   }
 
   createApiServer() {
-    return new ApiServer(this.db);
+    const journalService = new JournalService(this.db);
+    const journalController = new JournalController(journalService);
+
+    return new ApiServer({ journal: journalController });
   }
 
   getApiServer() {

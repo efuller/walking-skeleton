@@ -1,18 +1,20 @@
 import { Server } from 'http';
 import express, { Application } from 'express';
 import cors from 'cors';
-import { Database } from '../persistence/database/database';
 import { ProcessService } from '@efuller/shared';
+import { JournalController } from '@efuller/api/src/modules/journals/journal.controller';
+
+interface Controllers {
+  journal: JournalController;
+}
 
 export class ApiServer {
   private server: Server | null;
   private app: Application;
   private readonly port: number;
   private running: boolean;
-  private readonly db: Database;
 
-  // TODO: This dependency should be removed.
-  constructor(db: Database) {
+  constructor(private readonly controllers: Controllers) {
     const env = process.env.NODE_ENV || 'development';
     this.server = null;
     this.app = express();
@@ -20,7 +22,6 @@ export class ApiServer {
     this.app.use(cors());
     this.port = env === 'development' ? 3000 : 3001;
     this.running = false;
-    this.db = db;
 
     this.setupRoutes();
   }
@@ -35,22 +36,7 @@ export class ApiServer {
     });
 
     this.app.post('/journal', async (req, res) => {
-      const { title } = req.body;
-
-      const result = await this.db.getClient().journal.create({
-        data: {
-          title,
-          content: 'This is a journal entry',
-        },
-      });
-
-      console.log('RESULT', result);
-      const responseDto = {
-        success: true,
-        error: null,
-        data: { title: result.title },
-      }
-      res.status(201).json(responseDto);
+      await this.controllers.journal.create(req, res);
     });
   }
 

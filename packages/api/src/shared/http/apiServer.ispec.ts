@@ -1,12 +1,10 @@
-import { ApiServer } from './apiServer';
 import { RestApiDriver } from './restApiDriver';
 import { Server } from 'http';
-import { Database } from '@efuller/api/src/shared/persistence/database/database';
+import { CompositionRoot } from '@efuller/api/src/shared/composition/compositionRoot';
 
 describe('Web Server', () => {
-  const db = new Database();
-  // TODO: Need to remove this dependency on the database
-  const apiServer = new ApiServer(db);
+  const compositionRoot = new CompositionRoot();
+  const apiServer = compositionRoot.getApiServer();
 
   beforeEach(async () => {
     await apiServer.stop();
