@@ -12,4 +12,3 @@
           with:
             api-key: ${{ secrets.RENDER_TOKEN }}
             service-id: ${{ secrets.RENDER_SERVICE_ID }}
-            wait-for-success: true
