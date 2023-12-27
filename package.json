@@ -15,6 +15,7 @@
     "build:shared": "npm run build -w packages/shared",
     "build:api": "npm run build:shared && npm run build -w packages/api",
     "start:api": "npm run start -w packages/api",
+    "staging:start:api": "npm run staging:start -w packages/api",
     "staging:prisma:generate": "npm run prisma:generate -w packages/api",
     "staging:prisma:reset": "npm run prisma:generate -w packages/api"
   },
