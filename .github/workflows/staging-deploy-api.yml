@@ -6,7 +6,6 @@
     deploy:
       name: Deploy to render.com
       runs-on: ubuntu-latest
-      needs: build
       steps:
         - name: Deploy to staging
           uses: johnbeynon/render-deploy-action@v0.0.8
