@@ -19,7 +19,9 @@
     "staging:prisma:generate": "npm run prisma:generate -w packages/api",
     "staging:prisma:reset": "npm run prisma:generate -w packages/api",
     "web:dev": "npm run dev -w packages/web",
-    "web:build": "npm run build -w packages/web"
+    "web:build": "npm run build -w packages/web",
+    "web:test": "npm run test -w packages/web",
+    "web:test:watch": "npm run test:watch -w packages/web"
   },
   "keywords": [],
   "author": "",
