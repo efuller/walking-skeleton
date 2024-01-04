@@ -1,8 +1,13 @@
-Feature: Add Journal Entry
-  As a user
-  I want to be able to add a new journal entry
+Feature: Journaling
+  As a user I should be able to create, edit, and delete journal entries
 
-  Scenario: Adding a new journal entry
-    Given The app can be accessed
-    When The user adds a new journal entry of "Today is a great day"
-    Then The user should be able to verify that the journal entry is added to the list
+  @api
+  Scenario Outline: User sends data to create a new journal
+    Given the backend API is accessible
+    When a user sends a POST request to the "/journal" endpoint with a title of <title> and content of <content>
+    Then the API should respond with a status code of 201
+    And the response should contain title of <title> and content of <content>
+
+    Examples:
+      | title       | content                |
+      | Test Journal| Sample journal content |
