@@ -1,6 +1,7 @@
 import { defineFeature, loadFeature } from 'jest-cucumber';
+import path from 'path';
 
-const feature = loadFeature('../../packages/shared/tests/journal/e2e/addJournal.feature');
+const feature = loadFeature(path.join(__dirname, '../../../../../packages/shared/tests/journal/e2e/addJournal.feature'));
 
 defineFeature(feature, (test) => {
   test('Adding a new journal entry', ({ given, when, then }) => {
