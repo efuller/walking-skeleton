@@ -10,7 +10,7 @@
     "api:staging:prisma:generate": "npm run prisma:generate -w packages/api",
     "api:staging:prisma:reset": "npm run prisma:generate -w packages/api",
     "api:staging:test:e2e": "jest -c jest.config.staging.ts",
-    "api:staing:test:integration": "jest -c jest.config.staging.ts",
+    "api:staging:test:integration": "jest -c jest.config.staging.ts",
     "api:test:e2e": "jest --selectProjects backend-e2e -c jest.config.e2e.ts",
     "api:test:e2e:watch": "jest -c jest.config.e2e.ts --watchAll",
     "api:test:unit": "jest -c jest.config.unit.ts",

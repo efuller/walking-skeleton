@@ -27,7 +27,7 @@
           run: npm ci
 
         - name: Build packages
-          run: npm run build:api && npm run build:shared
+          run: npm run api:build && npm run shared:build
 
         - name: Run tests
-          run: npm run test:staging:integration
+          run: npm run api:staging:test:integration
