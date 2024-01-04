@@ -6,7 +6,7 @@ export default async (): Promise<Config> => ({
   testTimeout: 30000,
   projects: [
     {
-      displayName: 'Backend-E2E',
+      displayName: 'backend-e2e',
       testMatch: ['**/@(src|tests)/**/*.@(e2e).*'],
       transform: {
         '^.+\\.(t|j)sx?$': ['ts-jest', {}],
@@ -15,7 +15,7 @@ export default async (): Promise<Config> => ({
       rootDir: '<rootDir>/packages/api'
     },
     {
-      displayName: 'Frontend-E2E',
+      displayName: 'frontend-e2e',
       preset: "jest-puppeteer",
       testMatch: ['**/@(src|tests)/**/*.@(e2e).*'],
       transform: {
