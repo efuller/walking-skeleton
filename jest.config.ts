@@ -22,6 +22,15 @@ export default async (): Promise<Config> => ({
         '^.+\\.(t|j)sx?$': ['ts-jest', {}],
       },
       rootDir: '<rootDir>/packages/web'
+    },
+    {
+      displayName: 'api-infra',
+      testMatch: ['**/@(src|tests)/**/*.@(infra).*'],
+      transform: {
+        '^.+\\.(t|j)sx?$': ['ts-jest', {}],
+      },
+      rootDir: '<rootDir>/packages/api',
+      globalSetup: './tests/setupLocalTestingEnv.ts',
     }
   ]
 })
