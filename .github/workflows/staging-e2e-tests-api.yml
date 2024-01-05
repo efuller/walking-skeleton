@@ -27,7 +27,7 @@ jobs:
         run: npm ci
 
       - name: Build shared and api
-        run: npm run build:api
+        run: npm run api:build
 
       - name: Run E2E tests
-        run: npm run test:staging:e2e
+        run: npm run api:staging:test:e2e

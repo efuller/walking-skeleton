@@ -3,10 +3,10 @@ import { RestApiDriver } from '../../../src/shared/http/restApiDriver';
 import { Server } from 'http';
 import { CompositionRoot } from '@efuller/api/src/shared/composition/compositionRoot';
 
-const feature = loadFeature('./packages/shared/tests/journal/e2e/addJournal.feature');
+const feature = loadFeature('./packages/shared/tests/journal/e2e/addJournal.feature', { tagFilter: '@api' });
 
 defineFeature(feature, (test) => {
-  test('Adding a new journal entry', ({ given, when, then }) => {
+  test('User sends data to create a new journal', ({ given, when, then, and }) => {
     const compositionRoot = new CompositionRoot();
     const apiServer = compositionRoot.getApiServer();
     const db = compositionRoot.getDatabase();
@@ -23,16 +23,20 @@ defineFeature(feature, (test) => {
       await db.reset();
     });
 
-    given('The app can be accessed', async () => {
+    given('The backend API is accessible', async () => {
       expect(apiServer.isRunning()).toBeTruthy();
     });
 
-    when('The user adds a new journal entry of "Today is a great day"', async () => {
-      response = await apiDriver.post('/journal', { title: 'Today is a great day' });
+    when(/^a user sends a POST request to the "(.*)" endpoint with a title of (.*) and content of (.*)$/, async (endpoint, title, content) => {
+      response = await apiDriver.post(endpoint, { title, content });
     });
 
-    then('The user should be able to verify that the journal entry is added to the list', () => {
-      expect(response.body.data).toEqual({ title: 'Today is a great day' });
+    then(/^the API should respond with a status code of (\d+)$/, (status) => {
+      expect(response.status).toBe(Number(status));
+    });
+
+    and(/^the response should contain title of (.*) and content of (.*)$/, (title, content) => {
+      expect(response.body.data).toEqual({ title, content });
     });
   });
 });

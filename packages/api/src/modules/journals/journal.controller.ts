@@ -5,9 +5,9 @@ export class JournalController {
   constructor(private readonly journalService: JournalService) {}
 
   async create(req: Request, res: Response) {
-    const { title } = req.body;
+    const { title, content = '' } = req.body;
 
-    const result = await this.journalService.createJournal(title);
+    const result = await this.journalService.createJournal(title, content);
 
     if (!result.success) {
       return res.status(500).json(result);
