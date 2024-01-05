@@ -1,8 +1,4 @@
-import path from 'path';
 import { Config } from 'jest';
-import { pathsToModuleNameMapper } from 'ts-jest';
-
-import { compilerOptions } from './tsconfig.json';
 
 export default async (): Promise<Config> => ({
   verbose: true,
@@ -51,9 +47,6 @@ export default async (): Promise<Config> => ({
       transform: {
         '^.+\\.(t|j)sx?$': ['ts-jest', {}],
       },
-      moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
-        prefix: path.resolve(__dirname, '../../'),
-      }),
       rootDir: '<rootDir>/packages/api',
       globalSetup: './tests/setupStagingTestingEnv.ts',
     }
