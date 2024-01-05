@@ -42,9 +42,6 @@ export default async (): Promise<Config> => ({
       transform: {
         '^.+\\.(t|j)sx?$': ['ts-jest', {}],
       },
-      moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
-        prefix: path.resolve(__dirname, '../../'),
-      }),
       rootDir: '<rootDir>/packages/api',
       globalSetup: './tests/setupStagingTestingEnv.ts',
     },
