@@ -6,22 +6,20 @@ export default async (): Promise<Config> => ({
   testTimeout: 30000,
   projects: [
     {
-      displayName: 'backend-e2e',
+      displayName: 'api-unit',
+      testMatch: ['**/@(src|tests)/**/*.@(test|spec).*'],
+      transform: {
+        '^.+\\.(t|j)sx?$': ['ts-jest', {}],
+      },
+    },
+    {
+      displayName: 'api-e2e',
       testMatch: ['**/@(src|tests)/**/*.@(e2e).*'],
       transform: {
         '^.+\\.(t|j)sx?$': ['ts-jest', {}],
       },
       globalSetup: './tests/setupLocalTestingEnv.ts',
       rootDir: '<rootDir>/packages/api'
-    },
-    {
-      displayName: 'frontend-e2e',
-      preset: "jest-puppeteer",
-      testMatch: ['**/@(src|tests)/**/*.@(e2e).*'],
-      transform: {
-        '^.+\\.(t|j)sx?$': ['ts-jest', {}],
-      },
-      rootDir: '<rootDir>/packages/web'
     },
     {
       displayName: 'api-infra',
@@ -49,6 +47,15 @@ export default async (): Promise<Config> => ({
       },
       rootDir: '<rootDir>/packages/api',
       globalSetup: './tests/setupStagingTestingEnv.ts',
-    }
+    },
+    {
+      displayName: 'web-e2e',
+      preset: "jest-puppeteer",
+      testMatch: ['**/@(src|tests)/**/*.@(e2e).*'],
+      transform: {
+        '^.+\\.(t|j)sx?$': ['ts-jest', {}],
+      },
+      rootDir: '<rootDir>/packages/web'
+    },
   ]
 })

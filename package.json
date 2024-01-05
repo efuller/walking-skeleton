@@ -11,9 +11,9 @@
     "api:staging:prisma:reset": "npm run prisma:generate -w packages/api",
     "api:staging:test:e2e": "jest --selectProjects api-staging-e2e -c jest.config.ts",
     "api:staging:test:infra": "jest --selectProjects api-staging-infra -c jest.config.ts",
-    "api:test:e2e": "jest --selectProjects backend-e2e -c jest.config.ts",
+    "api:test:e2e": "jest --selectProjects api-e2e -c jest.config.ts",
     "api:test:e2e:watch": "jest -c jest.config.ts --watchAll",
-    "api:test:unit": "jest -c jest.config.unit.ts",
+    "api:test:unit": "jest --selectProjects api-unit -c jest.config.ts",
     "api:test:infra": "jest --selectProjects api-infra -c jest.config.ts",
     "api:test:infra:watch": "jest --selectProjects api-infra -c jest.config.ts --watchAll",
     "lint": "eslint \"**/*.ts\"",
@@ -22,8 +22,8 @@
     "web:build": "npm run build -w packages/web",
     "web:test": "npm run test -w packages/web",
     "web:test:watch": "npm run test:watch -w packages/web",
-    "web:test:e2e": "jest --selectProjects frontend-e2e -c jest.config.ts",
-    "web:test:e2e:watch": "jest --selectProjects frontend-e2e -c jest.config.ts --watchAll"
+    "web:test:e2e": "jest --selectProjects web-e2e -c jest.config.ts",
+    "web:test:e2e:watch": "jest --selectProjects web-e2e -c jest.config.ts --watchAll"
   },
   "keywords": [],
   "author": "",
