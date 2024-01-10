@@ -1,14 +1,9 @@
 import './App.css';
+import { JournalsPage } from './modules/jounals/journals.page.tsx';
 
 function App() {
-
   return (
-    <div>
-      <h1>Add Journal</h1>
-      <form id="add-journal">
-
-      </form>
-    </div>
+    <JournalsPage />
   );
 }
 
