@@ -1,14 +1,14 @@
 import { PuppeteerPageDriver } from '../webDriver/puppeteerPageDriver';
 
 export class HomePage {
-  constructor(private driver: PuppeteerPageDriver, private url: string) {}
+  constructor(private pageDriver: PuppeteerPageDriver, private url: string) {}
 
   async navigate() {
-    await this.driver.page.goto(this.url);
+    await this.pageDriver.page.goto(this.url);
   }
 
   async addJournalFormIsVisible() {
-    const form = await this.driver.page.waitForSelector('#add-journal');
+    const form = await this.pageDriver.page.waitForSelector('#add-journal');
 
     if (!form) {
       throw new Error('Add journal form is not visible');
@@ -29,7 +29,7 @@ export class HomePage {
   }
 
   async enterNewJournal(title: string, content: string) {
-    const form = await this.driver.page.waitForSelector('#add-journal');
+    const form = await this.pageDriver.page.waitForSelector('#add-journal');
 
     if (!form) {
       throw new Error('Add journal form is not visible');
@@ -53,7 +53,7 @@ export class HomePage {
   }
 
   async submitAddJournalForm() {
-    const form = await this.driver.page.waitForSelector('#add-journal');
+    const form = await this.pageDriver.page.waitForSelector('#add-journal');
 
     if (!form) {
       throw new Error('Add journal form is not visible');
@@ -69,7 +69,7 @@ export class HomePage {
   }
 
   async getFirstJournal() {
-    const journalList = await this.driver.page.waitForSelector('#journal-list');
+    const journalList = await this.pageDriver.page.waitForSelector('#journal-list');
 
     if (!journalList) {
       throw new Error('Add journal form is not visible');
