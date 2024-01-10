@@ -5,15 +5,7 @@ type Pages = {
   'homePage': HomePage;
 };
 
-export interface App {
-  baseUrl: string;
-  pages: Pages;
-  pageDriver: PuppeteerPageDriver;
-  close(): Promise<void>;
-  pause(): Promise<void>;
-}
-
-export class WebApp implements App {
+export class WebApp {
   pageDriver: PuppeteerPageDriver;
   readonly baseUrl: string;
   pages: Pages;
@@ -35,10 +27,15 @@ export class WebApp implements App {
     await this.pageDriver.browser.close();
   }
 
-  /**
-   * Pause the test for 3 seconds.
-   */
   async pause() {
     await new Promise(r => setTimeout(r, 3000))
+  }
+
+  async navigateToHomepage() {
+    await this.pages.homePage.navigate();
+  }
+
+  getPageObject<T extends keyof Pages>(pageName: T): Pages[T] {
+    return this.pages[pageName];
   }
 }
