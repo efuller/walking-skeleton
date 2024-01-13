@@ -3,7 +3,8 @@ import path from 'path';
 import { PuppeteerPageDriver } from '../../shared/webDriver/puppeteerPageDriver';
 import { WebApp } from '../../shared/webApp/webApp';
 import { HomePage } from '../../shared/pages/homePage';
-import { AddJournalFormComponent, JournalList } from '../../shared/pageComponents/pageComponent';
+import { JournalList } from '../../shared/pageComponents/journal/journalList';
+import { AddJournalFormComponent } from '../../shared/pageComponents/journal/addJournalForm';
 
 const feature = loadFeature(
   path.join(__dirname, '../../../../../packages/shared/tests/journal/e2e/addJournal.feature'),

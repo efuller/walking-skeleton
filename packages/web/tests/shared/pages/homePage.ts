@@ -1,5 +1,6 @@
 import { PuppeteerPageDriver } from '../webDriver/puppeteerPageDriver';
-import { AddJournalFormComponent, JournalList } from '../pageComponents/pageComponent';
+import { JournalList } from '../pageComponents/journal/journalList';
+import { AddJournalFormComponent } from '../pageComponents/journal/addJournalForm';
 
 type HomepageComponents = {
   addJournalForm: AddJournalFormComponent;
