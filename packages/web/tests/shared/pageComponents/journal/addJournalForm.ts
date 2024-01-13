@@ -1,29 +1,23 @@
 import { PuppeteerPageDriver } from '../../webDriver/puppeteerPageDriver';
-import { BasePageComponent, PageComponentConfig } from '../basePageComponent';
+import { BasePageComponent } from '../basePageComponent';
 
-export class AddJournalFormComponent extends BasePageComponent {
+type AddJournalFormElements = {
+  titleInput: { selector: string };
+  contentInput: { selector: string };
+  submitBtn: { selector: string };
+};
+
+export class AddJournalFormComponent extends BasePageComponent<AddJournalFormElements> {
   constructor(
     protected pageDriver: PuppeteerPageDriver,
-    protected componentConfig: PageComponentConfig,
+    protected componentConfig: AddJournalFormElements,
   ) {
     super(pageDriver, componentConfig);
   }
 
   async addAndSubmit(title: string, content: string) {
-    const titleInput = await this.pageDriver.page.$(this.componentConfig.titleInput.selector);
-    const contentInput = await this.pageDriver.page.$(this.componentConfig.contentInput.selector);
-    const submitBtn = await this.pageDriver.page.$(this.componentConfig.submitBtn.selector);
-
-    if (!titleInput || !contentInput) {
-      throw new Error('Add journal form inputs are not visible');
-    }
-
-    if (!submitBtn) {
-      throw new Error('Add journal form submit button is not visible');
-    }
-
-    await titleInput.type(title);
-    await contentInput.type(content);
-    await submitBtn.click();
+    await this.waitAndType('titleInput', title);
+    await this.waitAndType('contentInput', content);
+    await this.waitAndClick('submitBtn');
   }
 }

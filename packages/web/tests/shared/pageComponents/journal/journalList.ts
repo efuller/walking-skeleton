@@ -1,16 +1,23 @@
 import { PuppeteerPageDriver } from '../../webDriver/puppeteerPageDriver';
-import { BasePageComponent, PageComponentConfig } from '../basePageComponent';
+import { BasePageComponent } from '../basePageComponent';
 
-export class JournalList extends BasePageComponent {
+type JournalListFormElements = {
+  journalList: { selector: string };
+  journalEntries: { selector: string };
+  journalTitle: { selector: string };
+  journalContent: { selector: string };
+};
+
+export class JournalList extends BasePageComponent<JournalListFormElements> {
   constructor(
     protected pageDriver: PuppeteerPageDriver,
-    protected componentConfig: PageComponentConfig,
+    protected componentConfig: JournalListFormElements,
   ) {
     super(pageDriver, componentConfig);
   }
 
   async getFirstJournal() {
-    const journalList = await this.pageDriver.page.waitForSelector(this.componentConfig.journalList.selector);
+    const journalList = await this.$('journalList');
 
     if (!journalList) {
       throw new Error('Add journal form is not visible');
