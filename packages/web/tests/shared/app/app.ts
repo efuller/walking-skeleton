@@ -10,13 +10,13 @@ export class WebApp {
   baseUrl: string | null = null;
   pages: Pages | undefined;
 
-  private constructor(driver: PuppeteerPageDriver) {
+  private constructor(driver: PuppeteerPageDriver, baseUrl: string) {
     this.pageDriver = driver;
+    this.baseUrl = baseUrl;
   }
 
-  static async create(driver: PuppeteerPageDriver) {
-    const app = new WebApp(driver);
-    app.baseUrl = 'http://localhost:5173/';
+  static async create(driver: PuppeteerPageDriver, baseUrl: string = 'http://localhost:5173/') {
+    const app = new WebApp(driver, baseUrl);
     app.pageDriver.page.setDefaultTimeout(10000);
     await app.generatePages();
     return app;
