@@ -1,31 +1,25 @@
 import { PuppeteerPageDriver } from '../webDriver/puppeteerPageDriver';
 import { JournalList } from '../pageComponents/journal/journalList';
 import { AddJournalFormComponent } from '../pageComponents/journal/addJournalForm';
+import { BasePage } from './basePage';
 
 type HomepageComponents = {
   addJournalForm: AddJournalFormComponent;
   journalList: JournalList;
-}
+};
 
-export class HomePage {
-  public pageComponents: HomepageComponents | undefined;
-
-  private constructor(
-    private pageDriver: PuppeteerPageDriver,
-    private url: string,
-  ) {}
+export class HomePage extends BasePage<HomepageComponents> {
+  protected constructor(
+    protected pageDriver: PuppeteerPageDriver,
+    protected url: string,
+  ) {
+    super(pageDriver, url);
+  }
 
   static async create(pageDriver: PuppeteerPageDriver, url: string) {
     const page = new HomePage(pageDriver, url);
     page.pageComponents = await page.generatePageComponents();
     return page;
-  }
-
-  get<T extends keyof HomepageComponents>(key: T): HomepageComponents[T] {
-    if (!this.pageComponents?.[key]) {
-      throw new Error(`Page component ${key} does not exist`);
-    }
-    return this.pageComponents[key];
   }
 
   async generatePageComponents() {
@@ -43,9 +37,5 @@ export class HomePage {
     });
 
     return { addJournalForm, journalList };
-  }
-
-  async navigate() {
-    await this.pageDriver.page.goto(this.url);
   }
 }
