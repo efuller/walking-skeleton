@@ -22,8 +22,8 @@ defineFeature(feature, (test) => {
     driver = await PuppeteerPageDriver.create({ headless: false, slowMo: 50 });
     webApp = await WebApp.create(driver);
     homePage = webApp.getPageObject('homePage');
-    addJournalForm = homePage.get('addJournalForm');
-    journalList = homePage.get('journalList');
+    addJournalForm = homePage.$('addJournalForm');
+    journalList = homePage.$('journalList');
   });
 
   afterAll(async () => {

@@ -9,7 +9,7 @@ export abstract class BasePage<T> {
   ) {
   }
 
-  get<K extends keyof T>(key: K): T[K] {
+  $<K extends keyof T>(key: K): T[K] {
     if (!this.pageComponents?.[key]) {
       throw new Error(`Page component ${String(key)} does not exist`);
     }
