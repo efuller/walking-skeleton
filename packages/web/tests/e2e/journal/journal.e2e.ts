@@ -1,7 +1,7 @@
 import { defineFeature, loadFeature } from 'jest-cucumber';
 import path from 'path';
 import { PuppeteerPageDriver } from '../../shared/webDriver/puppeteerPageDriver';
-import { WebApp } from '../../shared/app/app';
+import { WebApp } from '../../shared/webApp/webApp';
 import { HomePage } from '../../shared/pages/homePage';
 import { AddJournalFormComponent } from '../../shared/pageComponents/pageComponent';
 
@@ -29,7 +29,7 @@ defineFeature(feature, (test) => {
 
   test('User creates a new journal', ({ given, and, when, then }) => {
     given('the user is on the homepage page', async () => {
-      await webApp.navigateToHomepage();
+      await homePage.navigate();
     });
 
     and('the form for adding a new journal is visible', async () => {

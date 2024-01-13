@@ -38,13 +38,6 @@ export class WebApp {
     await new Promise((r) => setTimeout(r, 3000));
   }
 
-  async navigateToHomepage() {
-    if (!this.pages) {
-      throw new Error('Pages have not been generated');
-    }
-    await this.pages.homePage.navigate();
-  }
-
   getPageObject<T extends keyof Pages>(pageName: T): Pages[T] {
     if (!this.pages) {
       throw new Error('Pages have not been generated');
