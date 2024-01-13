@@ -4,12 +4,36 @@ export type PageComponentConfig = {
   [key: string]: { selector: string };
 }
 
-export class JournalList {
+export class PageComponent {
   constructor(
-    private pageDriver: PuppeteerPageDriver,
-    private url: string,
-    private componentConfig: PageComponentConfig,
+    protected pageDriver: PuppeteerPageDriver,
+    protected componentConfig: PageComponentConfig,
   ) {}
+
+  async isValid() {
+    const promises = Object.keys(this.componentConfig).map(async (key) => {
+      const component = this.componentConfig[key];
+      return await this.pageDriver.page.waitForSelector(component.selector)
+        .then(() => true)
+        .catch(() => false);
+    });
+
+    const result = await Promise.all(promises);
+
+    if (result.includes(false)) {
+      throw new Error('Add journal form is not visible');
+    }
+    return true;
+  }
+}
+
+export class JournalList extends PageComponent {
+  constructor(
+    protected pageDriver: PuppeteerPageDriver,
+    protected componentConfig: PageComponentConfig,
+  ) {
+    super(pageDriver, componentConfig);
+  }
 
   async getFirstJournal() {
     const journalList = await this.pageDriver.page.waitForSelector(this.componentConfig.journalList.selector);
@@ -36,27 +60,12 @@ export class JournalList {
   }
 }
 
-export class AddJournalFormComponent {
+export class AddJournalFormComponent extends PageComponent {
   constructor(
-    private pageDriver: PuppeteerPageDriver,
-    private url: string,
-    private componentConfig: PageComponentConfig,
-  ) {}
-
-  async isValid() {
-    const promises = Object.keys(this.componentConfig).map(async (key) => {
-      const component = this.componentConfig[key];
-      return await this.pageDriver.page.waitForSelector(component.selector)
-        .then(() => true)
-        .catch(() => false);
-    });
-
-    const result = await Promise.all(promises);
-
-    if (result.includes(false)) {
-      throw new Error('Add journal form is not visible');
-    }
-    return true;
+    protected pageDriver: PuppeteerPageDriver,
+    protected componentConfig: PageComponentConfig,
+  ) {
+    super(pageDriver, componentConfig);
   }
 
   async addAndSubmit(title: string, content: string) {

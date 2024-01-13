@@ -28,13 +28,13 @@ export class HomePage {
   }
 
   async generatePageComponents() {
-    const addJournalForm = new AddJournalFormComponent(this.pageDriver, this.url, {
+    const addJournalForm = new AddJournalFormComponent(this.pageDriver, {
       titleInput: { selector: '#title' },
       contentInput: { selector: '#content' },
       submitBtn: { selector: '#submit' },
     });
 
-    const journalList = new JournalList(this.pageDriver, this.url, {
+    const journalList = new JournalList(this.pageDriver, {
       journalList: { selector: '#journal-list' },
       journalEntries: { selector: '.journal-entry' },
       journalTitle: { selector: '.journal-title' },
