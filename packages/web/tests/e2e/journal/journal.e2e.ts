@@ -3,7 +3,7 @@ import path from 'path';
 import { PuppeteerPageDriver } from '../../shared/webDriver/puppeteerPageDriver';
 import { WebApp } from '../../shared/webApp/webApp';
 import { HomePage } from '../../shared/pages/homePage';
-import { AddJournalFormComponent } from '../../shared/pageComponents/pageComponent';
+import { AddJournalFormComponent, JournalList } from '../../shared/pageComponents/pageComponent';
 
 const feature = loadFeature(
   path.join(__dirname, '../../../../../packages/shared/tests/journal/e2e/addJournal.feature'),
@@ -15,12 +15,14 @@ defineFeature(feature, (test) => {
   let driver: PuppeteerPageDriver;
   let homePage: HomePage;
   let addJournalForm: AddJournalFormComponent;
+  let journalList: JournalList;
 
   beforeAll(async () => {
     driver = await PuppeteerPageDriver.create({ headless: false, slowMo: 50 });
     webApp = await WebApp.create(driver);
     homePage = webApp.getPageObject('homePage');
     addJournalForm = homePage.get('addJournalForm');
+    journalList = homePage.get('journalList');
   });
 
   afterAll(async () => {
@@ -41,7 +43,7 @@ defineFeature(feature, (test) => {
     });
 
     then(/^the page should display the title of (.*) and content of (.*)$/, async (title, content) => {
-      const firstJournal = await homePage.getFirstJournal();
+      const firstJournal = await journalList.getFirstJournal();
       expect(firstJournal.title).toBe(title);
       expect(firstJournal.content).toBe(content);
     });

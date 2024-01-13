@@ -1,8 +1,9 @@
 import { PuppeteerPageDriver } from '../webDriver/puppeteerPageDriver';
-import { AddJournalFormComponent } from '../pageComponents/pageComponent';
+import { AddJournalFormComponent, JournalList } from '../pageComponents/pageComponent';
 
 type HomepageComponents = {
   addJournalForm: AddJournalFormComponent;
+  journalList: JournalList;
 }
 
 export class HomePage {
@@ -19,7 +20,7 @@ export class HomePage {
     return page;
   }
 
-  get(key: keyof HomepageComponents){
+  get<T extends keyof HomepageComponents>(key: T): HomepageComponents[T] {
     if (!this.pageComponents?.[key]) {
       throw new Error(`Page component ${key} does not exist`);
     }
@@ -32,34 +33,18 @@ export class HomePage {
       contentInput: { selector: '#content' },
       submitBtn: { selector: '#submit' },
     });
-    return { addJournalForm };
+
+    const journalList = new JournalList(this.pageDriver, this.url, {
+      journalList: { selector: '#journal-list' },
+      journalEntries: { selector: '.journal-entry' },
+      journalTitle: { selector: '.journal-title' },
+      journalContent: { selector: '.journal-content' },
+    });
+
+    return { addJournalForm, journalList };
   }
 
   async navigate() {
     await this.pageDriver.page.goto(this.url);
-  }
-
-  async getFirstJournal() {
-    const journalList = await this.pageDriver.page.waitForSelector('#journal-list');
-
-    if (!journalList) {
-      throw new Error('Add journal form is not visible');
-    }
-
-    const journalEntries = await journalList.$$('.journal-entry');
-
-    if (journalEntries.length < 1) {
-      throw new Error('Journal entries are not visible');
-    }
-
-    const [firstJournal] = journalEntries;
-
-    const title = await firstJournal.$eval('.journal-title', (el) => el.textContent);
-    const content = await firstJournal.$eval('.journal-content', (el) => el.textContent);
-
-    return {
-      title,
-      content,
-    };
   }
 }
