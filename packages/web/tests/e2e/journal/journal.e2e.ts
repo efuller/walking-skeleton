@@ -3,6 +3,7 @@ import path from 'path';
 import { PuppeteerPageDriver } from '../../shared/webDriver/puppeteerPageDriver';
 import { WebApp } from '../../shared/app/app';
 import { HomePage } from '../../shared/pages/homePage';
+import { AddJournalFormComponent } from '../../shared/pageComponents/pageComponent';
 
 const feature = loadFeature(
   path.join(__dirname, '../../../../../packages/shared/tests/journal/e2e/addJournal.feature'),
@@ -13,11 +14,13 @@ defineFeature(feature, (test) => {
   let webApp: WebApp;
   let driver: PuppeteerPageDriver;
   let homePage: HomePage;
+  let addJournalForm: AddJournalFormComponent;
 
   beforeAll(async () => {
     driver = await PuppeteerPageDriver.create({ headless: false, slowMo: 50 });
-    webApp = new WebApp(driver);
+    webApp = await WebApp.create(driver);
     homePage = webApp.getPageObject('homePage');
+    addJournalForm = homePage.get('addJournalForm');
   });
 
   afterAll(async () => {
@@ -30,13 +33,11 @@ defineFeature(feature, (test) => {
     });
 
     and('the form for adding a new journal is visible', async () => {
-      const result = await homePage.addJournalFormIsVisible();
-      expect(result).toBe(true);
+      expect(await addJournalForm.isValid()).toBe(true);
     });
 
     when(/^the user enters a title of (.*) and content of (.*) and clicks the submit button$/, async (title, content) => {
-      await homePage.enterNewJournal(title, content);
-      await homePage.submitAddJournalForm();
+      await addJournalForm.addAndSubmit(title, content);
     });
 
     then(/^the page should display the title of (.*) and content of (.*)$/, async (title, content) => {
