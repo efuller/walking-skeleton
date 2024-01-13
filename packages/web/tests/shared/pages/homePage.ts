@@ -27,7 +27,7 @@ export class HomePage {
   }
 
   async generatePageComponents() {
-    const addJournalForm = await AddJournalFormComponent.create(this.pageDriver, this.url, {
+    const addJournalForm = new AddJournalFormComponent(this.pageDriver, this.url, {
       titleInput: { selector: '#title' },
       contentInput: { selector: '#content' },
       submitBtn: { selector: '#submit' },

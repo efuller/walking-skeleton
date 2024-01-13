@@ -5,19 +5,11 @@ export type PageComponentConfig = {
 }
 
 export class AddJournalFormComponent {
-  private constructor(
+  constructor(
     private pageDriver: PuppeteerPageDriver,
     private url: string,
     private componentConfig: PageComponentConfig,
   ) {}
-
-  static async create(
-    pageDriver: PuppeteerPageDriver,
-    url: string,
-    componentConfig: PageComponentConfig,
-  ) {
-    return new AddJournalFormComponent(pageDriver, url, componentConfig);
-  }
 
   async isValid() {
     const promises = Object.keys(this.componentConfig).map(async (key) => {
