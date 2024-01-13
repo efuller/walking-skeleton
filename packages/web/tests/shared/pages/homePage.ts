@@ -1,71 +1,42 @@
 import { PuppeteerPageDriver } from '../webDriver/puppeteerPageDriver';
+import { AddJournalFormComponent } from '../pageComponents/pageComponent';
+
+type HomepageComponents = {
+  addJournalForm: AddJournalFormComponent;
+}
 
 export class HomePage {
-  constructor(private pageDriver: PuppeteerPageDriver, private url: string) {}
+  public pageComponents: HomepageComponents | undefined;
+
+  private constructor(
+    private pageDriver: PuppeteerPageDriver,
+    private url: string,
+  ) {}
+
+  static async create(pageDriver: PuppeteerPageDriver, url: string) {
+    const page = new HomePage(pageDriver, url);
+    page.pageComponents = await page.generatePageComponents();
+    return page;
+  }
+
+  get(key: keyof HomepageComponents){
+    if (!this.pageComponents?.[key]) {
+      throw new Error(`Page component ${key} does not exist`);
+    }
+    return this.pageComponents[key];
+  }
+
+  async generatePageComponents() {
+    const addJournalForm = await AddJournalFormComponent.create(this.pageDriver, this.url, {
+      titleInput: { selector: '#title' },
+      contentInput: { selector: '#content' },
+      submitBtn: { selector: '#submit' },
+    });
+    return { addJournalForm };
+  }
 
   async navigate() {
     await this.pageDriver.page.goto(this.url);
-  }
-
-  async addJournalFormIsVisible() {
-    const form = await this.pageDriver.page.waitForSelector('#add-journal');
-
-    if (!form) {
-      throw new Error('Add journal form is not visible');
-    }
-    const titleInput = await form.$('#title');
-    const contentInput = await form.$('#content');
-    const submitBtn = await form.$('#submit');
-
-    if (!titleInput || !contentInput) {
-      throw new Error('Add journal form inputs are not visible');
-    }
-
-    if (!submitBtn) {
-      throw new Error('Add journal form submit button is not visible');
-    }
-
-    return true;
-  }
-
-  async enterNewJournal(title: string, content: string) {
-    const form = await this.pageDriver.page.waitForSelector('#add-journal');
-
-    if (!form) {
-      throw new Error('Add journal form is not visible');
-    }
-
-    const titleInput = await form.$('#title');
-    const contentInput = await form.$('#content');
-    const submitBtn = await form.$('#submit');
-
-    if (!titleInput || !contentInput) {
-      throw new Error('Add journal form inputs are not visible');
-    }
-
-    if (!submitBtn) {
-      throw new Error('Add journal form submit button is not visible');
-    }
-
-    await titleInput.type(title);
-    await contentInput.type(content);
-    await submitBtn.click();
-  }
-
-  async submitAddJournalForm() {
-    const form = await this.pageDriver.page.waitForSelector('#add-journal');
-
-    if (!form) {
-      throw new Error('Add journal form is not visible');
-    }
-
-    const submitBtn = await form.$('#submit');
-
-    if (!submitBtn) {
-      throw new Error('Add journal form submit button is not visible');
-    }
-
-    await submitBtn.click();
   }
 
   async getFirstJournal() {
@@ -76,7 +47,6 @@ export class HomePage {
     }
 
     const journalEntries = await journalList.$$('.journal-entry');
-
 
     if (journalEntries.length < 1) {
       throw new Error('Journal entries are not visible');
