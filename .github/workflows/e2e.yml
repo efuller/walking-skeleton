@@ -18,6 +18,12 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ env.CACHE_KEY }}-${{ hashFiles('**/package-lock.json') }}
+
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
@@ -38,7 +44,7 @@ jobs:
       - name: Run API
         run: npm run api:staging:start:e2e &
         env:
-          NODE_OPTIONS: "--unhandled-rejections=strict"
+          PORT: 3001
 
       - name: Run Frontend
         run: npm run web:dev &
