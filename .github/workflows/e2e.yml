@@ -36,7 +36,7 @@ jobs:
         run: npm run api:staging:prisma:generate
 
       - name: Run API
-        run: npm run api:staging:start &
+        run: npm run api:staging:start:e2e &
 
       - name: Run Frontend
         run: npm run web:dev &
