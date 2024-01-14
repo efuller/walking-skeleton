@@ -43,8 +43,6 @@ jobs:
 
       - name: Run API
         run: npm run api:staging:start:e2e &
-        env:
-          PORT: 3001
 
       - name: Run Frontend
         run: npm run web:dev &
