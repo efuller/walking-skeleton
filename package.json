@@ -6,7 +6,7 @@
   "scripts": {
     "api:build": "npm run shared:build && npm run build -w packages/api",
     "api:start": "npm run start -w packages/api",
-    "api:staging:start": "npm run staging:start -w packages/api",
+    "api:start:dev": "npm run start:dev -w packages/api",
     "api:staging:start:e2e": "npm run staging:start:e2e -w packages/api",
     "api:staging:prisma:generate": "npm run prisma:generate -w packages/api",
     "api:staging:prisma:reset": "npm run prisma:generate -w packages/api",
