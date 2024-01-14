@@ -33,7 +33,7 @@ jobs:
         run: npm run web:build
 
       - name: Run API
-        run: npm run api:start &
+        run: npm run api:staging:start &
 
       - name: Run Frontend
         run: npm run web:start &
