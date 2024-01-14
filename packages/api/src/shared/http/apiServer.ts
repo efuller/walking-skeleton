@@ -43,6 +43,8 @@ export class ApiServer {
   async start() {
     const env = process.env.NODE_ENV || 'development';
 
+    console.log('Starting server...', env);
+
     if (env === 'development') {
       await ProcessService.killProcessOnPort(this.port);
     }
