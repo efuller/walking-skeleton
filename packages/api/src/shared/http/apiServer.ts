@@ -1,7 +1,6 @@
 import { Server } from 'http';
 import express, { Application } from 'express';
 import cors from 'cors';
-import { ProcessService } from '@efuller/shared';
 import { JournalController } from '@efuller/api/src/modules/journals/journal.controller';
 
 interface Controllers {
@@ -44,10 +43,6 @@ export class ApiServer {
     const env = process.env.NODE_ENV || 'development';
 
     console.log('Starting server...', env);
-
-    if (env === 'development') {
-      await ProcessService.killProcessOnPort(this.port);
-    }
 
     return new Promise((resolve) => {
       this.server = this.app.listen(
