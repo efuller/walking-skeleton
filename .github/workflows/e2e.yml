@@ -37,6 +37,8 @@ jobs:
 
       - name: Run API
         run: npm run api:staging:start:e2e &
+        env:
+          NODE_OPTIONS: "--unhandled-rejections=strict"
 
       - name: Run Frontend
         run: npm run web:dev &
