@@ -18,6 +18,12 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ env.CACHE_KEY }}-${{ hashFiles('**/package-lock.json') }}
+
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
@@ -32,11 +38,14 @@ jobs:
       - name: Build frontend
         run: npm run web:build
 
+      - name: Run prisma generate
+        run: npm run api:staging:prisma:generate
+
       - name: Run API
-        run: npm run api:start &
+        run: npm run api:staging:start:e2e &
 
       - name: Run Frontend
-        run: npm run web:start &
+        run: npm run web:dev &
 
       - name: Run E2E tests
         run: npm run web:test:e2e

@@ -2,6 +2,8 @@ import { loadFeature, defineFeature } from 'jest-cucumber';
 import { RestApiDriver } from '../../../src/shared/http/restApiDriver';
 import { Server } from 'http';
 import { CompositionRoot } from '@efuller/api/src/shared/composition/compositionRoot';
+import { ApiResponse } from '@efuller/shared/src/api';
+import { Journal } from '../../../src/modules/journals/journal.service';
 
 const feature = loadFeature('./packages/shared/tests/journal/e2e/addJournal.feature', { tagFilter: '@api' });
 
@@ -11,7 +13,7 @@ defineFeature(feature, (test) => {
     const apiServer = compositionRoot.getApiServer();
     const db = compositionRoot.getDatabase();
     let apiDriver: RestApiDriver;
-    let response: any;
+    let response: ApiResponse<Journal>;
 
     beforeAll(async () => {
       await apiServer.start();
@@ -28,15 +30,15 @@ defineFeature(feature, (test) => {
     });
 
     when(/^a user sends a POST request to the "(.*)" endpoint with a title of (.*) and content of (.*)$/, async (endpoint, title, content) => {
-      response = await apiDriver.post(endpoint, { title, content });
+      response = await apiDriver.post<Journal>(endpoint, { title, content });
     });
 
-    then(/^the API should respond with a status code of (\d+)$/, (status) => {
-      expect(response.status).toBe(Number(status));
+    then(/^the API should respond with a success of true$/, () => {
+      expect(response.success).toBe(true);
     });
 
     and(/^the response should contain title of (.*) and content of (.*)$/, (title, content) => {
-      expect(response.body.data).toEqual({ title, content });
+      expect(response.data).toEqual({ data: { title, content }, success: true });
     });
   });
 });

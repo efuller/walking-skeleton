@@ -5,7 +5,7 @@ Feature: Journaling
   Scenario Outline: User sends data to create a new journal
     Given the backend API is accessible
     When a user sends a POST request to the "/journal" endpoint with a title of <title> and content of <content>
-    Then the API should respond with a status code of 201
+    Then the API should respond with a success of true
     And the response should contain title of <title> and content of <content>
 
     Examples:

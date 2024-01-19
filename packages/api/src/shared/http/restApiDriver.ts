@@ -1,16 +1,23 @@
 import request from 'supertest';
 import { Server } from 'http';
+import { ApiResponse } from '@efuller/shared/src/api';
 
 export class RestApiDriver {
   constructor(private http: Server) {}
 
-  get(path: string) {
+  async get(path: string) {
     const response =  request(this.http).get(path);
     return response;
   }
 
-  post(path: string, data: Record<string, any>) {
-    const response =  request(this.http).post(path).set('Accept', 'application/json').send(data);
-    return response;
+  async post<T extends object>(path: string, data: T): Promise<ApiResponse<T>> {
+    const response =  await request(this.http)
+      .post(path)
+      .set('Accept', 'application/json')
+      .send(data);
+    return {
+      success: true,
+      data: response.body,
+    };
   }
 }

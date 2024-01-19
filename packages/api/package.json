@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "build": "rimraf dist && swc ./src -d dist",
-    "start": "ts-node setupDevEnv.ts && dotenv -e .env.development -- nodemon",
-    "staging:start": "nodemon",
+    "start:dev": "ts-node setupDevEnv.ts && dotenv -e .env.development -- nodemon --config nodemon.dev.json",
+    "staging:start:e2e": "NODE_ENV=test ts-node ./dist/index.js",
+    "start": "nodemon",
     "prisma:generate": "prisma generate",
     "staging:prisma:reset": "prisma db push --force-reset"
   },
