@@ -7,28 +7,6 @@
       name: Deploy to render.com
       runs-on: ubuntu-latest
       steps:
-        - name: Checkout
-          uses: actions/checkout@v4
-        - name: Cache dependencies
-          uses: actions/cache@v3
-          with:
-            path: ~/.npm
-            key: ${{ env.CACHE_KEY }}-${{ hashFiles('**/package-lock.json') }}
-        - name: Set up Node.js
-          uses: actions/setup-node@v3
-          with:
-            node-version: 18.x
-        - name: Install dependencies
-          run: npm ci
-        - name: Build web
-          run: npm run web:build
-        - name: Create web artifacts
-          id: web-artifacts
-          uses: actions/upload-artifact@v4
-          with:
-              name: web-artifacts
-              path: ./packages/web/dist
-              retention-days: 2
         - name: Deploy to render.com
           uses: johnbeynon/render-deploy-action@v0.0.8
           with:
