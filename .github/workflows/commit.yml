@@ -1,4 +1,4 @@
-  name: Lint and Build
+  name: Lint, Test, and Build
   on:
     pull_request:
       branches: [ main ]
@@ -22,6 +22,10 @@
           run: npm ci
         - name: Lint
           run: npm run lint
+        - name: Api unit tests
+          run: npm run api:test:unit
+        - name: Web unit tests
+          run: npm run web:test
         - name: Build api
           run: npm run api:build
         - name: Build web
