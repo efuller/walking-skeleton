@@ -26,13 +26,6 @@ export class JournalService {
   }
 
   async getJournals(): Promise<ApiResponse<Journal[]>> {
-    const dbClient = this.db.getClient();
-
-    const result = await dbClient.journal.findMany();
-
-    return {
-      success: true,
-      data: result.map((journal) => ({ title: journal.title, content: journal.content ?? '' })),
-    }
+    return Promise.resolve({ success: true, data: [{ title: 'Testing', content: 'The Content'}] })
   }
 }
