@@ -26,6 +26,6 @@ export class JournalService {
   }
 
   async getJournals(): Promise<ApiResponse<Journal[]>> {
-    return Promise.resolve({ success: true, data: [{ title: 'Testing', content: 'The Content'}] })
+    return Promise.resolve({ success: true, data: [{ title: 'Test Journal', content: 'Sample journal content'}] })
   }
 }
