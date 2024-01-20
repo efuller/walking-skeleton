@@ -7,7 +7,7 @@ export interface Journal {
   content: string;
 }
 
-const baseUrl = process.env.NODE_ENV === 'test' ? 'http://localhost:3001' : 'http://localhost:3000';
+const baseUrl = process.env.NODE_ENV === 'test' ? 'http://localhost:3001' : 'http://localhost:3001';
 
 const apiClient = new ApiClient(baseUrl);
 
