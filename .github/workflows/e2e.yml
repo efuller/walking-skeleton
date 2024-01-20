@@ -45,7 +45,7 @@ jobs:
         run: |
           npm run api:staging:start:e2e &
           sleep 5 &&
-          curl http://localhost:3000/api/health -I
+          curl http://localhost:3001/health -I
 
       - name: Run Frontend
         run: |
