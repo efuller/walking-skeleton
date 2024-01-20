@@ -44,12 +44,13 @@ jobs:
       - name: Run API
         run: |
           npm run api:staging:start:e2e &
-          sleep 2
+          sleep 5 &&
+          curl http://localhost:3000/api/health -I
 
       - name: Run Frontend
         run: |
           npm run web:dev &
-          sleep 2
+          sleep 5 &&
 
       - name: Run E2E tests
         run: npm run web:test:e2e
