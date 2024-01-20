@@ -12,7 +12,7 @@ jobs:
           POSTGRES_USER: admin
           POSTGRES_PASSWORD: admin
         ports:
-          - 5435:5432
+          - 5432:5432
     env:
       DATABASE_URL: postgresql://postgres:postgres@localhost:5432/db-test
     steps:
