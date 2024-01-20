@@ -51,6 +51,7 @@ jobs:
         run: |
           npm run web:dev &
           sleep 5 &&
+          curl http://localhost:5173 -I
 
       - name: Run E2E tests
         run: npm run web:test:e2e
