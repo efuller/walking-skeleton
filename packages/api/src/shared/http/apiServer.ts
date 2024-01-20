@@ -35,6 +35,10 @@ export class ApiServer {
       res.send({ ok: true }).status(200);
     });
 
+    this.app.get('/journal', async (req, res) => {
+      await this.controllers.journal.getAll(req, res);
+    });
+
     this.app.post('/journal', async (req, res) => {
       await this.controllers.journal.create(req, res);
     });

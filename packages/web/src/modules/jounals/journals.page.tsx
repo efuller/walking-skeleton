@@ -1,17 +1,31 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { AddJournalForm } from './components/addJournal.form.tsx';
+import { ApiClient } from '../../shared/apiClient/apiClient.ts';
 
 export interface Journal {
   title: string;
   content: string;
 }
 
+const apiClient = new ApiClient('http://localhost:3000');
+
 export const JournalsPage = () => {
   const [journals, setJournals] = React.useState<Journal[]>([]);
 
-  const handleOnSubmit = (newJournal: Journal) => {
+  const handleOnSubmit = async (newJournal: Journal) => {
+    await apiClient.post('/journal', newJournal);
     setJournals([...journals, newJournal]);
   };
+
+  useEffect(() => {
+    const fetchJournals = async () => {
+      const response = await apiClient.get<Journal[]>('/journal');
+      if (response.success && response.data) {
+        setJournals([...response.data]);
+      }
+    };
+    fetchJournals();
+  }, []);
 
   return (
     <div>
