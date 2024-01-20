@@ -43,6 +43,9 @@ jobs:
       - name: Run prisma generate
         run: npm run api:staging:prisma:generate
 
+      - name: Run prisma reset
+        run: npm run staging:prisma:reset
+
       - name: Run API
         run: |
           npm run api:staging:start:e2e &
