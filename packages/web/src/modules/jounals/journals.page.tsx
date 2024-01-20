@@ -7,7 +7,9 @@ export interface Journal {
   content: string;
 }
 
-const apiClient = new ApiClient('http://localhost:3001');
+const baseUrl = process.env.NODE_ENV === 'test' ? 'http://localhost:3001' : 'http://localhost:3000';
+
+const apiClient = new ApiClient(baseUrl);
 
 export const JournalsPage = () => {
   const [journals, setJournals] = React.useState<Journal[]>([]);
