@@ -42,10 +42,14 @@ jobs:
         run: npm run api:staging:prisma:generate
 
       - name: Run API
-        run: npm run api:staging:start:e2e &
+        run: |
+          npm run api:staging:start:e2e &
+          sleep 2
 
       - name: Run Frontend
-        run: npm run web:dev &
+        run: |
+          npm run web:dev &
+          sleep 2
 
       - name: Run E2E tests
         run: npm run web:test:e2e
