@@ -46,7 +46,7 @@ jobs:
         run: |
           npm run api:staging:start:e2e &
           sleep 5 &&
-          curl http://localhost:3001/health -I
+          curl --header "Content-Type: application/json" --request POST --data '{"title":"Test Journal","content":"Sample journal content"}' http://localhost:3001/journal
 
       - name: Run Frontend
         run: |
