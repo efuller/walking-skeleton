@@ -44,7 +44,7 @@ jobs:
         run: npm run api:staging:prisma:generate
 
       - name: Run prisma reset
-        run: npm run staging:prisma:reset
+        run: npm run api:staging:prisma:reset
 
       - name: Run API
         run: |
