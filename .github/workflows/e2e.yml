@@ -13,7 +13,7 @@ jobs:
           POSTGRES_PASSWORD: admin
           POSTGRES_DB: db-test
         ports:
-          - 5432:5432
+          - 5435:5432
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
