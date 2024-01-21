@@ -54,7 +54,7 @@ jobs:
 
       - name: Run Frontend
         run: |
-          npm run web:dev &
+          npm run web:ci &
           sleep 5 &&
           curl http://localhost:5173 -I
 
