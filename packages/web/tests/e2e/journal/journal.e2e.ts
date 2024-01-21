@@ -45,7 +45,6 @@ defineFeature(feature, (test) => {
 
     then(/^the page should display the title of (.*) and content of (.*)$/, async (title, content) => {
       const firstJournal = await journalList.getFirstJournal();
-      console.log('firstJournal', firstJournal);
       expect(firstJournal.title).toBe(title);
       expect(firstJournal.content).toBe(content);
     });
