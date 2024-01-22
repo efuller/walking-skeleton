@@ -7,6 +7,7 @@
     "esModuleInterop": true,
     "types": ["node", "jest"],
     "resolveJsonModule": true,
+    "skipLibCheck": true,
     "paths": {
       "@efuller/api/*": ["./packages/api/*"],
       "@efuller/shared/*": ["./packages/shared/*"]
