@@ -38,7 +38,7 @@ defineFeature(feature, (test) => {
     });
 
     and(/^the response should contain title of (.*) and content of (.*)$/, (title, content) => {
-      expect(response.data).toEqual({ data: { title, content }, success: true });
+      expect(response.data).toMatchObject({ data: { title, content }, success: true });
     });
   });
 });

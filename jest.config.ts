@@ -7,14 +7,14 @@ export default async (): Promise<Config> => ({
   projects: [
     {
       displayName: 'api-unit',
-      testMatch: ['**/@(src|tests)/**/*.@(test|spec).*'],
+      testMatch: ['**/@(src|tests)/**/*.@(test|spec).@(ts|tsx)'],
       transform: {
         '^.+\\.tsx?$': ['ts-jest', {}],
       },
     },
     {
       displayName: 'api-e2e',
-      testMatch: ['**/@(src|tests)/**/*.@(e2e).*'],
+      testMatch: ['**/@(src|tests)/**/*.@(e2e).@(ts|tsx)'],
       transform: {
         '^.+\\.tsx?$': ['ts-jest', {}],
       },
@@ -23,7 +23,7 @@ export default async (): Promise<Config> => ({
     },
     {
       displayName: 'api-infra',
-      testMatch: ['**/@(src|tests)/**/*.@(infra).*'],
+      testMatch: ['**/@(src|tests)/**/*.@(infra).@(ts|tsx)'],
       transform: {
         '^.+\\.tsx?$': ['ts-jest', {}],
       },
@@ -32,7 +32,7 @@ export default async (): Promise<Config> => ({
     },
     {
       displayName: 'api-staging-e2e',
-      testMatch: ['**/@(src|tests)/**/*.@(e2e).*'],
+      testMatch: ['**/@(src|tests)/**/*.@(e2e).@(ts|tsx)'],
       transform: {
         '^.+\\.tsx?$': ['ts-jest', {}],
       },
@@ -41,7 +41,7 @@ export default async (): Promise<Config> => ({
     },
     {
       displayName: 'api-staging-infra',
-      testMatch: ['**/@(src|tests)/**/*.@(infra).*'],
+      testMatch: ['**/@(src|tests)/**/*.@(infra).@(ts|tsx)'],
       transform: {
         '^.+\\.tsx?$': ['ts-jest', {}],
       },
@@ -51,7 +51,7 @@ export default async (): Promise<Config> => ({
     {
       displayName: 'web-e2e',
       preset: "jest-puppeteer",
-      testMatch: ['**/@(src|tests)/**/*.@(e2e).*'],
+      testMatch: ['**/@(src|tests)/**/*.@(e2e).@(ts|tsx)'],
       transform: {
         '^.+\\.tsx?$': ['ts-jest', {}],
       },
