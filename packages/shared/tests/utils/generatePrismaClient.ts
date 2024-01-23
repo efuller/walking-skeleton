@@ -1,4 +1,9 @@
 import execSh from 'exec-sh';
+
+async function sleep(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 import path from 'path';
 
 export const generatePrismaClient = async (
@@ -22,6 +27,8 @@ export const generatePrismaClient = async (
   console.log('Prisma client generated!');
   console.log('-----------------------------------');
 
+  await sleep(1000);
+
   console.log('-----------------------------------');
   console.log('Resetting the DB');
   console.log('-----------------------------------');
@@ -34,4 +41,6 @@ export const generatePrismaClient = async (
   console.log('-----------------------------------');
   console.log('DB Reset!');
   console.log('-----------------------------------');
+
+  await sleep(1000);
 };
