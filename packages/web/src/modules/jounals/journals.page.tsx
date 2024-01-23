@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { AddJournalForm } from './components/addJournal.form.tsx';
-import { ApiClient } from '../../shared/apiClient/apiClient.ts';
+import { AddJournalForm } from './components/addJournal.form';
+import { ApiClient } from '../../shared/apiClient/apiClient';
 
 export interface Journal {
   title: string;

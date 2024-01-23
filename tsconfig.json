@@ -2,6 +2,7 @@
   "compilerOptions": {
     "baseUrl": "./",
     "target": "esnext",
+    "jsx": "react",
     "module": "commonjs",
     "strict": true,
     "esModuleInterop": true,
@@ -11,6 +12,11 @@
     "paths": {
       "@efuller/api/*": ["./packages/api/*"],
       "@efuller/shared/*": ["./packages/shared/*"]
-    }
-  }
+    },
+  },
+  "include": [
+    "./packages/api/**/*",
+    "./packages/shared/**/*",
+    "./packages/web/**/*",
+  ]
 }

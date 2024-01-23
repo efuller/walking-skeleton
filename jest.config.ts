@@ -9,14 +9,14 @@ export default async (): Promise<Config> => ({
       displayName: 'api-unit',
       testMatch: ['**/@(src|tests)/**/*.@(test|spec).*'],
       transform: {
-        '^.+\\.(t|j)sx?$': ['ts-jest', {}],
+        '^.+\\.tsx?$': ['ts-jest', {}],
       },
     },
     {
       displayName: 'api-e2e',
       testMatch: ['**/@(src|tests)/**/*.@(e2e).*'],
       transform: {
-        '^.+\\.(t|j)sx?$': ['ts-jest', {}],
+        '^.+\\.tsx?$': ['ts-jest', {}],
       },
       globalSetup: './tests/setupLocalTestingEnv.ts',
       rootDir: '<rootDir>/packages/api'
@@ -25,7 +25,7 @@ export default async (): Promise<Config> => ({
       displayName: 'api-infra',
       testMatch: ['**/@(src|tests)/**/*.@(infra).*'],
       transform: {
-        '^.+\\.(t|j)sx?$': ['ts-jest', {}],
+        '^.+\\.tsx?$': ['ts-jest', {}],
       },
       rootDir: '<rootDir>/packages/api',
       globalSetup: './tests/setupLocalTestingEnv.ts',
@@ -34,7 +34,7 @@ export default async (): Promise<Config> => ({
       displayName: 'api-staging-e2e',
       testMatch: ['**/@(src|tests)/**/*.@(e2e).*'],
       transform: {
-        '^.+\\.(t|j)sx?$': ['ts-jest', {}],
+        '^.+\\.tsx?$': ['ts-jest', {}],
       },
       rootDir: '<rootDir>/packages/api',
       globalSetup: './tests/setupStagingTestingEnv.ts',
@@ -43,7 +43,7 @@ export default async (): Promise<Config> => ({
       displayName: 'api-staging-infra',
       testMatch: ['**/@(src|tests)/**/*.@(infra).*'],
       transform: {
-        '^.+\\.(t|j)sx?$': ['ts-jest', {}],
+        '^.+\\.tsx?$': ['ts-jest', {}],
       },
       rootDir: '<rootDir>/packages/api',
       globalSetup: './tests/setupStagingTestingEnv.ts',
@@ -53,7 +53,7 @@ export default async (): Promise<Config> => ({
       preset: "jest-puppeteer",
       testMatch: ['**/@(src|tests)/**/*.@(e2e).*'],
       transform: {
-        '^.+\\.(t|j)sx?$': ['ts-jest', {}],
+        '^.+\\.tsx?$': ['ts-jest', {}],
       },
       rootDir: '<rootDir>/packages/web'
     },
