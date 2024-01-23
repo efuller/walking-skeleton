@@ -10,7 +10,7 @@ export class RestApiDriver {
     return response;
   }
 
-  async post<T extends object>(path: string, data: T): Promise<ApiResponse<T>> {
+  async post<T extends object>(path: string, data: T): Promise<ApiResponse<Partial<T>>> {
     const response =  await request(this.http)
       .post(path)
       .set('Accept', 'application/json')

@@ -13,7 +13,7 @@ defineFeature(feature, (test) => {
     const apiServer = compositionRoot.getApiServer();
     const db = compositionRoot.getDatabase();
     let apiDriver: RestApiDriver;
-    let response: ApiResponse<Journal>;
+    let response: ApiResponse<Partial<Partial<Journal>>>;
 
     beforeAll(async () => {
       await apiServer.start();
@@ -30,7 +30,7 @@ defineFeature(feature, (test) => {
     });
 
     when(/^a user sends a POST request to the "(.*)" endpoint with a title of (.*) and content of (.*)$/, async (endpoint, title, content) => {
-      response = await apiDriver.post<Journal>(endpoint, { title, content });
+      response = await apiDriver.post<Partial<Journal>>(endpoint, { title, content });
     });
 
     then(/^the API should respond with a success of true$/, () => {
