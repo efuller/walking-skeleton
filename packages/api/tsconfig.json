@@ -5,6 +5,7 @@
     "lib": ["esnext"],
     "types": ["jest", "node"],
     "esModuleInterop": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "typeRoots": ["../../node_modules/.prisma/client", "../../node_modules/@types"]
   }
 }

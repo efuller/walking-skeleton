@@ -42,7 +42,7 @@ export class JournalService {
 
     return {
       success: true,
-      data: result.map((journal: Journal) => ({ ...journal })),
+      data: result.map((journal) => ({ ...journal })),
     }
   }
 }
