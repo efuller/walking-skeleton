@@ -1,17 +1,39 @@
-import React from 'react';
-import { AddJournalForm } from './components/addJournal.form.tsx';
+import React, { useEffect } from 'react';
+import { AddJournalForm } from './components/addJournal.form';
+import { ApiClient } from '../../shared/apiClient/apiClient';
 
 export interface Journal {
   title: string;
   content: string;
 }
 
+let baseUrl = 'http://localhost:3000';
+
+if (process.env.NODE_ENV === 'production') {
+  baseUrl = 'https://walking-skeleton-api.onrender.com';
+} else if (process.env.NODE_ENV === 'test') {
+  baseUrl = 'http://localhost:3001';
+}
+
+const apiClient = new ApiClient(baseUrl);
+
 export const JournalsPage = () => {
   const [journals, setJournals] = React.useState<Journal[]>([]);
 
-  const handleOnSubmit = (newJournal: Journal) => {
+  const handleOnSubmit = async (newJournal: Journal) => {
+    await apiClient.post('/journal', newJournal);
     setJournals([...journals, newJournal]);
   };
+
+  useEffect(() => {
+    const fetchJournals = async () => {
+      const response = await apiClient.get<Journal[]>('/journal');
+      if (response.success && response.data) {
+        setJournals([...response.data]);
+      }
+    };
+    fetchJournals();
+  }, []);
 
   return (
     <div>

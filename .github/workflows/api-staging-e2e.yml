@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  infra-tests:
+  api-e2e-tests:
     runs-on: ubuntu-latest
     services:
       postgres:
@@ -30,4 +30,5 @@ jobs:
         run: npm run api:build
 
       - name: Run E2E tests
-        run: npm run api:staging:test:e2e
+        if: ${{ success() }}
+        run: npm run api:ci:test:e2e

@@ -13,7 +13,9 @@ jobs:
           POSTGRES_PASSWORD: admin
           POSTGRES_DB: db-test
         ports:
-          - 5435:5432
+          - 5432:5432
+    env:
+      DATABASE_URL: postgresql://admin:admin@localhost:5432/db-test
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -39,13 +41,22 @@ jobs:
         run: npm run web:build
 
       - name: Run prisma generate
-        run: npm run api:staging:prisma:generate
+        run: npm run prisma:generate -w packages/api
+
+      - name: Run prisma reset
+        run: npm run prisma:reset -w packages/api
 
       - name: Run API
-        run: npm run api:staging:start:e2e &
+        run: |
+          npm run api:ci:start:e2e &
+          sleep 5 &&
+          curl http://localhost:3001/health -I
 
       - name: Run Frontend
-        run: npm run web:dev &
+        run: |
+          npm run web:ci &
+          sleep 5 &&
+          curl http://localhost:5173 -I
 
       - name: Run E2E tests
         run: npm run web:test:e2e
