@@ -13,7 +13,6 @@
       "@efuller/api/*": ["./packages/api/*"],
       "@efuller/shared/*": ["./packages/shared/*"]
     },
-    "typeRoots": ["./node_modules/.prisma/client", "./node_modules/@types"]
   },
   "include": [
     "./packages/api/**/*",
