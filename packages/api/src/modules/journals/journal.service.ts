@@ -2,8 +2,11 @@ import { Database } from '@efuller/api/src/shared/persistence/database/database'
 import { ApiResponse } from '@efuller/shared/src/api';
 
 export interface Journal {
+  id: string;
   title: string;
-  content: string;
+  content: string | null;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export class JournalService {
@@ -21,7 +24,7 @@ export class JournalService {
 
     return {
       success: true,
-      data: { title: result.title, content: result.content ?? '' },
+      data: { ...result },
     }
   }
 
@@ -30,9 +33,16 @@ export class JournalService {
 
     const result = await dbClient.journal.findMany();
 
+    if (!result.length) {
+      return {
+        success: false,
+        data: [],
+      }
+    }
+
     return {
       success: true,
-      data: result.map((journal) => ({ title: journal.title, content: journal.content ?? '' })),
+      data: result.map((journal: Journal) => ({ ...journal })),
     }
   }
 }
