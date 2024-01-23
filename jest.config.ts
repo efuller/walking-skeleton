@@ -32,12 +32,11 @@ export default async (): Promise<Config> => ({
     },
     {
       displayName: 'api-staging-e2e',
-      testMatch: ['**/@(src|tests)/**/*.@(e2e).@(ts|tsx)'],
+      testMatch: ['<rootDir>/packages/api/**/@(src|tests)/**/*.@(e2e).@(ts|tsx)'],
       transform: {
         '^.+\\.tsx?$': ['ts-jest', {}],
       },
-      rootDir: '<rootDir>/packages/api',
-      globalSetup: './tests/setupStagingTestingEnv.ts',
+      globalSetup: '<rootDir>/packages/api/tests/setupStagingTestingEnv.ts',
     },
     {
       displayName: 'api-staging-infra',
