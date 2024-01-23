@@ -41,14 +41,14 @@ jobs:
         run: npm run web:build
 
       - name: Run prisma generate
-        run: npm run api:staging:prisma:generate
+        run: npm run prisma:generate -w packages/api
 
       - name: Run prisma reset
-        run: npm run api:staging:prisma:reset
+        run: npm run prisma:reset -w packages/api
 
       - name: Run API
         run: |
-          npm run api:staging:start:e2e &
+          npm run api:ci:start:e2e &
           sleep 5 &&
           curl http://localhost:3001/health -I
 

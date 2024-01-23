@@ -31,4 +31,4 @@ jobs:
 
       - name: Run E2E tests
         if: ${{ success() }}
-        run: npm run api:staging:test:e2e
+        run: npm run api:ci:test:e2e
