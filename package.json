@@ -26,6 +26,10 @@
     "web:test:e2e": "jest --selectProjects web-e2e -c jest.config.ts",
     "web:test:e2e:watch": "jest --selectProjects web-e2e -c jest.config.ts --watchAll"
   },
+  "engines": {
+    "node": "20",
+    "npm": "10"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
