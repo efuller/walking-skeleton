@@ -12,6 +12,10 @@
     "test": "jest",
     "test:watch": "jest --watchAll"
   },
+  "engines": {
+    "node": "20",
+    "npm": "10"
+  },
   "dependencies": {
     "@efuller/shared": "^0.1.0",
     "react": "^18.3.1",

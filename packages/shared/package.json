@@ -7,6 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "rimraf dist && tsc -b tsconfig.build.json"
   },
+  "engines": {
+    "node": "20",
+    "npm": "10"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",

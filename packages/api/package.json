@@ -11,6 +11,10 @@
     "prisma:generate": "prisma generate",
     "prisma:reset": "prisma db push --force-reset"
   },
+  "engines": {
+    "node": "20",
+    "npm": "10"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
