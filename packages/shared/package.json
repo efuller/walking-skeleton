@@ -7,14 +7,18 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "rimraf dist && tsc -b tsconfig.build.json"
   },
+  "engines": {
+    "node": "20",
+    "npm": "10"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "rimraf": "^5.0.5"
+    "rimraf": "^5.0.7"
   },
   "dependencies": {
-    "dotenv-cli": "^7.3.0",
+    "dotenv-cli": "^7.4.2",
     "exec-sh": "^0.4.0"
   }
 }
