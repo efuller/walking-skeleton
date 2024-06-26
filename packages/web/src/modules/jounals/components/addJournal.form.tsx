@@ -1,9 +1,11 @@
 import React, { useRef } from 'react';
 import { Journal } from '../journals.page';
+import { Button } from '@/components/ui/button.tsx';
+import { Input } from '@/components/ui/input.tsx';
 
 type Props = {
   onSubmit: (data: Journal) => void;
-}
+};
 
 export const AddJournalForm = ({ onSubmit }: Props) => {
   const formRef = useRef(null);
@@ -21,42 +23,45 @@ export const AddJournalForm = ({ onSubmit }: Props) => {
 
   return (
     <form
+      className="flex flex-col gap-4 w-full max-w-md mx-auto my-8 p-4 bg-white rounded-lg shadow-md"
       id="add-journal"
       onSubmit={handleSubmit}
       ref={formRef}
     >
-      <input
-        id="title"
-        type="text"
-        name="title"
-        value={formData.title}
-        placeholder="Title"
-        onChange={(e) => {
-          setFormData({
-            ...formData,
-            title: e.target.value,
-          });
-        }}
-      />
-      <input
-        id="content"
-        type="text"
-        name="content"
-        value={formData.content}
-        placeholder="Content"
-        onChange={(e) => {
-          setFormData({
-            ...formData,
-            content: e.target.value,
-          });
-        }}
-      />
-      <button
-        id="submit"
-        type="submit"
-      >
-        Add Journal
-      </button>
+      <div className="flex flex-col gap-4">
+        <Input
+          id="title"
+          type="text"
+          name="title"
+          value={formData.title}
+          placeholder="Title"
+          onChange={(e) => {
+            setFormData({
+              ...formData,
+              title: e.target.value,
+            });
+          }}
+        />
+        <Input
+          id="content"
+          type="text"
+          name="content"
+          value={formData.content}
+          placeholder="Content"
+          onChange={(e) => {
+            setFormData({
+              ...formData,
+              content: e.target.value,
+            });
+          }}
+        />
+        <Button
+          id="submit"
+          type="submit"
+        >
+          Add Journal
+        </Button>
+      </div>
     </form>
   );
 };

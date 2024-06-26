@@ -37,11 +37,11 @@ export const JournalsPage = () => {
 
   return (
     <div>
-      <h1>Add Journal</h1>
+      <h1 className="text-4xl font-bold">Add Journal</h1>
       <AddJournalForm onSubmit={handleOnSubmit} />
       <hr />
-      <div>
-        <h1>Journal List</h1>
+      <div className="mt-4">
+        <h2 className="text-3xl font-semibold">Journal List</h2>
         <ul id="journal-list">
           {journals.map((journal, i) => {
             {
