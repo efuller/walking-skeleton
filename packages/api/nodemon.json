@@ -1,5 +1,5 @@
 {
   "ext": ".ts,.js",
   "ignore": [],
-  "exec": "ts-node ./dist/index.js"
+  "exec": "ts-node ./dist/src/index.js"
 }
