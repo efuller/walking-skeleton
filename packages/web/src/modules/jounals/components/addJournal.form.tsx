@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { Journal } from '../journals.page';
-import { Button } from '@/components/ui/button.tsx';
-import { Input } from '@/components/ui/input.tsx';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 
 type Props = {
   onSubmit: (data: Journal) => void;
