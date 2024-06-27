@@ -59,7 +59,7 @@ export class DrizzleClient {
     const test = [...[tables]];
 
     for (const table of test) {
-      // @ts-expect-error yeah, I know it's a hack
+      // @ts-expect-error Not great but it works.
       const query = sql.raw(`TRUNCATE TABLE ${table.table_name} CASCADE;`);
       await this.drizzleClient.execute(query); // Truncate (clear all the data) the table
     }
