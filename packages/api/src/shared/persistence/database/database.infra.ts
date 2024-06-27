@@ -1,37 +1,50 @@
 import { Database } from './database';
+import { DrizzleClient } from '@efuller/api/src/shared/persistence/database/drizzleClient';
+import { DBHealth } from '@efuller/api/src/shared/persistence/drizzle/schema';
 
 describe('Database', () => {
   let db: Database;
+  let drizzleClient: DrizzleClient;
 
-  beforeAll(() => {
+  beforeAll(async () => {
     db = new Database();
+    drizzleClient = await DrizzleClient.create();
   });
 
   afterAll(async () => {
     await db.disconnect();
+    await drizzleClient.disconnect();
   });
 
   it('should verify that the DB is online', async () => {
     const result = await db.isConnected();
+    const drizzleResult = await drizzleClient.isConnected();
 
     expect(result).toBe(true);
+    expect(drizzleResult).toBe(true);
   });
 });
 
 describe('Reset DB', () => {
   let db: Database;
+  let drizzleClient: DrizzleClient;
 
-  beforeAll(() => {
+  beforeAll(async () => {
     db = new Database();
+    drizzleClient = await DrizzleClient.create();
   });
 
   afterAll(async () => {
     await db.disconnect();
+    await drizzleClient.disconnect();
   });
 
   it('should reset the DB', async () => {
     const dbClient = db.getClient();
+    const drizzle = drizzleClient.getClient();
 
+
+    await drizzle.insert(DBHealth).values({ id: 'asdf', name: 'test2' });
     await dbClient.dBHealth.create({
       data: {
         name: 'test',
