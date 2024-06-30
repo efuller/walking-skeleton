@@ -1,13 +1,13 @@
-import { Database } from './database';
-import { DrizzleClient } from '@efuller/api/src/shared/persistence/database/drizzleClient';
+import { PrismaDbClient } from './prisma/prismaDbClient';
+import { DrizzleClient } from '@efuller/api/src/shared/persistence/drizzle/drizzleClient';
 import { DBHealth } from '@efuller/api/src/shared/persistence/drizzle/schema';
 
 describe('Database', () => {
-  let db: Database;
+  let db: PrismaDbClient;
   let drizzleClient: DrizzleClient;
 
   beforeAll(async () => {
-    db = new Database();
+    db = new PrismaDbClient();
     drizzleClient = await DrizzleClient.create();
   });
 
@@ -26,11 +26,11 @@ describe('Database', () => {
 });
 
 describe('Reset DB', () => {
-  let db: Database;
+  let db: PrismaDbClient;
   let drizzleClient: DrizzleClient;
 
   beforeAll(async () => {
-    db = new Database();
+    db = new PrismaDbClient();
     drizzleClient = await DrizzleClient.create();
   });
 
