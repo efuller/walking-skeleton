@@ -1,5 +1,6 @@
-import { Database } from '@efuller/api/src/shared/persistence/database/database';
 import { ApiResponse } from '@efuller/shared/src/api';
+import { Database } from '@efuller/api/src/shared/persistence/database';
+import { CreateJournalDto, JournalDto } from '@efuller/api/src/modules/journals/journal.dto';
 
 export interface Journal {
   id: string;
@@ -12,37 +13,15 @@ export interface Journal {
 export class JournalService {
   constructor(private readonly db: Database) {}
 
-  async createJournal(title: string, content: string): Promise<ApiResponse<Journal>> {
-    const dbClient = this.db.getClient();
+  async createJournal(journal: CreateJournalDto): Promise<ApiResponse<JournalDto>> {
+    const result = await this.db.journals.createJournal(journal);
 
-    const result = await dbClient.journal.create({
-      data: {
-        title,
-        content,
-      },
-    });
-
-    return {
-      success: true,
-      data: { ...result },
-    }
+    return result;
   }
 
-  async getJournals(): Promise<ApiResponse<Journal[]>> {
-    const dbClient = this.db.getClient();
+  async getJournals(): Promise<ApiResponse<JournalDto[]>> {
+    const result = await this.db.journals.getJournals();
 
-    const result = await dbClient.journal.findMany();
-
-    if (!result.length) {
-      return {
-        success: false,
-        data: [],
-      }
-    }
-
-    return {
-      success: true,
-      data: result.map((journal: Journal) => ({ ...journal })),
-    }
+    return result;
   }
 }
