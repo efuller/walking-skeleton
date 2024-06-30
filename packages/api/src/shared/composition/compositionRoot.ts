@@ -1,15 +1,28 @@
 import { ApiServer } from '../http/apiServer';
-import { Database } from '@efuller/api/src/shared/persistence/database/database';
 import { JournalController } from '@efuller/api/src/modules/journals/journal.controller';
 import { JournalService } from '@efuller/api/src/modules/journals/journal.service';
+import { Database } from '@efuller/api/src/shared/persistence/database';
+import { PrismaDbClient } from '@efuller/api/src/shared/persistence/prisma/prismaDbClient';
+import { PrismaJournalRepo } from '@efuller/api/src/modules/journals/adapters/prismaJournal.repo';
 
 export class CompositionRoot {
   private readonly db: Database;
   private readonly apiServer: ApiServer;
 
   constructor() {
-    this.db = new Database();
+    this.db = this.createDatabase();
     this.apiServer = this.createApiServer();
+  }
+
+  private createDatabase() {
+    const prismaClient = new PrismaDbClient();
+
+    return {
+      journals: new PrismaJournalRepo(prismaClient),
+      reset: async () => {
+        await prismaClient.reset();
+      }
+    }
   }
 
   createApiServer() {
