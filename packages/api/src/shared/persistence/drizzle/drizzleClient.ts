@@ -1,7 +1,7 @@
 import { drizzle } from 'drizzle-orm/node-postgres';
 import { sql } from "drizzle-orm"
 import { Client } from 'pg';
-import * as schema from '../drizzle/schema';
+import * as schema from './schema';
 
 import { NodePgDatabase } from 'drizzle-orm/node-postgres/driver';
 
