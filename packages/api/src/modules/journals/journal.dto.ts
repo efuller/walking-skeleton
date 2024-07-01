@@ -1,4 +1,4 @@
-export type CreateJournalDto = Omit<JournalDto, 'id'>;
+export type CreateJournalDto = Omit<JournalDto, 'id' | 'createdAt' | 'updatedAt'>;
 
 export type JournalDto = {
   id: string;
