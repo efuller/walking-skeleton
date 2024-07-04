@@ -19,6 +19,9 @@ export class ApiServer {
     this.server = null;
     this.app = express();
     this.app.use(express.json());
+    // Handle preflight requests for all routes
+    this.app.options('*', cors());
+
     this.app.use(cors({
       origin: 'https://ws.efuller.me/',
     }));
