@@ -23,7 +23,7 @@ export class ApiServer {
     this.app.options('*', cors());
 
     this.app.use(cors({
-      origin: 'https://ws.efuller.me/',
+      origin: 'https://ws.efuller.me',
     }));
     this.port = env === 'development' ? 3000 : 3001;
     this.running = false;
