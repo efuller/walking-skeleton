@@ -1,16 +1,17 @@
-import { pgTable, text, timestamp } from "drizzle-orm/pg-core"
+import { pgTable, serial, text, timestamp, varchar } from 'drizzle-orm/pg-core';
 
-
-
-export const Journal = pgTable("Journal", {
-	id: text("id").primaryKey().notNull(),
-	title: text("title").notNull(),
-	content: text("content"),
-	createdAt: timestamp("createdAt", { precision: 3, mode: 'string' }).defaultNow().notNull(),
-	updatedAt: timestamp("updatedAt", { precision: 3, mode: 'string' }).notNull(),
+export const journal = pgTable("journal", {
+	id: serial("id").primaryKey(),
+	title: varchar("title", { length: 255 }).notNull(),
+	content: text("content").default(''),
+	createdAt: timestamp("created_at", { precision: 3, mode: 'string' }).defaultNow().notNull(),
+	updatedAt: timestamp("updated_at", { precision: 3, mode: 'string' }).defaultNow().notNull(),
 });
 
-export const DBHealth = pgTable("DBHealth", {
-	id: text("id").primaryKey().notNull(),
+export const dbhealth = pgTable("dbhealth", {
+	id: serial("id").primaryKey(),
 	name: text("name"),
 });
+
+export type CreateJournalDto = typeof journal.$inferInsert;
+export type JournalDto = typeof journal.$inferSelect;

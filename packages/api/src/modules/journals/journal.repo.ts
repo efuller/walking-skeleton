@@ -1,7 +1,7 @@
-import { CreateJournalDto, JournalDto } from '@efuller/api/src/modules/journals/journal.dto';
 import { ApiResponse } from '@efuller/shared/src/api';
+import { CreateJournalDto, JournalDto } from '@efuller/api/src/shared/persistence/drizzle/schema';
 
 export interface JournalRepo {
-  createJournal(user: CreateJournalDto): Promise<ApiResponse<JournalDto>>;
+  createJournal(user: CreateJournalDto): Promise<ApiResponse<JournalDto | null>>;
   getJournals(): Promise<ApiResponse<JournalDto[]>>;
 }

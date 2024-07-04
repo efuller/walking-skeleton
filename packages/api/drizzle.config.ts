@@ -3,8 +3,8 @@ import { defineConfig } from 'drizzle-kit';
 
 export default defineConfig({
   dialect: 'postgresql',
-  out: './packages/api/src/shared/persistence/drizzle',
-  schema: './packages/api/src/shared/persistence/drizzle/schema.ts',
+  out: './src/shared/persistence/drizzle',
+  schema: './src/shared/persistence/drizzle/schema.ts',
   dbCredentials: {
     ssl: false,
     host: process.env.POSTGRES_HOST!,
@@ -16,5 +16,5 @@ export default defineConfig({
   // Print all statements
   verbose: true,
   // Always ask for confirmation
-  strict: true,
+  strict: false,
 });

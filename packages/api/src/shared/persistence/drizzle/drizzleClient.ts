@@ -1,3 +1,6 @@
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 import { drizzle } from 'drizzle-orm/node-postgres';
 import { sql } from "drizzle-orm"
 import { Client } from 'pg';
@@ -9,7 +12,7 @@ export class DrizzleClient {
   private readonly drizzleClient;
   private readonly client: Client;
 
-  private constructor(drizzleClient: NodePgDatabase<typeof schema>, client: Client) {
+  public constructor(drizzleClient: NodePgDatabase<typeof schema>, client: Client) {
     this.client = client;
     this.drizzleClient = drizzleClient;
   }
@@ -56,10 +59,8 @@ export class DrizzleClient {
 
     const tables = await this.drizzleClient.execute(query);// retrieve tables
 
-    const test = [...[tables]];
-
-    for (const table of test) {
-      // @ts-expect-error Not great but it works.
+   for (const table of tables.rows) {
+      console.log('TABLE', table);
       const query = sql.raw(`TRUNCATE TABLE ${table.table_name} CASCADE;`);
       await this.drizzleClient.execute(query); // Truncate (clear all the data) the table
     }

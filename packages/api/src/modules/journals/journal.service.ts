@@ -1,6 +1,6 @@
 import { ApiResponse } from '@efuller/shared/src/api';
 import { Database } from '@efuller/api/src/shared/persistence/database';
-import { CreateJournalDto, JournalDto } from '@efuller/api/src/modules/journals/journal.dto';
+import { CreateJournalDto, JournalDto } from '@efuller/api/src/shared/persistence/drizzle/schema';
 
 export interface Journal {
   id: string;
@@ -13,7 +13,7 @@ export interface Journal {
 export class JournalService {
   constructor(private readonly db: Database) {}
 
-  async createJournal(journal: CreateJournalDto): Promise<ApiResponse<JournalDto>> {
+  async createJournal(journal: CreateJournalDto): Promise<ApiResponse<JournalDto | null>> {
     const result = await this.db.journals.createJournal(journal);
 
     return result;

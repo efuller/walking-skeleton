@@ -1,13 +1,24 @@
 import { InMemoryJournalRepo } from '@efuller/api/src/modules/journals/adapters/inMemoryJournal.repo';
-import { PrismaJournalRepo } from '@efuller/api/src/modules/journals/adapters/prismaJournal.repo';
-import { PrismaDbClient } from '@efuller/api/src/shared/persistence/prisma/prismaDbClient';
 import { CreateJournalDto } from '@efuller/api/src/modules/journals/journal.dto';
+import { DrizzleClient } from '@efuller/api/src/shared/persistence/drizzle/drizzleClient';
+import { DrizzleJournalRepo } from '@efuller/api/src/modules/journals/adapters/drizzleJournal.repo';
+import { JournalRepo } from '@efuller/api/src/modules/journals/journal.repo';
 
 describe('JournalRepo', () => {
-  const journalRepos = [
-    new InMemoryJournalRepo(),
-    new PrismaJournalRepo(new PrismaDbClient())
-  ];
+  let drizzleClient: DrizzleClient;
+  let journalRepos: JournalRepo[];
+
+  beforeAll(async () => {
+    drizzleClient = await DrizzleClient.create();
+    journalRepos = [
+      new InMemoryJournalRepo(),
+      new DrizzleJournalRepo(drizzleClient),
+    ];
+  })
+
+  afterAll(async () => {
+    await drizzleClient.disconnect();
+  });
 
   it('can save an retrieve members by their email', async () => {
     const journalDto: CreateJournalDto = {
