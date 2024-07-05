@@ -12,7 +12,6 @@ export default async () => {
   const port = Number(process.env.POSTGRES_PORT);
 
   const isDBPortAvailable = await isPortAvailable(port);
-  console.log({isDBPortAvailable});
 
   if (isDBPortAvailable) {
     await compose.upAll({

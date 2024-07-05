@@ -18,7 +18,7 @@ export default async (): Promise<Config> => ({
       transform: {
         '^.+\\.tsx?$': ['ts-jest', {}],
       },
-      globalSetup: './tests/setupLocalTestingEnv.ts',
+      globalSetup: '../../test/globalSetup.ts',
       rootDir: '<rootDir>/packages/api'
     },
     {
