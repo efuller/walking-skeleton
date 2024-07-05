@@ -4,7 +4,6 @@ export default async (): Promise<Config> => ({
   verbose: true,
   maxWorkers: 1,
   testTimeout: 30000,
-  globalSetup: './test/globalSetup.ts',
   projects: [
     {
       displayName: 'api-unit',
@@ -29,6 +28,7 @@ export default async (): Promise<Config> => ({
         '^.+\\.tsx?$': ['ts-jest', {}],
       },
       rootDir: '<rootDir>/packages/api',
+      globalSetup: '../../test/globalSetup.ts',
     },
     {
       displayName: 'api-staging-e2e',
