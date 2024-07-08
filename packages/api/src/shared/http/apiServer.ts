@@ -14,6 +14,7 @@ export class ApiServer {
   private running: boolean;
 
   constructor(private readonly controllers: Controllers) {
+    const origin = process.env.NODE_ENV === 'production' ? 'https://ws.efuller.me' : '*';
     this.server = null;
     this.app = express();
     this.app.use(express.json());
@@ -21,7 +22,7 @@ export class ApiServer {
     this.app.options('*', cors());
 
     this.app.use(cors({
-      origin: 'https://ws.efuller.me',
+      origin,
     }));
     this.port = process.env.PORT ? Number(process.env.PORT) : 0;
     this.running = false;

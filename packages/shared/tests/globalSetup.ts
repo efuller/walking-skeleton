@@ -1,13 +1,13 @@
 import path from 'path';
 import { v2 as compose } from 'docker-compose';
-import { setupEnvVars } from './setupEnvVars';
-import { generateDrizzleKit } from './generateDrizzleKit';
-import { isPortAvailable } from './detectPort';
+import { generateDrizzleKit } from './utils/generateDrizzleKit';
+import { isPortAvailable } from './utils/detectPort';
+import { setupEnvVars } from './utils/setupEnvVars';
 
 
 export default async () => {
   console.time('globalSetup');
-  setupEnvVars('./packages/api/.env.test');
+  setupEnvVars('./packages/shared/tests/.env.test');
 
   const port = Number(process.env.POSTGRES_PORT);
 
@@ -29,7 +29,7 @@ export default async () => {
       }
     );
 
-    await generateDrizzleKit(path.join(__dirname, '../', 'packages/api'));
+    await generateDrizzleKit(path.join(__dirname, '../../', 'api'));
   }
 
   console.timeEnd('globalSetup');

@@ -5,7 +5,7 @@ services:
     command: postgres -c fsync=off -c synchronous_commit=off -c full_page_writes=off -c random_page_cost=1.0
     container_name: 'walking-skeleton-test-db'
     env_file:
-      - .env.test
+      - ../../../test/.env.test
     ports:
       - 5435:5432
     tmpfs: /var/lib/postgresql/data
