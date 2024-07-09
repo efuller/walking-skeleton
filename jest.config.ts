@@ -18,7 +18,8 @@ export default async (): Promise<Config> => ({
       transform: {
         '^.+\\.tsx?$': ['ts-jest', {}],
       },
-      globalSetup: './tests/setupLocalTestingEnv.ts',
+      globalSetup: '../shared/tests/globalSetup.ts',
+      globalTeardown: '../shared/tests/globalTeardown.ts',
       rootDir: '<rootDir>/packages/api'
     },
     {
@@ -28,7 +29,8 @@ export default async (): Promise<Config> => ({
         '^.+\\.tsx?$': ['ts-jest', {}],
       },
       rootDir: '<rootDir>/packages/api',
-      globalSetup: './tests/setupLocalTestingEnv.ts',
+      globalSetup: '../shared/tests/globalSetup.ts',
+      globalTeardown: '../shared/tests/globalTeardown.ts',
     },
     {
       displayName: 'api-staging-e2e',

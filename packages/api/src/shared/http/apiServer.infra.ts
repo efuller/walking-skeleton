@@ -13,7 +13,8 @@ describe('Web Server', () => {
   })
 
   beforeEach(async () => {
-    await apiServer.start();
+    const port = await apiServer.start();
+    console.log('[PORT]', port);
   });
 
   afterEach(async () => {

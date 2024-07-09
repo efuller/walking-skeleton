@@ -1,7 +1,6 @@
 import { Server } from 'http';
 import express, { Application } from 'express';
 import cors from 'cors';
-import { ProcessService } from '@efuller/shared';
 import { JournalController } from '@efuller/api/src/modules/journals/journal.controller';
 
 interface Controllers {
@@ -15,7 +14,7 @@ export class ApiServer {
   private running: boolean;
 
   constructor(private readonly controllers: Controllers) {
-    const env = process.env.NODE_ENV || 'development';
+    const origin = process.env.NODE_ENV === 'production' ? 'https://ws.efuller.me' : '*';
     this.server = null;
     this.app = express();
     this.app.use(express.json());
@@ -23,9 +22,9 @@ export class ApiServer {
     this.app.options('*', cors());
 
     this.app.use(cors({
-      origin: 'https://ws.efuller.me',
+      origin,
     }));
-    this.port = env === 'development' ? 3000 : 3001;
+    this.port = process.env.PORT ? Number(process.env.PORT) : 0;
     this.running = false;
 
     this.setupRoutes();
@@ -50,19 +49,13 @@ export class ApiServer {
   }
 
   async start() {
-    const env = process.env.NODE_ENV || 'development';
-
-    if (env === 'development') {
-      await ProcessService.killProcessOnPort(this.port);
-    }
-
     return new Promise((resolve) => {
       this.server = this.app.listen(
         this.port,
         () => {
-          console.log('Server is running on port 3000');
+          const address = this.server?.address();
           this.running = true;
-          resolve(true);
+          resolve(address);
         }
       );
     });

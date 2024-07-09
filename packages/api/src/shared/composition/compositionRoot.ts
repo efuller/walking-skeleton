@@ -6,6 +6,7 @@ import { DrizzleClient } from '@efuller/api/src/shared/persistence/drizzle/drizz
 import { DrizzleJournalRepo } from '@efuller/api/src/modules/journals/adapters/drizzleJournal.repo';
 
 export class CompositionRoot {
+  private static instance: CompositionRoot;
   private readonly db: Database;
   private readonly apiServer: ApiServer;
 
@@ -18,9 +19,11 @@ export class CompositionRoot {
   }
 
   public static async create() {
-    const drizzleClient = await DrizzleClient.create();
-    const compositionRoot = new CompositionRoot(drizzleClient);
-    return compositionRoot;
+    if (!CompositionRoot.instance) {
+      const drizzleClient = await DrizzleClient.create();
+      CompositionRoot.instance = new CompositionRoot(drizzleClient);
+    }
+    return CompositionRoot.instance;
   }
 
   private createDatabase(drizzleClient: DrizzleClient) {
@@ -45,6 +48,13 @@ export class CompositionRoot {
 
   getDatabase() {
     return this.db;
+  }
+
+  static getInstance() {
+   if (!CompositionRoot.instance) {
+      throw new Error('CompositionRoot not initialized. Call create() first.');
+   }
+    return CompositionRoot.instance;
   }
 
   async disconnectDb() {
