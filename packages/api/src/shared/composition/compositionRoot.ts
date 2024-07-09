@@ -1,20 +1,22 @@
 import { ApiServer } from '../http/apiServer';
-import { JournalController } from '@efuller/api/src/modules/journals/journal.controller';
 import { JournalService } from '@efuller/api/src/modules/journals/journal.service';
 import { Database } from '@efuller/api/src/shared/persistence/database';
 import { DrizzleClient } from '@efuller/api/src/shared/persistence/drizzle/drizzleClient';
 import { DrizzleJournalRepo } from '@efuller/api/src/modules/journals/adapters/drizzleJournal.repo';
+import { AppInterface } from '@efuller/api/src/shared/application';
 
 export class CompositionRoot {
   private static instance: CompositionRoot;
   private readonly db: Database;
   private readonly apiServer: ApiServer;
+  private readonly application!: AppInterface;
 
   /**
    * TODO: Create an abstraction for a database client class.
    */
   constructor(private readonly drizzleClient: DrizzleClient) {
     this.db = this.createDatabase(drizzleClient);
+    this.application = this.createApplication();
     this.apiServer = this.createApiServer();
   }
 
@@ -24,6 +26,23 @@ export class CompositionRoot {
       CompositionRoot.instance = new CompositionRoot(drizzleClient);
     }
     return CompositionRoot.instance;
+  }
+
+  private createJournalService() {
+    return new JournalService(this.db);
+  }
+
+  private createApplication(): AppInterface {
+    return {
+      journals: this.getJournalService(),
+    }
+  }
+
+  public getJournalService() {
+    if (!this.application?.journals) {
+      return this.createJournalService();
+    }
+    return this.application.journals;
   }
 
   private createDatabase(drizzleClient: DrizzleClient) {
@@ -36,28 +55,25 @@ export class CompositionRoot {
   }
 
   createApiServer() {
-    const journalService = new JournalService(this.db);
-    const journalController = new JournalController(journalService);
-
-    return new ApiServer({ journal: journalController });
+    return new ApiServer(this.application);
   }
 
-  getApiServer() {
+  public getApiServer() {
     return this.apiServer;
   }
 
-  getDatabase() {
+  public getDatabase() {
     return this.db;
   }
 
-  static getInstance() {
+  public static getInstance() {
    if (!CompositionRoot.instance) {
       throw new Error('CompositionRoot not initialized. Call create() first.');
    }
     return CompositionRoot.instance;
   }
 
-  async disconnectDb() {
+  public async disconnectDb() {
     await this.drizzleClient.disconnect();
   }
 }

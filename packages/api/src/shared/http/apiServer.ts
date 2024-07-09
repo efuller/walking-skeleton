@@ -2,10 +2,7 @@ import { Server } from 'http';
 import express, { Application } from 'express';
 import cors from 'cors';
 import { JournalController } from '@efuller/api/src/modules/journals/journal.controller';
-
-interface Controllers {
-  journal: JournalController;
-}
+import { AppInterface } from '@efuller/api/src/shared/application';
 
 export class ApiServer {
   private server: Server | null;
@@ -13,7 +10,7 @@ export class ApiServer {
   private readonly port: number;
   private running: boolean;
 
-  constructor(private readonly controllers: Controllers) {
+  constructor(private app: AppInterface) {
     const origin = process.env.NODE_ENV === 'production' ? 'https://ws.efuller.me' : '*';
     this.server = null;
     this.express = express();
@@ -31,6 +28,9 @@ export class ApiServer {
   }
 
   private setupRoutes() {
+    const journalService = this.app.journals;
+    const journalController = new JournalController(journalService);
+
     this.express.get('/', (req, res) => {
       res.send({ ok: true }).status(200);
     });
@@ -40,11 +40,11 @@ export class ApiServer {
     });
 
     this.express.get('/journal', async (req, res) => {
-      await this.controllers.journal.getAll(req, res);
+      await journalController.getAll(req, res);
     });
 
     this.express.post('/journal', async (req, res) => {
-      await this.controllers.journal.create(req, res);
+      await journalController.create(req, res);
     });
   }
 
