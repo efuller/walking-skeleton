@@ -9,19 +9,19 @@ interface Controllers {
 
 export class ApiServer {
   private server: Server | null;
-  private app: Application;
+  private express: Application;
   private readonly port: number;
   private running: boolean;
 
   constructor(private readonly controllers: Controllers) {
     const origin = process.env.NODE_ENV === 'production' ? 'https://ws.efuller.me' : '*';
     this.server = null;
-    this.app = express();
-    this.app.use(express.json());
+    this.express = express();
+    this.express.use(express.json());
     // Handle preflight requests for all routes
-    this.app.options('*', cors());
+    this.express.options('*', cors());
 
-    this.app.use(cors({
+    this.express.use(cors({
       origin,
     }));
     this.port = process.env.PORT ? Number(process.env.PORT) : 0;
@@ -31,26 +31,26 @@ export class ApiServer {
   }
 
   private setupRoutes() {
-    this.app.get('/', (req, res) => {
+    this.express.get('/', (req, res) => {
       res.send({ ok: true }).status(200);
     });
 
-    this.app.get('/health', (req, res) => {
+    this.express.get('/health', (req, res) => {
       res.send({ ok: true }).status(200);
     });
 
-    this.app.get('/journal', async (req, res) => {
+    this.express.get('/journal', async (req, res) => {
       await this.controllers.journal.getAll(req, res);
     });
 
-    this.app.post('/journal', async (req, res) => {
+    this.express.post('/journal', async (req, res) => {
       await this.controllers.journal.create(req, res);
     });
   }
 
   async start() {
     return new Promise((resolve) => {
-      this.server = this.app.listen(
+      this.server = this.express.listen(
         this.port,
         () => {
           const address = this.server?.address();
