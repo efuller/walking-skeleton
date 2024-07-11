@@ -1,17 +1,19 @@
 import isCI from 'is-ci';
-import { v2 as compose } from 'docker-compose';
-
+import execSh from 'exec-sh';
+import path from 'path';
 import { DrizzleClient } from '@efuller/api/src/shared/persistence/drizzle/drizzleClient';
 
 export default async () => {
   console.time('globalTeardown');
 
   if (isCI) {
-    await compose.down({
-      cwd: __dirname,
-      config: __dirname + '/docker-compose.test.yml',
-      log: true,
-    });
+    const out = await execSh.promise(
+      `supabase stop`,
+      {
+        cwd: path.join(__dirname, 'supabase'),
+      },
+    );
+    console.log(out.stdout, out.stderr);
   } else {
     // Randomly clear out the test db.
     if (Math.ceil(Math.random() * 10) === 10) {
