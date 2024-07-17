@@ -1,34 +1,39 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import { Label } from '@/components/ui/label.tsx';
 import { Input } from '@/components/ui/input.tsx';
-import { createClient } from '@supabase/supabase-js';
+import { AuthController } from '@/modules/auth/auth.controller';
+import { AuthPresenter } from '@/modules/auth/auth.presenter.ts';
+import { observer } from 'mobx-react';
 
-export const RegisterPage = () => {
+interface RegisterPageProps {
+  authController: AuthController;
+  authPresenter: AuthPresenter;
+}
+
+export const RegisterPage = observer(({authController, authPresenter}: RegisterPageProps) => {
   const formRef = useRef(null);
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    // Create a single supabase client for interacting with your database
-    const supabase = createClient('http://127.0.0.1:54321', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0')
     e.preventDefault();
 
     const target = e.target as HTMLFormElement;
     console.log('Form submitted', target.email.value, target.password.value);
 
-    const { data, error } = await supabase.auth.signUp({
+    await authController.register({
       email: target.email.value,
       password: target.password.value,
     });
+  };
 
-    console.log({data, error});
-
-    if (!error) {
+  useEffect(() => {
+    if (authPresenter.viewModel.isAuthenticated) {
       navigate('/app/journals');
     }
-  };
+  }, [authPresenter.viewModel.isAuthenticated, navigate]);
 
   return (
     <div className="container mx-auto grid h-screen justify-center items-center">
@@ -70,6 +75,5 @@ export const RegisterPage = () => {
         </form>
       </div>
     </div>
-  )
-    ;
-}
+  );
+});

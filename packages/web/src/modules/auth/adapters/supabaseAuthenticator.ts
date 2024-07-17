@@ -1,6 +1,7 @@
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { Authenticator } from '@/modules/auth/ports/authenticator.ts';
-import { UserLoginDto } from '@/modules/auth/auth.controller.ts';
+import { UserLoginDto, UserRegisterDto } from '@/modules/auth/auth.controller.ts';
+import { ApiResponse } from '@efuller/shared/dist/api';
 
 export class SupabaseAuthenticator implements Authenticator {
   private readonly authClient: SupabaseClient;
@@ -29,7 +30,29 @@ export class SupabaseAuthenticator implements Authenticator {
     return true;
   }
 
-  async getSession(): Promise<void> {
-    await this.authClient.auth.getSession();
+  async refreshSession(): Promise<ApiResponse<null>> {
+    const result = await this.authClient.auth.refreshSession();
+
+    if (result.error) {
+      return {
+        success: false,
+        data: null,
+        error: result.error.message
+      };
+    }
+
+    return {
+      success: true,
+      data: null
+    }
+  }
+
+  async register(user: UserRegisterDto): Promise<boolean> {
+    const result = await this.authClient.auth.signUp(user);
+
+    if (result.error) {
+      return false;
+    }
+    return true;
   }
 }

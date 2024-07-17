@@ -1,7 +1,9 @@
-import { UserLoginDto } from '@/modules/auth/auth.controller.ts';
+import { UserLoginDto, UserRegisterDto } from '@/modules/auth/auth.controller.ts';
+import { ApiResponse } from '@efuller/shared/dist/api';
 
 export interface Authenticator {
   login(user: UserLoginDto): Promise<boolean>;
   logout(): Promise<boolean>;
-  getSession(): Promise<void>;
+  refreshSession(): Promise<ApiResponse<null>>;
+  register(user: UserRegisterDto): Promise<boolean>
 }

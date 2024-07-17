@@ -11,9 +11,8 @@ describe('auth', () => {
     authModule = compositionRoot.getAuthModule();
   });
 
-  it('should redirect user to homepage if not authenticated', () => {
+  it('should start with the user as not authenticated', () => {
     expect(authModule.getAuthPresenter().viewModel.isAuthenticated).toBe(false);
-    expect(authModule.getAuthPresenter().viewModel.redirectTo).toEqual('/');
   });
 
   it('should show the user as being authenticated successfully logged in', async () => {

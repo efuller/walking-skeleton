@@ -1,6 +1,6 @@
 import { Authenticator } from '@/modules/auth/ports/authenticator.ts';
 import { ApiResponse } from '@efuller/shared/dist/api';
-import { UserLoginDto } from '@/modules/auth/auth.controller.ts';
+import { UserLoginDto, UserRegisterDto } from '@/modules/auth/auth.controller.ts';
 
 export class AuthService {
   constructor(private readonly authClient: Authenticator) {}
@@ -22,11 +22,15 @@ export class AuthService {
     };
   }
 
-  logout(): Promise<void> {
-    throw new Error('Method not implemented.');
+  async register(user: UserRegisterDto): Promise<boolean> {
+    return await this.authClient.register(user);
   }
 
-  getSession(): Promise<void> {
-    throw new Error('Method not implemented.');
+  async logout(): Promise<void> {
+    await this.authClient.logout();
+  }
+
+  async getSession(): Promise<ApiResponse<null>> {
+    return await this.authClient.refreshSession();
   }
 }

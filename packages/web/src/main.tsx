@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { AppRouter } from '@/shared/router';
 
 import './index.css';
+import { CompositionRoot } from '@/shared/compositionRoot';
 
-const router = new AppRouter();
+const compositionRoot = new CompositionRoot();
+const router = compositionRoot.getAppRouter();
 const routeMap = router.getRouteMap();
 const browserRouter = createBrowserRouter(routeMap);
 

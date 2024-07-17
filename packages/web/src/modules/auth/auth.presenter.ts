@@ -5,7 +5,7 @@ export class AuthPresenter {
   get viewModel() {
     return {
       isAuthenticated: this.authRepo.authenticated,
-      redirectTo: '/'
+      redirectTo: ''
     };
   }
 
@@ -14,6 +14,4 @@ export class AuthPresenter {
       viewModel: computed,
     });
   }
-
-
 }

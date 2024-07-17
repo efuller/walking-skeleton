@@ -1,5 +1,6 @@
 import { Authenticator } from '@/modules/auth/ports/authenticator.ts';
-import { UserLoginDto } from '@/modules/auth/auth.controller.ts';
+import { UserLoginDto, UserRegisterDto } from '@/modules/auth/auth.controller.ts';
+import { ApiResponse } from '@efuller/shared/dist/api';
 
 export class MockAuthenticator implements Authenticator {
   private loginResponse = false;
@@ -13,11 +14,16 @@ export class MockAuthenticator implements Authenticator {
     throw new Error('Method not implemented.');
   }
 
-  public async getSession(): Promise<void> {
+  public async refreshSession(): Promise<ApiResponse<null>> {
     throw new Error('Method not implemented.');
   }
 
   public setLoginResponse(response: boolean) {
     this.loginResponse = response;
+  }
+
+  register(user: UserRegisterDto): Promise<boolean> {
+    console.log('Registering user', user);
+    return Promise.resolve(false);
   }
 }

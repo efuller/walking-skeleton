@@ -1,4 +1,4 @@
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 import {
   Bell,
   CircleUser,
@@ -31,8 +31,13 @@ import {
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Badge } from '@/components/ui/badge.tsx';
 import { Input } from '@/components/ui/input.tsx';
+import { AuthController } from '@/modules/auth/auth.controller.ts';
 
-export function AppPage() {
+interface AppPageProps {
+  authController: AuthController;
+}
+export function AppPage({authController} : AppPageProps) {
+  const navigate = useNavigate();
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
       <div className="hidden border-r bg-muted/40 md:block">
@@ -173,7 +178,10 @@ export function AppPage() {
               <DropdownMenuSeparator />
               <DropdownMenuItem>Settings</DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={() => console.log('logging out')}>Logout</DropdownMenuItem>
+              <DropdownMenuItem onClick={async () => {
+                await authController.logout();
+                navigate('/');
+              }}>Logout</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </header>
