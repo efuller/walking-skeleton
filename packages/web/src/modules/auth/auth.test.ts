@@ -6,8 +6,8 @@ describe('auth', () => {
   let compositionRoot: CompositionRoot;
   let authModule: AuthModule;
 
-  beforeEach(() => {
-    compositionRoot = new CompositionRoot('test');
+  beforeEach(async () => {
+    compositionRoot = await CompositionRoot.create('test');
     authModule = compositionRoot.getAuthModule();
   });
 
