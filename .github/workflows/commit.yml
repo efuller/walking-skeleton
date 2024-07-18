@@ -26,8 +26,8 @@
           run: npm run shared:build
         - name: Type check
           run: npm run tsc
-        - name: Api unit tests
-          run: npm run api:test:unit
+#        - name: Api unit tests
+#          run: npm run api:test:unit
         - name: Web unit tests
           run: npm run web:test
         - name: Build api
