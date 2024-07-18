@@ -36,7 +36,8 @@ export const JournalsPage = () => {
   }, []);
 
   return (
-    <div>
+    <div className="container mx-auto grid h-screen justify-center items-center">
+      <div className="flex justify-center items-center flex-col gap-12 min-w-[350px]">
       <h1 className="text-4xl font-bold">Add Journal</h1>
       <AddJournalForm onSubmit={handleOnSubmit} />
       <hr />
@@ -57,6 +58,7 @@ export const JournalsPage = () => {
             }
           })}
         </ul>
+      </div>
       </div>
     </div>
   );

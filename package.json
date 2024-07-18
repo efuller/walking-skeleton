@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "supabase:dev": "supabase start --workdir=packages/api/src/shared/persistence",
     "api:build": "npm run shared:build && npm run build -w packages/api",
     "api:start": "npm run start -w packages/api",
     "api:start:dev": "npm run start:dev -w packages/api",
@@ -24,8 +25,8 @@
     "web:dev": "npm run dev -w packages/web",
     "web:ci": "npm run ci:dev -w packages/web",
     "web:build": "npm run build -w packages/web",
-    "web:test": "npm run test -w packages/web",
-    "web:test:watch": "npm run test:watch -w packages/web",
+    "web:test": "dotenv -e packages/web/.env.test.local -- jest --selectProjects web -c jest.config.ts",
+    "web:test:watch": "dotenv -e packages/web/.env.test.local -- jest --selectProjects web -c jest.config.ts --watchAll",
     "web:test:e2e": "jest --selectProjects web-e2e -c jest.config.ts",
     "web:test:e2e:watch": "jest --selectProjects web-e2e -c jest.config.ts --watchAll"
   },
@@ -56,7 +57,11 @@
     "jest-cucumber": "^4.4.0",
     "prettier": "^3.3.2",
     "rimraf": "^5.0.7",
+    "supabase": "^1.183.5",
     "ts-jest": "^29.1.5",
     "ts-node": "^10.9.2"
+  },
+  "dependencies": {
+    "@supabase/auth-js": "^2.64.4"
   }
 }

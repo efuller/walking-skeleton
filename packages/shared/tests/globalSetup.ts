@@ -1,5 +1,5 @@
 import path from 'path';
-import { v2 as compose } from 'docker-compose';
+import execSh from 'exec-sh';
 import { generateDrizzleKit } from './utils/generateDrizzleKit';
 import { isPortAvailable } from './utils/detectPort';
 import { setupEnvVars } from './utils/setupEnvVars';
@@ -14,23 +14,16 @@ export default async () => {
   const isDBPortAvailable = await isPortAvailable(port);
 
   if (isDBPortAvailable) {
-    await compose.upAll({
-      cwd: path.join(__dirname),
-      config: path.join(__dirname, 'docker-compose.test.yml'),
-      log: true,
-    });
-
-    await compose.exec(
-      'test-database',
-      ['sh', '-c', 'until pg_isready ; do sleep 1; done'],
+    const out = await execSh.promise(
+      `supabase start`,
       {
-        cwd: path.join(__dirname),
-        config: path.join(__dirname, 'docker-compose.test.yml'),
-      }
+        cwd: path.join(__dirname, 'supabase'),
+      },
     );
-
-    await generateDrizzleKit(path.join(__dirname, '../../', 'api'));
+    console.log(out.stdout, out.stderr);
   }
+
+  await generateDrizzleKit(path.join(__dirname, '../../', 'api'));
 
   console.timeEnd('globalSetup');
   return true;
