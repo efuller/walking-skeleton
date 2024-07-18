@@ -30,4 +30,4 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Run Drizzle
-        run: drizzle-kit push --schema=packages/api/src/shared/persistence/schema.ts --url=${{ secrets.DATABASE_RUL }}
+        run: npx drizzle-kit push --schema=packages/api/src/shared/persistence/schema.ts --url=${{ secrets.DATABASE_RUL }}
