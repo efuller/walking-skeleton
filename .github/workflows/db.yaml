@@ -31,4 +31,4 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Run Drizzle
-        run: npx drizzle-kit push --dialect=postgresql --schema=${{ github.workspace }}/packages/api/src/shared/persistence/schema.ts --url=${{ secrets.DATABASE_URL }}
+        run: npx drizzle-kit push --dialect=postgresql --schema=${{ github.workspace }}/packages/api/src/shared/persistence/drizzle/schema.ts --url=${{ secrets.DATABASE_URL }}
