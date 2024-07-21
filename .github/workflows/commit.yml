@@ -33,6 +33,8 @@
 #          run: npm run api:test:unit
         - name: API infra tests
           run: npm run api:test:infra
+        - name: API acceptance tests
+          run: npm run api:test:e2e
         - name: Web unit tests
           run: npm run web:test
         - name: Build api
