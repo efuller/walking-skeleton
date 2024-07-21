@@ -2,10 +2,12 @@
   on:
     pull_request:
       branches: [ main ]
+      types: [synchronize, opened, reopened, ready_for_review]
   jobs:
     lint:
-      name: Lint
+      name: Lint, Test, and Build
       runs-on: ubuntu-latest
+      if: github.event.pull_request.draft == false
       steps:
         - name: Checkout
           uses: actions/checkout@v4
@@ -26,8 +28,11 @@
           run: npm run shared:build
         - name: Type check
           run: npm run tsc
+#          currently no api unit tests.
 #        - name: Api unit tests
 #          run: npm run api:test:unit
+        - name: API infra tests
+          run: npm run api:test:infra
         - name: Web unit tests
           run: npm run web:test
         - name: Build api
