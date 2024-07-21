@@ -28,7 +28,7 @@
           run: npm run shared:build
         - name: Type check
           run: npm run tsc
-#          currently no api unit tests.
+#          Currently there are no api unit tests.
 #        - name: Api unit tests
 #          run: npm run api:test:unit
         - name: API infra tests
