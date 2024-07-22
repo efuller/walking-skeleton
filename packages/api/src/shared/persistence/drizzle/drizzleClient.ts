@@ -44,20 +44,4 @@ export class DrizzleClient {
     }
     return true;
   }
-
-  async reset() {
-    const query = sql<string>`SELECT table_name
-      FROM information_schema.tables
-      WHERE table_schema = 'public'
-        AND table_type = 'BASE TABLE';
-    `;
-
-    const tables = await this.drizzleClient.execute(query);// retrieve tables
-
-   for (const table of tables.rows) {
-      console.log('TABLE', table);
-      const query = sql.raw(`TRUNCATE TABLE ${table.table_name} CASCADE;`);
-      await this.drizzleClient.execute(query); // Truncate (clear all the data) the table
-    }
-  }
 }
