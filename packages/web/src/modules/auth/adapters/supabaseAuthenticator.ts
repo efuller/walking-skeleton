@@ -7,8 +7,8 @@ export class SupabaseAuthenticator implements Authenticator {
   private readonly authClient: SupabaseClient;
 
   constructor() {
-    const url = process.env.SUPABASE_URL;
-    const key = process.env.SUPABASE_ANON_KEY;
+    const url = process.env.SUPABASE_URL || '';
+    const key = process.env.SUPABASE_ANON_KEY || '';
 
     if (!url || !key) {
       throw new Error('Supabase URL and key not provided');

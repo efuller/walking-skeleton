@@ -48,9 +48,6 @@ export class CompositionRoot {
   private createDatabase(drizzleClient: DrizzleClient) {
     return {
       journals: new DrizzleJournalRepo(drizzleClient),
-      reset: async () => {
-        await drizzleClient.reset();
-      }
     }
   }
 

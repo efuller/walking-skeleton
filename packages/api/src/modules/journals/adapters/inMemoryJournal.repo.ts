@@ -39,4 +39,20 @@ export class InMemoryJournalRepo implements JournalRepo {
       data: [...this.journals],
     }
   }
+
+  async getJournalById(id: number): Promise<ApiResponse<JournalDto | null>> {
+    const journal = this.journals.find(journal => journal.id === id);
+
+    if (!journal) {
+      return {
+        success: true,
+        data: null,
+      }
+    }
+
+    return {
+      success: true,
+      data: { ...journal },
+    }
+  }
 }

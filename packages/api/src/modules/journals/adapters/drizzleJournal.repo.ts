@@ -2,6 +2,7 @@ import { JournalRepo } from '@efuller/api/src/modules/journals/journal.repo';
 import { ApiResponse } from '@efuller/shared/src/api';
 import { DrizzleClient } from '@efuller/api/src/shared/persistence/drizzle/drizzleClient';
 import { CreateJournalDto, journal, JournalDto } from '@efuller/api/src/shared/persistence/drizzle/schema';
+import { eq } from 'drizzle-orm';
 
 export class DrizzleJournalRepo implements JournalRepo {
   constructor(private readonly db: DrizzleClient) {}
@@ -40,6 +41,26 @@ export class DrizzleJournalRepo implements JournalRepo {
     return {
       success: true,
       data: [],
+    }
+  }
+
+  async getJournalById(id: number): Promise<ApiResponse<JournalDto | null>> {
+    const dbClient = this.db.getClient();
+    const result = await dbClient
+      .select()
+      .from(journal)
+      .where(eq(journal.id, id));
+
+    if (result.length > 0 ) {
+      return {
+        success: true,
+        data: { ...result[0] },
+      }
+    }
+
+    return {
+      success: true,
+      data: null,
     }
   }
 }

@@ -15,7 +15,7 @@ export default async () => {
 
   if (isDBPortAvailable) {
     const out = await execSh.promise(
-      `supabase start`,
+      `supabase start -x realtime,storage-api,imgproxy,inbucket,postgrest,edge-runtime,logflare,vector,supavisor`,
       {
         cwd: path.join(__dirname, 'supabase'),
       },

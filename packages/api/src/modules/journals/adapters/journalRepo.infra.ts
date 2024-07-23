@@ -20,7 +20,7 @@ describe('JournalRepo', () => {
     await drizzleClient.disconnect();
   });
 
-  it('can save an retrieve members by their email', async () => {
+  it('can retrieve a journal by its id', async () => {
     const journalDto: CreateJournalDto = {
       title: 'Test',
       content: 'Test Content',
@@ -30,13 +30,13 @@ describe('JournalRepo', () => {
       const journal = await journalRepo.createJournal(journalDto);
 
       expect(journal.success).toBeTruthy();
+      expect(journal.data).not.toBeNull();
       expect(journal.data?.title).toBe(journalDto.title);
 
-      const retrievedJournal = await journalRepo.getJournals()
+      const retrievedJournal = await journalRepo.getJournalById(journal.data!.id);
 
       expect(retrievedJournal.success).toBeTruthy();
-      expect(retrievedJournal.data?.length).toBeGreaterThan(0);
-      expect(retrievedJournal.data?.[0].title).toBe(journalDto.title);
+      expect(retrievedJournal.data!.id).toBe(journal.data!.id);
     }
   });
 });

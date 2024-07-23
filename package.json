@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "supabase:dev": "supabase start --workdir=packages/api/src/shared/persistence",
+    "supabase:dev": "supabase start -x realtime,storage-api,imgproxy,inbucket,postgrest,edge-runtime,logflare,vector --workdir=packages/api/src/shared/persistence",
+    "supabase:dev:down": "supabase stop --workdir=packages/api/src/shared/persistence",
     "api:build": "npm run shared:build && npm run build -w packages/api",
     "api:start": "npm run start -w packages/api",
     "api:start:dev": "npm run start:dev -w packages/api",
