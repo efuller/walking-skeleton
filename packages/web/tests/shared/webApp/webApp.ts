@@ -29,6 +29,7 @@ export class WebApp {
       throw new Error('Base url has not been set');
     }
     const homePage = await HomePage.create(this.pageDriver, this.baseUrl);
+    console.log('baseURL', this.baseUrl);
     const registerPage = await RegisterPage.create(this.pageDriver, `${this.baseUrl}register`);
     this.pages = { homePage, registerPage };
   }
