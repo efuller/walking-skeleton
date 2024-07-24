@@ -21,7 +21,7 @@ jobs:
         uses: supabase/setup-cli@v1
 
       - name: Start supabase
-        run: supabase start -x realtime,storage-api,imgproxy,inbucket,postgrest,edge-runtime,logflare,vector,supavisor --workDir=./packages/api/src/shared/persistence
+        run: supabase start -x realtime,storage-api,imgproxy,inbucket,postgrest,edge-runtime,logflare,vector,supavisor --workdir=./packages/api/src/shared/persistence
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
