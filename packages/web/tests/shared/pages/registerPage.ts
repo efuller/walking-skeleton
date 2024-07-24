@@ -30,4 +30,8 @@ export class RegisterPage extends BasePage<RegisterComponents> {
 
     return { registerForm };
   }
+
+  async getHTML() {
+    return this.pageDriver.page.content();
+  }
 }

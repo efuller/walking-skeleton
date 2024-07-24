@@ -36,6 +36,9 @@ defineFeature(feature, (test) => {
     given('I have registered as a new user', async () => {
       await registerPage.navigate();
 
+      const data = await registerPage.getHTML();
+      console.log('data', data);
+
       expect(await registerForm.isValid()).toBe(true);
       await registerForm.fillAndSubmitForm();
     });
