@@ -5,17 +5,8 @@ on:
 jobs:
   e2e:
     runs-on: ubuntu-latest
-    services:
-      postgres:
-        image: postgres:latest
-        env:
-          POSTGRES_USER: admin
-          POSTGRES_PASSWORD: admin
-          POSTGRES_DB: db-test
-        ports:
-          - 5432:5432
     env:
-      DATABASE_URL: postgresql://admin:admin@localhost:5432/db-test
+      DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:54322/postgres
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -25,6 +16,9 @@ jobs:
         with:
           path: ~/.npm
           key: ${{ env.CACHE_KEY }}-${{ hashFiles('**/package-lock.json') }}
+      - name: Start supabase
+        uses: supabase/setup-cli@v1
+        run: supabase start -x realtime,storage-api,imgproxy,inbucket,postgrest,edge-runtime,logflare,vector,supavisor --workDir=./packages/api/src/shared/persistence
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
@@ -40,21 +34,18 @@ jobs:
       - name: Build frontend
         run: npm run web:build
 
-      - name: Run prisma generate
-        run: npm run prisma:generate -w packages/api
-
-      - name: Run prisma reset
-        run: npm run prisma:reset -w packages/api
+      - name: Run drizzle push
+        run: npm run drizzle:push:dev -w packages/api
 
       - name: Run API
         run: |
-          npm run api:ci:start:e2e &
+          npm run api:start:dev &
           sleep 5 &&
           curl http://localhost:3001/health -I
 
       - name: Run Frontend
         run: |
-          npm run web:ci &
+          npm run web:dev &
           sleep 5 &&
           curl http://localhost:5173 -I
 

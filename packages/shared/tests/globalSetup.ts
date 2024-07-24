@@ -1,3 +1,4 @@
+import isCI from 'is-ci';
 import path from 'path';
 import execSh from 'exec-sh';
 import { generateDrizzleKit } from './utils/generateDrizzleKit';
@@ -7,7 +8,11 @@ import { setupEnvVars } from './utils/setupEnvVars';
 
 export default async () => {
   console.time('globalSetup');
-  setupEnvVars('./packages/shared/tests/.env.test');
+  if (isCI) {
+    setupEnvVars('./packages/api/.env.development');
+  } else {
+    setupEnvVars('./packages/shared/tests/.env.test');
+  }
 
   const port = Number(process.env.POSTGRES_PORT);
 
