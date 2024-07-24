@@ -22,7 +22,7 @@ defineFeature(feature, (test) => {
   let registerForm: RegisterForm;
 
   beforeAll(async () => {
-    driver = await PuppeteerPageDriver.create({ headless: false, slowMo: 75 });
+    driver = await PuppeteerPageDriver.create({ headless: true, slowMo: 75 });
     webApp = await WebApp.create(driver);
     registerPage = webApp.getPageObject('registerPage');
     registerForm = registerPage.$('registerForm');
