@@ -67,7 +67,7 @@ export const HomePage = observer(({ authPresenter, authController }: HomePagePro
             </CardFooter>
             <div className="my-4 text-center text-sm">
               Don&apos;t have an account?{" "}
-              <Link to="/register" className="underline">
+              <Link id="registerLink" to="/register" className="underline">
                 Register
               </Link>
             </div>
