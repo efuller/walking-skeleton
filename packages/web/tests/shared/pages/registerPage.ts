@@ -32,6 +32,6 @@ export class RegisterPage extends BasePage<RegisterComponents> {
   }
 
   async getHTML() {
-    return this.pageDriver.page.content();
+    return this.pageDriver.page.evaluate(() => document.body.innerHTML);
   }
 }
