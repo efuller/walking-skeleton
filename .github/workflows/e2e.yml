@@ -44,7 +44,7 @@ jobs:
         run: |
           npm run api:ci:start:e2e &
           sleep 5 &&
-          curl http://localhost:3001/health -I
+          curl http://localhost:3000/health -I
 
       - name: Run Frontend
         run: |
