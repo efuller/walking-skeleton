@@ -8,7 +8,7 @@
       name: Lint, Test, and Build
       runs-on: ubuntu-latest
       env:
-        DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:54322/postgres
+        DATABASE_URL: ${{ secrets.TEST_DATABASE_URL }}
       if: github.event.pull_request.draft == false
       steps:
         - name: Checkout
