@@ -37,7 +37,6 @@ defineFeature(feature, (test) => {
       await registerPage.navigate();
 
       const data = await registerPage.getHTML();
-      console.log('data', data);
 
       expect(await registerForm.isValid()).toBe(true);
       await registerForm.fillAndSubmitForm();
