@@ -63,7 +63,7 @@ export const RegisterPage = observer(({authController, authPresenter}: RegisterP
               </div>
             </CardContent>
             <CardFooter>
-              <Button className="w-full" type="submit">Sign in</Button>
+              <Button id="submitBtn" className="w-full" type="submit">Sign in</Button>
             </CardFooter>
             <div className="my-4 text-center text-sm">
               Already have an account?{" "}
