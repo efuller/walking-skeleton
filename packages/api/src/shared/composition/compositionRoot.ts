@@ -1,23 +1,23 @@
 import { ApiServer } from '../http/apiServer';
 import { JournalService } from '@efuller/api/src/modules/journals/journal.service';
-import { Database } from '@efuller/api/src/shared/persistence/database';
 import { DrizzleClient } from '@efuller/api/src/shared/persistence/drizzle/drizzleClient';
 import { DrizzleJournalRepo } from '@efuller/api/src/modules/journals/adapters/drizzleJournal.repo';
 import { AppInterface } from '@efuller/api/src/shared/application';
+import { JournalRepo } from '@efuller/api/src/modules/journals/journal.repo';
 
 export class CompositionRoot {
   private static instance: CompositionRoot;
-  private readonly db: Database;
   private readonly apiServer: ApiServer;
   private readonly application!: AppInterface;
+  private readonly journalsRepo: JournalRepo;
 
   /**
    * TODO: Create an abstraction for a database client class.
    */
   constructor(private readonly drizzleClient: DrizzleClient) {
-    this.db = this.createDatabase(drizzleClient);
     this.application = this.createApplication();
     this.apiServer = this.createApiServer();
+    this.journalsRepo = this.createJournalRepo(drizzleClient);
   }
 
   public static async create() {
@@ -28,8 +28,12 @@ export class CompositionRoot {
     return CompositionRoot.instance;
   }
 
+  private createJournalRepo(drizzleClient: DrizzleClient) {
+    return new DrizzleJournalRepo(drizzleClient);
+  }
+
   private createJournalService() {
-    return new JournalService(this.db);
+    return new JournalService(this.journalsRepo);
   }
 
   private createApplication(): AppInterface {
@@ -45,22 +49,12 @@ export class CompositionRoot {
     return this.application.journals;
   }
 
-  private createDatabase(drizzleClient: DrizzleClient) {
-    return {
-      journals: new DrizzleJournalRepo(drizzleClient),
-    }
-  }
-
   createApiServer() {
     return new ApiServer(this.application);
   }
 
   public getApiServer() {
     return this.apiServer;
-  }
-
-  public getDatabase() {
-    return this.db;
   }
 
   public static getInstance() {
