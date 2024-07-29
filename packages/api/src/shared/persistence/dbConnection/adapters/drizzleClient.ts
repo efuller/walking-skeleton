@@ -6,7 +6,9 @@ import * as schema from '../../drizzle/schema';
 import { NodePgDatabase } from 'drizzle-orm/node-postgres/driver';
 import { DbConnection } from '@efuller/api/src/shared/persistence/dbConnection/dbConnection';
 
-export class DrizzleClient implements DbConnection<NodePgDatabase<typeof schema>>{
+export type DbClient = NodePgDatabase<typeof schema>;
+
+export class DrizzleClient implements DbConnection<DbClient>{
   private readonly drizzleClient;
   private readonly client: Client;
 
@@ -27,7 +29,7 @@ export class DrizzleClient implements DbConnection<NodePgDatabase<typeof schema>
     return new DrizzleClient(drizzleClient, client);
   }
 
-  getClient() {
+  getClient(): DbClient {
     return this.drizzleClient;
   }
 
