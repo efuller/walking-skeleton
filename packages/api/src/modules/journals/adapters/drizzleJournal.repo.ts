@@ -1,16 +1,15 @@
 import { JournalRepo } from '@efuller/api/src/modules/journals/journal.repo';
 import { ApiResponse } from '@efuller/shared/src/api';
-import { DrizzleClient } from '@efuller/api/src/shared/persistence/drizzle/drizzleClient';
+import { DbClient } from '@efuller/api/src/shared/persistence/dbConnection/adapters/drizzleClient';
 import { CreateJournalDto, journal, JournalDto } from '@efuller/api/src/shared/persistence/drizzle/schema';
 import { eq } from 'drizzle-orm';
 
 export class DrizzleJournalRepo implements JournalRepo {
-  constructor(private readonly db: DrizzleClient) {}
+  constructor(private readonly db: DbClient) {}
 
   async createJournal(journalDto: CreateJournalDto): Promise<ApiResponse<JournalDto | null>> {
-    const dbClient = this.db.getClient();
 
-    const result = await dbClient.insert(journal).values({
+    const result = await this.db.insert(journal).values({
       ...journalDto,
     }).returning();
 
@@ -28,8 +27,7 @@ export class DrizzleJournalRepo implements JournalRepo {
   }
 
   async getJournals(): Promise<ApiResponse<JournalDto[]>> {
-    const dbClient = this.db.getClient();
-    const result = await dbClient.select().from(journal);
+    const result = await this.db.select().from(journal);
 
     if (result.length > 0 ) {
       return {
@@ -45,8 +43,7 @@ export class DrizzleJournalRepo implements JournalRepo {
   }
 
   async getJournalById(id: number): Promise<ApiResponse<JournalDto | null>> {
-    const dbClient = this.db.getClient();
-    const result = await dbClient
+    const result = await this.db
       .select()
       .from(journal)
       .where(eq(journal.id, id));

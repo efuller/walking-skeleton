@@ -4,6 +4,12 @@ import { DrizzleClient } from '@efuller/api/src/shared/persistence/dbConnection/
 import { DrizzleJournalRepo } from '@efuller/api/src/modules/journals/adapters/drizzleJournal.repo';
 import { AppInterface } from '@efuller/api/src/shared/application';
 import { JournalRepo } from '@efuller/api/src/modules/journals/journal.repo';
+import { DbConnection } from '@efuller/api/src/shared/persistence/dbConnection/dbConnection';
+import { NodePgDatabase } from 'drizzle-orm/node-postgres/driver';
+import * as schema from '@efuller/api/src/shared/persistence/drizzle/schema';
+import { InMemoryJournalRepo } from '@efuller/api/src/modules/journals/adapters/inMemoryJournal.repo';
+
+type Context = 'test' | 'test:unit' | 'development' | 'production';
 
 export class CompositionRoot {
   private static instance: CompositionRoot;
@@ -14,22 +20,28 @@ export class CompositionRoot {
   /**
    * TODO: Create an abstraction for a database client class.
    */
-  constructor(private readonly drizzleClient: DrizzleClient) {
+  constructor(
+    private readonly context: Context,
+    private readonly dbClient: DbConnection<NodePgDatabase<typeof schema>>
+  ) {
+    this.journalsRepo = this.createJournalRepo();
     this.application = this.createApplication();
     this.apiServer = this.createApiServer();
-    this.journalsRepo = this.createJournalRepo(drizzleClient);
   }
 
-  public static async create() {
+  public static async create(context: Context = 'development') {
     if (!CompositionRoot.instance) {
       const drizzleClient = await DrizzleClient.create();
-      CompositionRoot.instance = new CompositionRoot(drizzleClient);
+      CompositionRoot.instance = new CompositionRoot(context, drizzleClient);
     }
     return CompositionRoot.instance;
   }
 
-  private createJournalRepo(drizzleClient: DrizzleClient) {
-    return new DrizzleJournalRepo(drizzleClient);
+  private createJournalRepo() {
+    if (this.context === 'test:unit') {
+      return new InMemoryJournalRepo();
+    }
+    return new DrizzleJournalRepo(this.dbClient.getClient());
   }
 
   private createJournalService() {
@@ -65,6 +77,6 @@ export class CompositionRoot {
   }
 
   public async disconnectDb() {
-    await this.drizzleClient.disconnect();
+    await this.dbClient.disconnect();
   }
 }
