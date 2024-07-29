@@ -1,13 +1,12 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
 import { drizzle } from 'drizzle-orm/node-postgres';
 import { sql } from "drizzle-orm"
 import { Client } from 'pg';
-import * as schema from './schema';
+import * as schema from '../../drizzle/schema';
 
 import { NodePgDatabase } from 'drizzle-orm/node-postgres/driver';
+import { DbConnection } from '@efuller/api/src/shared/persistence/dbConnection/dbConnection';
 
-export class DrizzleClient {
+export class DrizzleClient implements DbConnection<NodePgDatabase<typeof schema>>{
   private readonly drizzleClient;
   private readonly client: Client;
 

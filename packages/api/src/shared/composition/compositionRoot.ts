@@ -1,6 +1,6 @@
 import { ApiServer } from '../http/apiServer';
 import { JournalService } from '@efuller/api/src/modules/journals/journal.service';
-import { DrizzleClient } from '@efuller/api/src/shared/persistence/drizzle/drizzleClient';
+import { DrizzleClient } from '@efuller/api/src/shared/persistence/dbConnection/adapters/drizzleClient';
 import { DrizzleJournalRepo } from '@efuller/api/src/modules/journals/adapters/drizzleJournal.repo';
 import { AppInterface } from '@efuller/api/src/shared/application';
 import { JournalRepo } from '@efuller/api/src/modules/journals/journal.repo';

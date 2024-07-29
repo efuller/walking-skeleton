@@ -1,7 +1,7 @@
 import isCI from 'is-ci';
 import execSh from 'exec-sh';
 import path from 'path';
-import { DrizzleClient } from '@efuller/api/src/shared/persistence/drizzle/drizzleClient';
+import { DrizzleClient } from '@efuller/api/src/shared/persistence/dbConnection/adapters/drizzleClient';
 import { generateDrizzleKit } from '@efuller/shared/tests/utils/generateDrizzleKit';
 
 export default async () => {
