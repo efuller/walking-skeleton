@@ -9,6 +9,9 @@ import { NodePgDatabase } from 'drizzle-orm/node-postgres/driver';
 import * as schema from '@efuller/api/src/shared/persistence/drizzle/schema';
 import { InMemoryJournalRepo } from '@efuller/api/src/modules/journals/adapters/inMemoryJournal.repo';
 import { FakeDbClient } from '@efuller/api/src/shared/persistence/dbConnection/adapters/fakeDbClient';
+import { MembersService } from '@efuller/api/src/modules/members/members.service';
+import { MembersRepo } from '@efuller/api/src/modules/members/ports/members.repo';
+import { InMemoryMembersRepo } from '@efuller/api/src/modules/members/adapters/inMemoryMembersRepo';
 
 type Context = 'test' | 'test:unit' | 'development' | 'production';
 
@@ -17,21 +20,20 @@ export class CompositionRoot {
   private readonly apiServer: ApiServer;
   private readonly application!: AppInterface;
   private readonly journalsRepo: JournalRepo;
+  private readonly membersRepo: MembersRepo;
 
-  /**
-   * TODO: Create an abstraction for a database client class.
-   */
   constructor(
     private readonly context: Context,
     private readonly dbClient: DbConnection<NodePgDatabase<typeof schema>>
   ) {
     this.journalsRepo = this.createJournalRepo();
+    this.membersRepo = this.createMembersRepo();
     this.application = this.createApplication();
     this.apiServer = this.createApiServer();
   }
 
   /**
-   * @todo: We could remove this static factory method and use a bootstrap function instead and inject the db client.
+   * TODO: We could remove this static factory method and use a bootstrap function instead and inject the db client.
    */
   public static async create(context: Context = 'development') {
     if (!CompositionRoot.instance) {
@@ -54,14 +56,30 @@ export class CompositionRoot {
     return new DrizzleJournalRepo(this.dbClient.getClient());
   }
 
-  private createJournalService() {
-    return new JournalService(this.journalsRepo);
+  public getApplication() {
+    return this.application;
   }
 
   private createApplication(): AppInterface {
     return {
       journals: this.getJournalService(),
+      members: this.getMembersService()
     }
+  }
+
+  public getMembersService() {
+    if (!this.application?.members) {
+      return this.createMembersService();
+    }
+    return this.application.members;
+  }
+
+  private createMembersService() {
+    return new MembersService(this.membersRepo);
+  }
+
+  private createMembersRepo() {
+    return new InMemoryMembersRepo();
   }
 
   public getJournalService() {
@@ -69,6 +87,10 @@ export class CompositionRoot {
       return this.createJournalService();
     }
     return this.application.journals;
+  }
+
+  private createJournalService() {
+    return new JournalService(this.journalsRepo);
   }
 
   createApiServer() {

@@ -8,9 +8,8 @@ Feature: Registration
     Then I am redirected to the dashboard
     And My member email is present on the page
 
-#  @api
-#  Scenario: Create new member using the API
-#    Given I am a new user
-#    And I am logged in
-#    When I request to create a member account
-#    Then I am able to retrieve that member account by email
+  @api
+  Scenario: Create new member using the API
+    Given I am registered as a new user
+    When I request to create a member account
+    Then I am able to retrieve that member account by email
