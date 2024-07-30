@@ -8,6 +8,7 @@ import { DbConnection } from '@efuller/api/src/shared/persistence/dbConnection/d
 import { NodePgDatabase } from 'drizzle-orm/node-postgres/driver';
 import * as schema from '@efuller/api/src/shared/persistence/drizzle/schema';
 import { InMemoryJournalRepo } from '@efuller/api/src/modules/journals/adapters/inMemoryJournal.repo';
+import { FakeDbClient } from '@efuller/api/src/shared/persistence/dbConnection/adapters/fakeDbClient';
 
 type Context = 'test' | 'test:unit' | 'development' | 'production';
 
@@ -29,10 +30,19 @@ export class CompositionRoot {
     this.apiServer = this.createApiServer();
   }
 
+  /**
+   * @todo: We could remove this static factory method and use a bootstrap function instead and inject the db client.
+   */
   public static async create(context: Context = 'development') {
     if (!CompositionRoot.instance) {
-      const drizzleClient = await DrizzleClient.create();
-      CompositionRoot.instance = new CompositionRoot(context, drizzleClient);
+
+      if (context === 'test:unit') {
+        CompositionRoot.instance = new CompositionRoot(context, new FakeDbClient());
+        return CompositionRoot.instance;
+      }
+
+      const dbClient = await DrizzleClient.create();
+      CompositionRoot.instance = new CompositionRoot(context, dbClient);
     }
     return CompositionRoot.instance;
   }
