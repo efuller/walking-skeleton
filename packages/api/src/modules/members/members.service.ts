@@ -15,4 +15,18 @@ export class MembersService {
     };
     return memberDto;
   }
+
+  async getMemberByEmail(email: string): Promise<MemberDto | null> {
+    const member = await this.membersRepo.getMemberByEmail(email);
+    if (!member) {
+      return null;
+    }
+    const memberDto: MemberDto = {
+      id: member.id,
+      firstName: member.firstName,
+      lastName: member.lastName,
+      email: member.email,
+    };
+    return memberDto;
+  }
 }

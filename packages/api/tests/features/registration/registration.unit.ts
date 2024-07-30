@@ -35,15 +35,14 @@ defineFeature(feature, (test) => {
       expect(createdMember.lastName).toEqual(createdMember.lastName);
     });
 
-    then('I am able to retrieve that member account by email', () => {
+    then('I am able to retrieve that member account by email', async () => {
       expect(true).toBe(true);
-      // const member = application.members.getMemberByEmail(user.email);
-      //
-      // expect(member.success).toBe(true);
-      // expect(member.error).toBeFalsy();
-      // expect(member.data.email).toEqual(user.email);
-      // expect(member.data.firstName).toEqual(user.firstName);
-      // expect(member.data.lastName).toEqual(user.lastName);
+      const foundMember = await application.members.getMemberByEmail(createMemberCommand.email);
+
+      expect(foundMember).toBeDefined();
+      expect(foundMember?.email).toEqual(createMemberCommand.email);
+      expect(foundMember?.firstName).toEqual(createMemberCommand.firstName);
+      expect(foundMember?.lastName).toEqual(createMemberCommand.lastName);
     });
   });
 });

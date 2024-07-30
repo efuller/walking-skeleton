@@ -19,4 +19,12 @@ export class InMemoryMembersRepo implements MembersRepo {
     this.members.push(member);
     return member;
   }
+
+  async getMemberByEmail(email: string): Promise<Member | null> {
+    return this.members.find(member => member.email === email) || null;
+  }
+
+  reset() {
+    this.members = [];
+  }
 }
