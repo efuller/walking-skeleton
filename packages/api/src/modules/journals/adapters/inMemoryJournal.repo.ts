@@ -1,6 +1,7 @@
 import { JournalRepo } from '@efuller/api/src/modules/journals/journal.repo';
 import { ApiResponse } from '@efuller/shared/src/api';
-import { CreateJournalDto, JournalDto } from '@efuller/api/src/shared/persistence/drizzle/schema';
+import { JournalDto } from '@efuller/api/src/shared/persistence/drizzle/schema';
+import { CreateJournalCommand } from '@efuller/shared/src/modules/journals/commands';
 
 export function generateRandomNumber() {
   return Math.floor(Math.random() * 1000);
@@ -9,7 +10,7 @@ export function generateRandomNumber() {
 export class InMemoryJournalRepo implements JournalRepo {
   private journals: JournalDto[] = [];
 
-  async createJournal(journal: CreateJournalDto): Promise<ApiResponse<JournalDto | null>> {
+  async createJournal(journal: CreateJournalCommand): Promise<ApiResponse<JournalDto | null>> {
     const newJournal = {
       ...journal,
       content: '',
