@@ -2,6 +2,7 @@ import { RestApiDriver } from './restApiDriver';
 import { Server } from 'http';
 import { CompositionRoot } from '@efuller/api/src/shared/composition/compositionRoot';
 import { ApiServer } from '@efuller/api/src/shared/http/apiServer';
+import { ApiResponse } from '@efuller/shared/src/api';
 
 describe('Web Server', () => {
   let compositionRoot: CompositionRoot;
@@ -33,8 +34,7 @@ describe('Web Server', () => {
   it('should be able to check server health', async () => {
     const server = apiServer.getServer();
     const restApiDriver = new RestApiDriver(server as Server);
-    const response = await restApiDriver.get('/health');
-    expect(response.status).toBe(200);
-    expect(response.ok).toBe(true);
+    const response = await restApiDriver.get<null>('/health');
+    expect(response.success).toBe(true);
   });
 });

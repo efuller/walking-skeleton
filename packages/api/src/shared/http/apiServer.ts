@@ -39,7 +39,7 @@ export class ApiServer {
     });
 
     this.express.get('/health', (req, res) => {
-      res.send({ ok: true }).status(200);
+      res.send({ success: true, data: null, error: false }).status(200);
     });
 
     this.express.get('/journal', async (req, res) => {
