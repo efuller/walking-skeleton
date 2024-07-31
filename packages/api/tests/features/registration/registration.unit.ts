@@ -16,8 +16,8 @@ defineFeature(feature, (test) => {
     application = compositionRoot.getApplication();
   });
 
-  test('Create new member using the API', ({ given, when, then }) => {
-    given('I am registered as a new user', () => {
+  test('Verify member creation details', ({ given, when, then }) => {
+    given('I am a newly registered user', () => {
       createMemberCommand = new MemberBuilder()
         .withFirstName('John')
         .withLastName('Doe')
@@ -26,7 +26,7 @@ defineFeature(feature, (test) => {
         .build();
     });
 
-    when('I request to create a member account', async () => {
+    when('I request my member account details by email', async () => {
       const createdMember = await application.members.createMember(createMemberCommand);
 
       expect(createdMember.id).toBeDefined();
@@ -35,7 +35,7 @@ defineFeature(feature, (test) => {
       expect(createdMember.lastName).toEqual(createdMember.lastName);
     });
 
-    then('I am able to retrieve that member account by email', async () => {
+    then('I am able to see my member account details', async () => {
       expect(true).toBe(true);
       const foundMember = await application.members.getMemberByEmail(createMemberCommand.email);
 
