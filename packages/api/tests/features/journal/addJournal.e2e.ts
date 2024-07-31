@@ -3,8 +3,9 @@ import { RestApiDriver } from '../../../src/shared/http/restApiDriver';
 import { Server } from 'http';
 import { CompositionRoot } from '@efuller/api/src/shared/composition/compositionRoot';
 import { ApiResponse } from '@efuller/shared/src/api';
-import { Journal } from '@efuller/api/src/modules/journals/journal.service';
 import { ApiServer } from '@efuller/api/src/shared/http/apiServer';
+import { JournalDto } from '@efuller/api/src/shared/persistence/drizzle/schema';
+import { CreateJournalCommand } from '@efuller/shared/src/modules/journals/commands';
 
 const feature = loadFeature('./packages/shared/tests/features/addJournal.feature', { tagFilter: '@api' });
 
@@ -13,7 +14,7 @@ defineFeature(feature, (test) => {
     let compositionRoot: CompositionRoot;
     let apiServer: ApiServer;
     let apiDriver: RestApiDriver;
-    let response: ApiResponse<Partial<Partial<Journal>>>;
+    let response: ApiResponse<JournalDto>;
 
     beforeAll(async () => {
       compositionRoot = await CompositionRoot.create('test');
@@ -32,7 +33,7 @@ defineFeature(feature, (test) => {
     });
 
     when(/^a user sends a POST request to the "(.*)" endpoint with a title of (.*) and content of (.*)$/, async (endpoint, title, content) => {
-      response = await apiDriver.post<Partial<Journal>>(endpoint, { title, content });
+      response = await apiDriver.post<CreateJournalCommand, JournalDto>(endpoint, { title, content });
     });
 
     then(/^the API should respond with a success of true$/, () => {
@@ -40,7 +41,7 @@ defineFeature(feature, (test) => {
     });
 
     and(/^the response should contain title of (.*) and content of (.*)$/, (title, content) => {
-      expect(response.data).toMatchObject({ data: { title, content }, success: true });
+      expect(response).toMatchObject({ data: { title, content }, success: true });
     });
   });
 });
