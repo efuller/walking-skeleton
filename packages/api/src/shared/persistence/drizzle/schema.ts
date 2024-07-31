@@ -26,5 +26,4 @@ export const dbhealth = pgTable("dbhealth", {
 	name: text("name"),
 });
 
-export type CreateJournalDto = typeof journal.$inferInsert;
 export type JournalDto = typeof journal.$inferSelect;
