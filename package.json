@@ -20,6 +20,8 @@
     "api:test:infra:watch": "jest --selectProjects api-infra -c jest.config.ts --watchAll",
     "lint": "eslint \"**/*.{ts,tsx}\"",
     "shared:build": "npm run build -w packages/shared",
+    "supabase:status:dev": "supabase status --workdir=packages/api/src/shared/persistence",
+    "supabase:status:test": "supabase status --workdir=packages/shared/tests",
     "tsc:api": "tsc --project packages/api/tsconfig.json --noEmit",
     "tsc:shared": "tsc --project packages/shared/tsconfig.build.json --noEmit",
     "tsc:web": "tsc --project packages/web/tsconfig.node.json --noEmit",
