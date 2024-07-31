@@ -1,8 +1,9 @@
 import { defineFeature, loadFeature } from 'jest-cucumber';
 import { MemberBuilder } from '@efuller/shared/tests/support/builders/memberBuilder';
 import { CompositionRoot } from '@efuller/api/src/shared/composition/compositionRoot';
-import { AppInterface } from '@efuller/api/src/shared/application';
 import { CreateMemberCommand } from '@efuller/shared/src/modules/members/commands';
+import { MemberDto } from '@efuller/api/src/modules/members/member.dto';
+import { AppInterface } from '@efuller/api/src/shared/application';
 
 const feature = loadFeature('./packages/shared/tests/features/registration.feature', { tagFilter: '@api' });
 
@@ -10,6 +11,7 @@ defineFeature(feature, (test) => {
   let compositionRoot: CompositionRoot;
   let application: AppInterface;
   let createMemberCommand: CreateMemberCommand;
+  let foundMember: MemberDto | null;
 
   beforeAll(async () => {
     compositionRoot = await CompositionRoot.create('test:unit');
@@ -24,15 +26,12 @@ defineFeature(feature, (test) => {
         .withEmail('johndoe@test.com')
         .withPassword('password')
         .build();
+      application.members.createMember(createMemberCommand);
     });
 
     when('I request my member account details by email', async () => {
-      const createdMember = await application.members.createMember(createMemberCommand);
-
-      expect(createdMember.id).toBeDefined();
-      expect(createdMember.email).toBe(createdMember.email);
-      expect(createdMember.firstName).toEqual(createdMember.firstName);
-      expect(createdMember.lastName).toEqual(createdMember.lastName);
+      foundMember = await application.members.getMemberByEmail(createMemberCommand.email);
+      expect(foundMember).not.toBeNull();
     });
 
     then('I am able to see my member account details', async () => {
