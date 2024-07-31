@@ -8,8 +8,8 @@ export class InMemoryMembersRepo implements MembersRepo {
   async createMember(command: CreateMemberCommand): Promise<Member> {
     const member: Member = {
       id: this.members.length + 1,
-      firstName: command.firstName,
-      lastName: command.lastName,
+      firstName: command.firstName || '',
+      lastName: command.lastName || '',
       email: command.email,
       password: command.password,
       createdAt: Date.now().toString(),
