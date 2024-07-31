@@ -3,6 +3,7 @@ import express, { Application } from 'express';
 import cors from 'cors';
 import { JournalController } from '@efuller/api/src/modules/journals/journal.controller';
 import { AppInterface } from '@efuller/api/src/shared/application';
+import { MembersController } from '@efuller/api/src/modules/members/members.controller';
 
 export class ApiServer {
   private server: Server | null;
@@ -29,7 +30,9 @@ export class ApiServer {
 
   private setupRoutes() {
     const journalService = this.app.journals;
+    const membersService = this.app.members;
     const journalController = new JournalController(journalService);
+    const membersController = new MembersController(membersService);
 
     this.express.get('/', (req, res) => {
       res.send({ ok: true }).status(200);
@@ -45,6 +48,10 @@ export class ApiServer {
 
     this.express.post('/journal', async (req, res) => {
       await journalController.create(req, res);
+    });
+
+    this.express.get('/members/:email', async (req, res) => {
+      await membersController.getMemberByEmail(req, res);
     });
   }
 
