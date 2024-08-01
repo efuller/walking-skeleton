@@ -12,7 +12,7 @@ export const members = pgTable("members", {
 	id: serial("id").primaryKey(),
 	firstName: varchar("first_name", { length: 50 }),
 	lastName: varchar("last_name", { length: 50 }),
-	email: varchar("email", { length: 255 }).notNull(),
+	email: varchar("email", { length: 255 }).unique().notNull(),
 	password: text("password").notNull(),
 	createdAt: timestamp("created_at", { precision: 3, mode: 'string' }).defaultNow().notNull(),
 	updatedAt: timestamp("updated_at", { precision: 3, mode: 'string' }).defaultNow().notNull(),
