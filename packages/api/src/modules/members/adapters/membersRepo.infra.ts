@@ -3,19 +3,22 @@ import { MembersRepo } from '@efuller/api/src/modules/members/ports/members.repo
 import { InMemoryMembersRepo } from '@efuller/api/src/modules/members/adapters/inMemoryMembersRepo';
 import { MemberBuilder } from '@efuller/shared/tests/support/builders/memberBuilder';
 import { CreateMemberCommand } from '@efuller/shared/src/modules/members/commands';
+import { DrizzleMembersRepo } from '@efuller/api/src/modules/members/adapters/drizzleMembers.repo';
 
 describe('MembersRepo', () => {
   let drizzleClient: DrizzleClient;
   let membersRepos: MembersRepo[];
   let inMemoryMembersRepo: InMemoryMembersRepo;
+  let drizzleMembersRepo: DrizzleMembersRepo;
   let createMemberCommand: CreateMemberCommand;
 
   beforeAll(async () => {
-    inMemoryMembersRepo = new InMemoryMembersRepo();
     drizzleClient = await DrizzleClient.create();
+    inMemoryMembersRepo = new InMemoryMembersRepo();
+    drizzleMembersRepo = new DrizzleMembersRepo(drizzleClient.getClient())
     membersRepos = [
       inMemoryMembersRepo,
-      // new DrizzleMembersRepo(drizzleClient.getClient()),
+      drizzleMembersRepo,
     ];
   })
 
@@ -24,24 +27,23 @@ describe('MembersRepo', () => {
     await drizzleClient.disconnect();
   });
 
-  it('can retrieve a by their email', async () => {
+  it('Can create a new member and retrieve them by their email', async () => {
     createMemberCommand = new MemberBuilder()
       .withFirstName('John')
       .withLastName('Doe')
       .withEmail('johndoe@test.com')
       .withPassword('password')
       .build();
-    await inMemoryMembersRepo.createMember(createMemberCommand);
 
     for (const membersRepo of membersRepos) {
-      const createdMember = await membersRepo.getMemberByEmail(createMemberCommand.email);
-      console.log('member', createdMember);
+      await membersRepo.createMember(createMemberCommand);
+      const retrievedMember = await membersRepo.getMemberByEmail(createMemberCommand.email);
 
-      expect(createdMember).not.toBeNull();
-      expect(createdMember?.id).toEqual(expect.any(Number));
-      expect(createdMember!.email).toEqual(createMemberCommand.email);
-      expect(createdMember?.firstName).toBe(createMemberCommand.firstName);
-      expect(createdMember?.lastName).toBe(createMemberCommand.lastName);
+      expect(retrievedMember).not.toBeNull();
+      expect(retrievedMember?.id).toEqual(expect.any(Number));
+      expect(retrievedMember!.email).toEqual(createMemberCommand.email);
+      expect(retrievedMember?.firstName).toBe(createMemberCommand.firstName);
+      expect(retrievedMember?.lastName).toBe(createMemberCommand.lastName);
     }
   });
 });
