@@ -1,5 +1,5 @@
 export interface MemberDto {
-  id: number;
+  id: string;
   firstName: string | null;
   lastName: string | null;
   email: string;

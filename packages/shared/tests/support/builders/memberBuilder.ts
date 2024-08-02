@@ -5,11 +5,22 @@ export class MemberBuilder {
 
   constructor() {
     this.memberProps = {
+      id: '',
       firstName: '',
       lastName: '',
       email: '',
       password: ''
     };
+  }
+
+  withId(id: string): MemberBuilder {
+    this.memberProps.id = id;
+    return this;
+  }
+
+  withRandomEmail() {
+    this.memberProps.email = `test-email-${Math.random().toString(36).substring(7)}@test.com`;
+    return this;
   }
 
   withFirstName(firstName: string): MemberBuilder {
