@@ -1,12 +1,12 @@
 import { Request, Response } from 'express';
 import { JournalService } from './journal.service';
-import { CreateJournalDto } from '@efuller/api/src/modules/journals/journal.dto';
+import { CreateJournalCommand } from '@efuller/shared/src/modules/journals/commands';
 
 export class JournalController {
   constructor(private readonly journalService: JournalService) {}
 
   async create(req: Request, res: Response) {
-    const journal: CreateJournalDto = req.body;
+    const journal: CreateJournalCommand = req.body;
 
     const result = await this.journalService.createJournal(journal);
 

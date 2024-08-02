@@ -1,8 +1,9 @@
+import { v4 as uuidv4 } from 'uuid';
 import { InMemoryJournalRepo } from '@efuller/api/src/modules/journals/adapters/inMemoryJournal.repo';
-import { CreateJournalDto } from '@efuller/api/src/modules/journals/journal.dto';
 import { DrizzleClient } from '@efuller/api/src/shared/persistence/dbConnection/adapters/drizzleClient';
 import { DrizzleJournalRepo } from '@efuller/api/src/modules/journals/adapters/drizzleJournal.repo';
 import { JournalRepo } from '@efuller/api/src/modules/journals/journal.repo';
+import { CreateJournalCommand } from '@efuller/shared/src/modules/journals/commands';
 
 describe('JournalRepo', () => {
   let drizzleClient: DrizzleClient;
@@ -21,7 +22,8 @@ describe('JournalRepo', () => {
   });
 
   it('can retrieve a journal by its id', async () => {
-    const journalDto: CreateJournalDto = {
+    const journalDto: CreateJournalCommand = {
+      id: uuidv4(),
       title: 'Test',
       content: 'Test Content',
     };

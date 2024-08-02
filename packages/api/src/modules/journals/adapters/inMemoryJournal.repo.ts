@@ -1,20 +1,18 @@
 import { JournalRepo } from '@efuller/api/src/modules/journals/journal.repo';
 import { ApiResponse } from '@efuller/shared/src/api';
-import { JournalDto } from '@efuller/api/src/shared/persistence/drizzle/schema';
-import { CreateJournalCommand } from '@efuller/shared/src/modules/journals/commands';
+import { CreateJournalCommand, Journal } from '@efuller/shared/src/modules/journals/commands';
 
 export function generateRandomNumber() {
   return Math.floor(Math.random() * 1000);
 }
 
 export class InMemoryJournalRepo implements JournalRepo {
-  private journals: JournalDto[] = [];
+  private journals: Journal[] = [];
 
-  async createJournal(journal: CreateJournalCommand): Promise<ApiResponse<JournalDto | null>> {
+  async createJournal(journal: CreateJournalCommand): Promise<ApiResponse<Journal | null>> {
     const newJournal = {
       ...journal,
       content: '',
-      id: generateRandomNumber(),
       createdAt: new Date().toString(),
       updatedAt: new Date().toString()
     };
@@ -27,7 +25,7 @@ export class InMemoryJournalRepo implements JournalRepo {
     }
   }
 
-  async getJournals(): Promise<ApiResponse<JournalDto[]>> {
+  async getJournals(): Promise<ApiResponse<Journal[]>> {
     if (!this.journals.length) {
       return {
         success: true,
@@ -41,7 +39,7 @@ export class InMemoryJournalRepo implements JournalRepo {
     }
   }
 
-  async getJournalById(id: number): Promise<ApiResponse<JournalDto | null>> {
+  async getJournalById(id: string): Promise<ApiResponse<Journal | null>> {
     const journal = this.journals.find(journal => journal.id === id);
 
     if (!journal) {
