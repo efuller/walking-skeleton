@@ -13,4 +13,5 @@ export default defineConfig({
   verbose: true,
   // Always ask for confirmation
   strict: false,
+  schemaFilter: ['public'],
 });
