@@ -4,8 +4,7 @@ import { Server } from 'http';
 import { CompositionRoot } from '@efuller/api/src/shared/composition/compositionRoot';
 import { ApiResponse } from '@efuller/shared/src/api';
 import { ApiServer } from '@efuller/api/src/shared/http/apiServer';
-import { JournalDto } from '@efuller/api/src/shared/persistence/drizzle/schema';
-import { CreateJournalCommand } from '@efuller/shared/src/modules/journals/commands';
+import { CreateJournalCommand, Journal } from '@efuller/shared/src/modules/journals/commands';
 
 const feature = loadFeature('./packages/shared/tests/features/addJournal.feature', { tagFilter: '@api' });
 
@@ -14,7 +13,7 @@ defineFeature(feature, (test) => {
     let compositionRoot: CompositionRoot;
     let apiServer: ApiServer;
     let apiDriver: RestApiDriver;
-    let response: ApiResponse<JournalDto>;
+    let response: ApiResponse<Journal>;
 
     beforeAll(async () => {
       compositionRoot = await CompositionRoot.create('test');
@@ -33,7 +32,7 @@ defineFeature(feature, (test) => {
     });
 
     when(/^a user sends a POST request to the "(.*)" endpoint with a title of (.*) and content of (.*)$/, async (endpoint, title, content) => {
-      response = await apiDriver.post<CreateJournalCommand, JournalDto>(endpoint, { title, content });
+      response = await apiDriver.post<CreateJournalCommand, Journal>(endpoint, { title, content });
     });
 
     then(/^the API should respond with a success of true$/, () => {
