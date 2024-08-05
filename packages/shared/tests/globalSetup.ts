@@ -1,7 +1,7 @@
 import isCI from 'is-ci';
 import path from 'path';
 import execSh from 'exec-sh';
-import { generateDrizzleKit } from './utils/generateDrizzleKit';
+import { generateDrizzleKit, migrateDrizzleKit } from './utils/generateDrizzleKit';
 import { setupEnvVars } from './utils/setupEnvVars';
 
 
@@ -20,6 +20,7 @@ export default async () => {
   console.log(out.stdout, out.stderr);
 
   await generateDrizzleKit(path.join(__dirname, '../../', 'api'));
+  await migrateDrizzleKit(path.join(__dirname, '../../', 'api'));
 
   console.timeEnd('globalSetup');
   return true;
