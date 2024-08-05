@@ -6,7 +6,7 @@ const users = authSchema.table("users", {
 });
 
 export const journal = pgTable("journal", {
-	id: uuid("id").primaryKey().notNull(),
+	id: uuid("id").primaryKey().defaultRandom(),
 	title: varchar("title", { length: 255 }).notNull(),
 	content: text("content").default(''),
 	createdAt: timestamp("created_at", { precision: 3, mode: 'string' }).defaultNow().notNull(),
