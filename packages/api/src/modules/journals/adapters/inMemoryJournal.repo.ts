@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 import { JournalRepo } from '@efuller/api/src/modules/journals/journal.repo';
 import { ApiResponse } from '@efuller/shared/src/api';
 import { CreateJournalCommand, Journal } from '@efuller/shared/src/modules/journals/commands';
@@ -12,6 +13,7 @@ export class InMemoryJournalRepo implements JournalRepo {
   async createJournal(journal: CreateJournalCommand): Promise<ApiResponse<Journal | null>> {
     const newJournal = {
       ...journal,
+      id: uuidv4(),
       content: '',
       createdAt: new Date().toString(),
       updatedAt: new Date().toString()
