@@ -2,7 +2,6 @@ import { defineFeature, loadFeature } from 'jest-cucumber';
 import { Server } from 'http';
 import { MemberBuilder } from '@efuller/shared/tests/support/builders/memberBuilder';
 import { CompositionRoot } from '@efuller/api/src/shared/composition/compositionRoot';
-import { AppInterface } from '@efuller/api/src/shared/application';
 import { CreateMemberCommand } from '@efuller/shared/src/modules/members/commands';
 import { ApiServer } from '@efuller/api/src/shared/http/apiServer';
 import { RestApiDriver } from '@efuller/api/src/shared/http/restApiDriver';
