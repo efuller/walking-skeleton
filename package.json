@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "supabase:dev": "supabase start -x realtime,storage-api,imgproxy,inbucket,postgrest,edge-runtime,logflare,vector --workdir=packages/api/src/shared/persistence",
+    "supabase:test": "supabase start -x realtime,storage-api,imgproxy,inbucket,postgrest,edge-runtime,logflare,vector --workdir=packages/shared/tests",
     "supabase:dev:down": "supabase stop --workdir=packages/api/src/shared/persistence",
     "supabase:test:down": "supabase stop --workdir=packages/shared/tests",
     "api:build": "npm run shared:build && npm run build -w packages/api",
@@ -28,6 +29,7 @@
     "tsc:web": "tsc --project packages/web/tsconfig.node.json --noEmit",
     "tsc": "npm run tsc:shared && npm run tsc:api && npm run tsc:web",
     "web:dev": "npm run dev -w packages/web",
+    "web:dev:test": "npm run dev:test -w packages/web",
     "web:ci": "npm run ci:dev -w packages/web",
     "web:build": "npm run build -w packages/web",
     "web:test": "dotenv -e packages/web/.env.test.local -- jest --selectProjects web -c jest.config.ts",

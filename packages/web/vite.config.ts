@@ -3,7 +3,8 @@ import react from '@vitejs/plugin-react-swc'
 import path from 'path';
 
 // https://vitejs.dev/config/
-export default defineConfig(({ mode }) => {
+export default defineConfig(() => {
+  const mode = process.env.NODE_ENV || 'development'
   // Set the third parameter to '' to load all env regardless of the `VITE_` prefix.
   const env = loadEnv(mode, process.cwd(), '')
 
