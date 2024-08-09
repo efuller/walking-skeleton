@@ -13,7 +13,6 @@ export class InMemoryMembersRepo implements MembersRepo {
       firstName: command.firstName || '',
       lastName: command.lastName || '',
       email: command.email,
-      password: command.password,
       createdAt: Date.now().toString(),
       updatedAt: '',
     };
