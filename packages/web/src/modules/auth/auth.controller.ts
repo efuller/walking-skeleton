@@ -9,6 +9,11 @@ export interface UserLoginDto {
 export interface UserRegisterDto {
   email: string;
   password: string;
+  options: {
+    data: {
+      email: string;
+    }
+  }
 }
 
 export class AuthController {
