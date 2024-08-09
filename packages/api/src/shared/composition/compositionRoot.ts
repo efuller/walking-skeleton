@@ -12,6 +12,7 @@ import { FakeDbClient } from '@efuller/api/src/shared/persistence/dbConnection/a
 import { MembersService } from '@efuller/api/src/modules/members/members.service';
 import { MembersRepo } from '@efuller/api/src/modules/members/ports/members.repo';
 import { InMemoryMembersRepo } from '@efuller/api/src/modules/members/adapters/inMemoryMembersRepo';
+import { DrizzleMembersRepo } from '@efuller/api/src/modules/members/adapters/drizzleMembers.repo';
 
 type Context = 'test' | 'test:unit' | 'development' | 'production';
 
@@ -79,7 +80,10 @@ export class CompositionRoot {
   }
 
   private createMembersRepo() {
-    return new InMemoryMembersRepo();
+    if (this.context === 'test:unit') {
+      return new InMemoryMembersRepo();
+    }
+    return new DrizzleMembersRepo(this.dbClient.getClient());
   }
 
   public getJournalService() {

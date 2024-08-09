@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 import { CreateMemberCommand } from '@efuller/shared/src/modules/members/commands';
 
 export class MemberBuilder {
@@ -13,7 +14,10 @@ export class MemberBuilder {
     };
   }
 
-  withId(id: string): MemberBuilder {
+  withId(id: string = ''): MemberBuilder {
+    if (!id) {
+      id = uuidv4();
+    }
     this.memberProps.id = id;
     return this;
   }
