@@ -30,7 +30,15 @@ export class RegisterPage extends BasePage<RegisterComponents> {
     return { registerForm };
   }
 
+  async waitForNavigation() {
+    await this.pageDriver.page.waitForNavigation();
+  }
+
   async getHTML() {
     return this.pageDriver.page.evaluate(() => document.body.innerHTML);
+  }
+
+  getUrl() {
+    return this.pageDriver.page.url();
   }
 }

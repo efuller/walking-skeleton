@@ -40,7 +40,7 @@ export function AppPage({authController} : AppPageProps) {
   const navigate = useNavigate();
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
-      <div className="hidden border-r bg-muted/40 md:block">
+      <div id="sidebar" className="hidden border-r bg-muted/40 md:block">
         <div className="flex h-full max-h-screen flex-col gap-2">
           <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
             <Link to="/" className="flex items-center gap-2 font-semibold">
@@ -72,7 +72,9 @@ export function AppPage({authController} : AppPageProps) {
               </Link>
             </nav>
           </div>
-          hi: Eric
+          <div className="px-5">
+            <p id="user" className="font-medium text-muted-foreground">hi: test@test.com</p>
+          </div>
         </div>
       </div>
       <div className="flex flex-col">
