@@ -4,3 +4,4 @@ export type CreateMemberCommand = typeof members.$inferInsert;
 export type Member = typeof members.$inferSelect;
 
 export type CreatedMemberResult = Omit<Member, 'password'>;
+export type MemberDto = Omit<Member, 'password'>;

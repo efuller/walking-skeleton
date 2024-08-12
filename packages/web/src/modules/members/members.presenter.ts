@@ -1,7 +1,16 @@
+import { MembersRepo } from "./members.repo";
+import { computed, makeObservable } from 'mobx';
+
 export class MembersPresenter {
   get viewModel() {
     return {
-      email: 'test@test.com',
+      email: this.membersRepo.member?.email || '',
     }
+  }
+
+  constructor(private readonly membersRepo: MembersRepo) {
+    makeObservable(this, {
+      viewModel: computed,
+    });
   }
 }
