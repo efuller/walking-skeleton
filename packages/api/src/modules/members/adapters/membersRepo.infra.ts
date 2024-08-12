@@ -34,7 +34,6 @@ describe('MembersRepo', () => {
       .withFirstName('John')
       .withLastName('Doe')
       .withRandomEmail()
-      .withPassword('password')
       .build();
 
     for (const membersRepo of membersRepos) {

@@ -10,7 +10,6 @@ export class MemberBuilder {
       firstName: '',
       lastName: '',
       email: '',
-      password: ''
     };
   }
 
@@ -39,11 +38,6 @@ export class MemberBuilder {
 
   withEmail(email: string): MemberBuilder {
     this.memberProps.email = email;
-    return this;
-  }
-
-  withPassword(password: string): MemberBuilder {
-    this.memberProps.password = password;
     return this;
   }
 

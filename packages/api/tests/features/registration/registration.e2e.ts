@@ -41,7 +41,6 @@ defineFeature(feature, (test) => {
         .withFirstName('John')
         .withLastName('Doe')
         .withRandomEmail()
-        .withPassword('password')
         .build();
       await dbFixture.withUser(createMemberCommand);
     });
