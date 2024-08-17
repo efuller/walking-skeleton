@@ -12,7 +12,7 @@ export class AuthService {
       return {
         success: false,
         data: null,
-        error: 'Error logging in',
+        error: new Error('Invalid credentials'),
       };
     }
 

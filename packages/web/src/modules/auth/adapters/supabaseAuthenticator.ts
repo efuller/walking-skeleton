@@ -42,7 +42,7 @@ export class SupabaseAuthenticator implements Authenticator {
       return {
         success: false,
         data: null,
-        error: result.error.message
+        error: new Error(result.error.message)
       };
     }
 
