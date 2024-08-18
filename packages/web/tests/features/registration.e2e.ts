@@ -56,7 +56,7 @@ defineFeature(feature, (test) => {
     and('My member email is present on the page', async () => {
       // we can check for username in header for FE.
       expect(await sidebar.isValid()).toBe(true);
-      expect(await sidebar.getUserText()).toBe('hi: test@test.com');
+      expect(await sidebar.getUserText()).toBe('hi: e2e@test.com');
     });
   });
 });
