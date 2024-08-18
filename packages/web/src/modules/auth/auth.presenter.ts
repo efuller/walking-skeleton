@@ -5,7 +5,8 @@ export class AuthPresenter {
   get viewModel() {
     return {
       isAuthenticated: this.authRepo.authenticated,
-      redirectTo: ''
+      redirectTo: '',
+      user: this.authRepo.user,
     };
   }
 

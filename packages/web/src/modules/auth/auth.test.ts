@@ -1,6 +1,7 @@
 import { CompositionRoot } from '@/shared/compositionRoot';
 import { AuthModule } from '@/modules/auth/auth.module.ts';
 import { MockAuthenticator } from '@/modules/auth/adapters/mockAuthenticator.ts';
+import { AuthTokenResponsePassword } from '@supabase/supabase-js';
 
 describe('auth', () => {
   let compositionRoot: CompositionRoot;
@@ -17,7 +18,12 @@ describe('auth', () => {
 
   it('should show the user as being authenticated successfully logged in', async () => {
     const authenticator = authModule.getAuthenticator() as MockAuthenticator;
-    authenticator.setLoginResponse(true)
+    const response = {
+      data: {
+        user: { email: 'test@test.com' }
+      },
+    }
+    authenticator.setLoginResponse(response as AuthTokenResponsePassword);
 
     await authModule.getAuthController().login({ email: 'test@test.com', password: 'password' });
 

@@ -37,6 +37,7 @@ export class AuthController {
       const result = await this.authService.login(user);
       if (result.success) {
         this.authRepo.setAuthenticated(true);
+        this.authRepo.setUser(result.data.data.user);
       }
     } catch (error) {
       console.error('Error logging in', error);
