@@ -1,4 +1,4 @@
-import { createClient, SupabaseClient } from '@supabase/supabase-js';
+import { AuthTokenResponsePassword, createClient, SupabaseClient } from '@supabase/supabase-js';
 import { Authenticator } from '@/modules/auth/ports/authenticator.ts';
 import { UserLoginDto, UserRegisterDto } from '@/modules/auth/auth.controller.ts';
 import { ApiResponse } from '@efuller/shared/dist/api';
@@ -17,13 +17,10 @@ export class SupabaseAuthenticator implements Authenticator {
     this.authClient = createClient(url, key)
   }
 
-  async login(user: UserLoginDto): Promise<boolean> {
+  async login(user: UserLoginDto): Promise<AuthTokenResponsePassword> {
     const result = await this.authClient.auth.signInWithPassword(user);
 
-    if (result.error) {
-      return false;
-    }
-    return true;
+    return result;
   }
 
   async logout(): Promise<boolean> {

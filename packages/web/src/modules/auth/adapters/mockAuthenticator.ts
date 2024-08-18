@@ -1,11 +1,12 @@
 import { Authenticator } from '@/modules/auth/ports/authenticator.ts';
 import { UserLoginDto, UserRegisterDto } from '@/modules/auth/auth.controller.ts';
 import { ApiResponse } from '@efuller/shared/dist/api';
+import { AuthTokenResponsePassword } from '@supabase/supabase-js';
 
 export class MockAuthenticator implements Authenticator {
-  private loginResponse = false;
+  private loginResponse!: AuthTokenResponsePassword;
 
-  public async login(user: UserLoginDto): Promise<boolean> {
+  public async login(user: UserLoginDto): Promise<AuthTokenResponsePassword> {
     console.log('Logging user in', user);
     return this.loginResponse;
   }
@@ -18,7 +19,7 @@ export class MockAuthenticator implements Authenticator {
     throw new Error('Method not implemented.');
   }
 
-  public setLoginResponse(response: boolean) {
+  public setLoginResponse(response: AuthTokenResponsePassword) {
     this.loginResponse = response;
   }
 
