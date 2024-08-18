@@ -13,4 +13,12 @@ export class MembersPresenter {
       viewModel: computed,
     });
   }
+
+  async loadMember(email: string) {
+    await this.membersRepo.loadMember(email);
+  }
+
+  isMemberLoaded() {
+    return this.viewModel.email !== '';
+  }
 }
