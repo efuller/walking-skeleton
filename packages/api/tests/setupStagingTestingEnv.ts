@@ -7,7 +7,9 @@ async function sleep(ms: number) {
 }
 
 export default async () => {
+  const rootCwd = path.join(__dirname, '../');
+
   setupEnvVars('./packages/shared/tests/.env.test');
-  await generateDrizzleKit('./packages/api');
+  await generateDrizzleKit(rootCwd);
   await sleep(1000);
 };
