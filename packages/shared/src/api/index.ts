@@ -1,4 +1,5 @@
 import { MemberDto } from '@efuller/shared/src/modules/members/commands';
+import { AppConfig } from 'web/src/shared/appConfig';
 
 export type ApiResponse<T> = {
   success: boolean;
@@ -80,21 +81,21 @@ export class ClientApi {
   public app: AppApiClient;
 
   private constructor(
-    private readonly context: 'test' | 'production' = 'production',
+    private readonly config: AppConfig,
     app: AppApiClient
   ) {
     this.app = app;
   }
 
-  public static create(baseUrl: string, context: 'test' | 'production' = 'production'): ClientApi {
-    if (context === 'test') {
+  public static create(baseUrl: string, config: AppConfig): ClientApi {
+    if (config.useMocks()) {
       const members = new MockMembersApiClient(baseUrl);
       const api = {
         app: {
           members
         }
       }
-      return new ClientApi(context, api);
+      return new ClientApi(config, api);
     }
 
     const members = new MembersApiClient(baseUrl);
@@ -104,6 +105,6 @@ export class ClientApi {
         members
       }
     }
-    return new ClientApi(context, api);
+    return new ClientApi(config, api);
   }
 }
