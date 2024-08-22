@@ -22,7 +22,7 @@ const LoadingProfile = observer(({presenter}: LoadingProfileProps) => {
     if (loaded) {
       navigate('/app/journals');
     }
-  }, []);
+  }, [navigate, presenter]);
   return (
     <h2>Loading profile...</h2>
   );

@@ -2,7 +2,6 @@ import { RestApiDriver } from './restApiDriver';
 import { Server } from 'http';
 import { CompositionRoot } from '@efuller/api/src/shared/composition/compositionRoot';
 import { ApiServer } from '@efuller/api/src/shared/http/apiServer';
-import { ApiResponse } from '@efuller/shared/src/api';
 
 describe('Web Server', () => {
   let compositionRoot: CompositionRoot;
