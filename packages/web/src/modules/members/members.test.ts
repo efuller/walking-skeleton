@@ -1,14 +1,19 @@
 import { MembersPresenter } from './members.presenter';
 import { CompositionRoot } from '@/shared/compositionRoot';
 import { AppApiClient } from '@efuller/shared/dist/api';
+import { AppConfig } from '@/shared/appConfig';
 
 describe('Members', () => {
   let membersPresenter: MembersPresenter;
   let compositionRoot: CompositionRoot;
   let clientApi: AppApiClient;
+  const appConfig = new AppConfig({
+    environment: 'test',
+    script: 'test-unit',
+  });
 
   beforeEach(async () => {
-    compositionRoot = await CompositionRoot.create('test');
+    compositionRoot = await CompositionRoot.create(appConfig);
     membersPresenter = compositionRoot.getMembersModule().getMembersPresenter();
     clientApi = compositionRoot.getClientApi();
     // membersController = compositionRoot.getMembersModule().getMembersController();

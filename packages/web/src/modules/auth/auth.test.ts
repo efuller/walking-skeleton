@@ -2,13 +2,18 @@ import { CompositionRoot } from '@/shared/compositionRoot';
 import { AuthModule } from '@/modules/auth/auth.module.ts';
 import { MockAuthenticator } from '@/modules/auth/adapters/mockAuthenticator.ts';
 import { AuthTokenResponsePassword } from '@supabase/supabase-js';
+import { AppConfig } from '@/shared/appConfig';
 
 describe('auth', () => {
   let compositionRoot: CompositionRoot;
   let authModule: AuthModule;
+  const appConfig = new AppConfig({
+    environment: 'test',
+    script: 'test-unit',
+  });
 
   beforeEach(async () => {
-    compositionRoot = await CompositionRoot.create('test');
+    compositionRoot = await CompositionRoot.create(appConfig);
     authModule = compositionRoot.getAuthModule();
   });
 
