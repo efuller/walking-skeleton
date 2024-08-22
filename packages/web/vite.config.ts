@@ -12,6 +12,8 @@ export default defineConfig(() => {
     define: {
       'process.env.SUPABASE_URL': JSON.stringify(env.SUPABASE_URL),
       'process.env.SUPABASE_ANON_KEY': JSON.stringify(env.SUPABASE_ANON_KEY),
+      'process.env.API_URL': JSON.stringify(env.API_URL),
+      'process.env.TEST_SCRIPT': JSON.stringify(env.TEST_SCRIPT),
     },
     build: {
       target: 'esnext',
