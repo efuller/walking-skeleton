@@ -8,6 +8,6 @@ async function sleep(ms: number) {
 
 export default async () => {
   setupEnvVars('./packages/shared/tests/.env.test');
-  await generateDrizzleKit('./packages/shared/tests/.env.test');
+  await generateDrizzleKit('./packages/api');
   await sleep(1000);
 };
