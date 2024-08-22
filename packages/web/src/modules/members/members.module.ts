@@ -2,6 +2,7 @@ import { MembersPresenter } from '@/modules/members/members.presenter.ts';
 import { MembersRepo } from './members.repo';
 import { MembersController } from './members.controller';
 import { MembersApi } from '@efuller/shared/src/api';
+import { AppConfig } from '@/shared/appConfig';
 
 export class MembersModule {
   private readonly membersPresenter: MembersPresenter;
@@ -9,7 +10,7 @@ export class MembersModule {
   private readonly membersRepo: MembersRepo;
 
   constructor(
-    private readonly context: 'test' | 'production' = 'production',
+    private readonly config: AppConfig,
     private readonly api: MembersApi,
   ) {
     this.membersRepo = new MembersRepo(this.api);

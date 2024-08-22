@@ -5,6 +5,7 @@ import { SupabaseAuthenticator } from '@/modules/auth/adapters/supabaseAuthentic
 import { MockAuthenticator } from '@/modules/auth/adapters/mockAuthenticator.ts';
 import { AuthRepo } from '@/modules/auth/auth.repo.ts';
 import { AuthController } from './auth.controller';
+import { AppConfig } from '@/shared/appConfig';
 
 export class AuthModule {
   private readonly authPresenter: AuthPresenter;
@@ -13,7 +14,7 @@ export class AuthModule {
   private readonly authService: AuthService;
   private readonly authController: AuthController;
 
-  constructor(private readonly context: 'test' | 'production' = 'production'){
+  constructor(private readonly config: AppConfig){
     this.authRepo = new AuthRepo();
     this.authPresenter = new AuthPresenter(this.authRepo);
     this.authenticator = this.buildAuthenticator();
@@ -22,7 +23,7 @@ export class AuthModule {
   }
 
   private buildAuthenticator() {
-    if (this.context !== 'test') {
+    if (!this.config.useMocks()) {
       return new SupabaseAuthenticator();
     }
 
