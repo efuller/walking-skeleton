@@ -32,11 +32,13 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Badge } from '@/components/ui/badge.tsx';
 import { Input } from '@/components/ui/input.tsx';
 import { AuthController } from '@/modules/auth/auth.controller.ts';
+import { MembersPresenter } from '@/modules/members/members.presenter.ts';
 
 interface AppPageProps {
   authController: AuthController;
+  membersPresenter: MembersPresenter;
 }
-export function AppPage({authController} : AppPageProps) {
+export function AppPage({authController, membersPresenter} : AppPageProps) {
   const navigate = useNavigate();
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
@@ -73,7 +75,7 @@ export function AppPage({authController} : AppPageProps) {
             </nav>
           </div>
           <div className="px-5">
-            <p id="user" className="font-medium text-muted-foreground">hi: test@test.com</p>
+            <p id="user" className="font-medium text-muted-foreground">{ `hi: ${membersPresenter.viewModel.email}` }</p>
           </div>
         </div>
       </div>
