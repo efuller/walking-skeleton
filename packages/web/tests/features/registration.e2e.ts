@@ -44,8 +44,11 @@ defineFeature(feature, (test) => {
 
     when('I register with valid credentials', async () => {
       await registerForm.fillAndSubmitForm();
-      // await registerPage.waitForNavigation();
-      // expect(registerPage.getUrl()).toContain('logging-in');
+    });
+
+    then('My member profile is loaded', async () => {
+      await registerPage.waitForNavigation();
+      expect(registerPage.getUrl()).toContain('load-profile');
     });
 
     then('I am redirected to the dashboard', async () => {
