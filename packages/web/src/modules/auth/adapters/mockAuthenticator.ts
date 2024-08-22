@@ -1,7 +1,6 @@
 import { Authenticator } from '@/modules/auth/ports/authenticator.ts';
 import { UserLoginDto, UserRegisterDto } from '@/modules/auth/auth.controller.ts';
-import { ApiResponse } from '@efuller/shared/dist/api';
-import { AuthTokenResponsePassword } from '@supabase/supabase-js';
+import { AuthResponse, AuthTokenResponsePassword } from '@supabase/supabase-js';
 
 export class MockAuthenticator implements Authenticator {
   private loginResponse!: AuthTokenResponsePassword;
@@ -15,7 +14,7 @@ export class MockAuthenticator implements Authenticator {
     throw new Error('Method not implemented.');
   }
 
-  public async refreshSession(): Promise<ApiResponse<null>> {
+  public async refreshSession(): Promise<AuthResponse> {
     throw new Error('Method not implemented.');
   }
 
@@ -23,8 +22,8 @@ export class MockAuthenticator implements Authenticator {
     this.loginResponse = response;
   }
 
-  register(user: UserRegisterDto): Promise<boolean> {
+  register(user: UserRegisterDto): Promise<AuthResponse> {
     console.log('Registering user', user);
-    return Promise.resolve(false);
+    return Promise.resolve({} as AuthResponse);
   }
 }
