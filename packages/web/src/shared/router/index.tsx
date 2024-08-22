@@ -37,6 +37,8 @@ export class AppRouter {
   private async protectedLoader() {
     const controller = this.authModule.getAuthController();
     const presenter = this.authModule.getAuthPresenter();
+    const authPresenter = this.authModule.getAuthPresenter();
+    const memberPresenter = this.membersModule.getMembersPresenter();
     const isAuthenticated = presenter.viewModel.isAuthenticated;
 
     if (!isAuthenticated) {
@@ -44,6 +46,10 @@ export class AppRouter {
       if (!result) {
         return redirect('/');
       }
+    }
+
+    if (!memberPresenter.viewModel.email && authPresenter.viewModel.user?.email) {
+      await memberPresenter.loadMember(authPresenter.viewModel.user?.email);
     }
 
     return null;
@@ -70,7 +76,7 @@ export class AppRouter {
       },
       {
         path: 'app',
-        element: <AppPage authController={this.authModule.getAuthController()} />,
+        element: <AppPage authController={this.authModule.getAuthController()} membersPresenter={this.membersModule.getMembersPresenter()} />,
         loader: this.protectedLoader.bind(this),
         children: [
           {
