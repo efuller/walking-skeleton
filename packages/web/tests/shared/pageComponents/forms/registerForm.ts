@@ -16,7 +16,7 @@ export class RegisterForm extends BasePageComponent<RegisterFormElements> {
   }
 
   async fillAndSubmitForm() {
-    await this.waitAndType('userName', 'e2ee@test.com');
+    await this.waitAndType('userName', 'e2e@test.com');
     await this.waitAndType('password', 'password');
     await this.waitAndClick('submitBtn');
   }
