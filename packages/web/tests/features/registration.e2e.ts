@@ -47,7 +47,9 @@ defineFeature(feature, (test) => {
     });
 
     then('My member profile is loaded', async () => {
+      console.log('member profile before', registerPage.getUrl());
       await registerPage.waitForNavigation();
+      console.log('member profile after', registerPage.getUrl());
       expect(registerPage.getUrl()).toContain('load-profile');
     });
 
