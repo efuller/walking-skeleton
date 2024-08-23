@@ -60,8 +60,6 @@ export default async (): Promise<Config> => ({
         '^.+\\.tsx?$': ['ts-jest', {}],
       },
       rootDir: '<rootDir>/packages/web',
-      globalSetup: '../shared/tests/globalSetup.ts',
-      globalTeardown: '../shared/tests/globalTeardown.ts',
     },
     {
       displayName: 'web',
