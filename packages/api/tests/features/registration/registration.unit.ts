@@ -24,7 +24,6 @@ defineFeature(feature, (test) => {
         .withFirstName('John')
         .withLastName('Doe')
         .withEmail('johndoe@test.com')
-        .withPassword('password')
         .build();
       application.members.createMember(createMemberCommand);
     });
