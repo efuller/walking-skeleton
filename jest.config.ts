@@ -39,8 +39,9 @@ export default async (): Promise<Config> => ({
       transform: {
         '^.+\\.tsx?$': ['ts-jest', {}],
       },
+      globalSetup: '../shared/tests/globalSetup.ts',
+      globalTeardown: '../shared/tests/globalTeardown.ts',
       rootDir: '<rootDir>/packages/api',
-      globalSetup: './tests/setupStagingTestingEnv.ts',
     },
     {
       displayName: 'api-staging-infra',
