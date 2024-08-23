@@ -21,6 +21,8 @@ export default async function setupTestEnv() {
   );
   console.log(out.stdout, out.stderr);
 
+  console.log('---------DB_URL---------', process.env.DATABASE_URL);
+
   await generateDrizzleKit(path.join(__dirname, '../../', 'api'));
   await migrateDrizzleKit(path.join(__dirname, '../../', 'api'));
 
