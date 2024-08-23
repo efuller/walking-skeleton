@@ -8,13 +8,13 @@ export default async () => {
   console.time('globalTeardown');
 
   if (isCI) {
-    const out = await execSh.promise(
-      `supabase stop`,
-      {
-        cwd: path.join(__dirname, 'supabase'),
-      },
-    );
-    console.log(out.stdout, out.stderr);
+    // const out = await execSh.promise(
+    //   `supabase stop`,
+    //   {
+    //     cwd: path.join(__dirname, 'supabase'),
+    //   },
+    // );
+    // console.log(out.stdout, out.stderr);
   } else {
     // Randomly clear out the test db.
     if (Math.ceil(Math.random() * 10) === 10) {

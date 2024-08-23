@@ -22,11 +22,11 @@ jobs:
           path: ~/.npm
           key: ${{ env.CACHE_KEY }}-${{ hashFiles('**/package-lock.json') }}
 
-#      - name: Setup supabase
-#        uses: supabase/setup-cli@v1
-#
-#      - name: Start supabase
-#        run: supabase start -x realtime --workdir=./packages/api/src/shared/persistence
+      - name: Setup supabase
+        uses: supabase/setup-cli@v1
+
+      - name: Start supabase
+        run: supabase start -x realtime --workdir=./packages/shared/tests
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
