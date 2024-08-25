@@ -2,8 +2,8 @@ import 'dotenv/config'; // make sure to install dotenv package
 import { defineConfig } from 'drizzle-kit';
 import isCI from 'is-ci';
 
-const outPath = isCI ? './packages/shared/src/persistence/drizzle' : './src/shared/persistence/drizzle';
-const schemaPath = isCI ? './packages/shared/src/persistence/drizzle/schema.ts' : './src/shared/persistence/drizzle/schema.ts';
+const outPath = isCI ? './packages/api/src/shared/persistence/drizzle' : './src/shared/persistence/drizzle';
+const schemaPath = isCI ? './packages/api/src/shared/persistence/drizzle/schema.ts' : './src/shared/persistence/drizzle/schema.ts';
 
 export default defineConfig({
   dialect: 'postgresql',
