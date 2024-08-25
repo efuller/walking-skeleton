@@ -17,7 +17,9 @@ export class ApiServer {
     this.express = express();
     this.express.use(express.json());
     // Handle preflight requests for all routes
-    this.express.options('*', cors());
+    this.express.options('*', cors({
+      origin,
+    }));
 
     this.express.use(cors({
       origin,
