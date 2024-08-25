@@ -23,15 +23,20 @@ export class DrizzleMembersRepo implements MembersRepo {
   }
 
   async getMemberByEmail(email: string): Promise<Member | null> {
-    const result = await this.client
-      .select()
-      .from(members)
-      .where(eq(members.email, email));
+    try {
+      const result = await this.client
+        .select()
+        .from(members)
+        .where(eq(members.email, email));
 
-    if (result.length < 1 ) {
+      if (result.length < 1) {
+        return null;
+      }
+
+      return result[0];
+    } catch (error) {
+      console.error('Error getting member by email', error);
       return null;
     }
-
-    return result[0];
   }
 }
