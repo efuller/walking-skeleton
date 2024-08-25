@@ -16,14 +16,16 @@ export class ApiServer {
     this.server = null;
     this.express = express();
     this.express.use(express.json());
-    // Handle preflight requests for all routes
-    this.express.options('*', cors({
-      origin,
-    }));
-
     this.express.use(cors({
       origin,
     }));
+    // Handle preflight requests for all routes
+    this.express.options('*', cors({
+      origin,
+      methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+      allowedHeaders: ['Content-Type', 'Authorization'],
+    }));
+
     this.port = process.env.PORT ? Number(process.env.PORT) : 0;
     this.running = false;
 
