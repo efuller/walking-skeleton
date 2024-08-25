@@ -42,9 +42,6 @@ jobs:
       - name: Build frontend
         run: npm run web:build
 
-#      - name: Run drizzle push
-#        run: npm run drizzle:push:dev -w packages/api
-
       - name: Run API
         run: |
           npm run api:ci:start:e2e &
