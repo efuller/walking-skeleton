@@ -31,7 +31,7 @@ export const RegisterPage = observer(({authController, authPresenter}: RegisterP
 
   useEffect(() => {
     if (authPresenter.viewModel.isAuthenticated) {
-      navigate('/app/journals');
+      navigate('/app/load-profile');
     }
   }, [authPresenter.viewModel.isAuthenticated, navigate]);
 

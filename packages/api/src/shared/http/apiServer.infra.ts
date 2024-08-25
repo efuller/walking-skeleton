@@ -33,8 +33,7 @@ describe('Web Server', () => {
   it('should be able to check server health', async () => {
     const server = apiServer.getServer();
     const restApiDriver = new RestApiDriver(server as Server);
-    const response = await restApiDriver.get('/health');
-    expect(response.status).toBe(200);
-    expect(response.ok).toBe(true);
+    const response = await restApiDriver.get<null>('/health');
+    expect(response.success).toBe(true);
   });
 });

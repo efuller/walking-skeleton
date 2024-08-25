@@ -1,17 +1,24 @@
-import { pgTable, serial, text, timestamp, varchar } from 'drizzle-orm/pg-core';
+import { pgSchema, pgTable, text, timestamp, uuid, varchar } from 'drizzle-orm/pg-core';
+const authSchema = pgSchema("auth");
+
+const users = authSchema.table("users", {
+	id: uuid("id").primaryKey(),
+});
 
 export const journal = pgTable("journal", {
-	id: serial("id").primaryKey(),
+	id: uuid("id").primaryKey().defaultRandom(),
 	title: varchar("title", { length: 255 }).notNull(),
 	content: text("content").default(''),
 	createdAt: timestamp("created_at", { precision: 3, mode: 'string' }).defaultNow().notNull(),
 	updatedAt: timestamp("updated_at", { precision: 3, mode: 'string' }).defaultNow().notNull(),
 });
 
-export const dbhealth = pgTable("dbhealth", {
-	id: serial("id").primaryKey(),
-	name: text("name"),
+export const members = pgTable("members", {
+	id: uuid("id").primaryKey().defaultRandom(),
+	userId: uuid("user_id").references(() => users.id, { onDelete: 'cascade' }),
+	firstName: varchar("first_name", { length: 50 }),
+	lastName: varchar("last_name", { length: 50 }),
+	email: varchar("email", { length: 255 }).unique().notNull(),
+	createdAt: timestamp("created_at", { precision: 3, mode: 'string' }).defaultNow().notNull(),
+	updatedAt: timestamp("updated_at", { precision: 3, mode: 'string' }).defaultNow().notNull(),
 });
-
-export type CreateJournalDto = typeof journal.$inferInsert;
-export type JournalDto = typeof journal.$inferSelect;

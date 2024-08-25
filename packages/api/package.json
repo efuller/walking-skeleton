@@ -6,10 +6,11 @@
   "scripts": {
     "build": "rimraf dist && swc ./src -d dist",
     "start:dev": "ts-node setupDevEnv.ts && dotenv -e .env.development -- nodemon --config nodemon.dev.json",
-    "staging:start:e2e": "NODE_ENV=development ts-node ./dist/src/index.js",
+    "start:dev:test": "ts-node ../shared/tests/setupTestEnv.ts && dotenv -e ../shared/tests/.env.test -- nodemon --config nodemon.dev.json",
+    "staging:start:e2e": "NODE_ENV=test ts-node ../shared/tests/setupTestEnv.ts && dotenv -e ../shared/tests/.env.test -- nodemon",
     "start": "nodemon",
     "drizzle:push": "NODE_ENV=production drizzle-kit push --config=drizzle.config.ts",
-    "drizzle:push:dev": "NODE_ENV=development dotenv -e .env.development -- drizzle-kit push --config=drizzle.config.ts"
+    "drizzle:push:dev": "NODE_ENV=development dotenv -e .env.development -- drizzle-kit push --config=drizzle.config.ts && dotenv -e .env.development -- drizzle-kit migrate --config=drizzle.config.ts"
   },
   "engines": {
     "node": "20",

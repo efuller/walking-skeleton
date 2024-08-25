@@ -1,4 +1,4 @@
-import { DrizzleClient } from '@efuller/api/src/shared/persistence/drizzle/drizzleClient';
+import { DrizzleClient } from '@efuller/api/src/shared/persistence/dbConnection/adapters/drizzleClient';
 
 describe('Database', () => {
   let drizzleClient: DrizzleClient;

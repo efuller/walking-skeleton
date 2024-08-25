@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "supabase:dev": "supabase start -x realtime,storage-api,imgproxy,inbucket,postgrest,edge-runtime,logflare,vector --workdir=packages/api/src/shared/persistence",
+    "supabase:test": "supabase start -x realtime,storage-api,imgproxy,inbucket,postgrest,edge-runtime,logflare,vector --workdir=packages/shared/tests",
     "supabase:dev:down": "supabase stop --workdir=packages/api/src/shared/persistence",
+    "supabase:test:down": "supabase stop --workdir=packages/shared/tests",
     "api:build": "npm run shared:build && npm run build -w packages/api",
     "api:start": "npm run start -w packages/api",
     "api:start:dev": "npm run start:dev -w packages/api",
@@ -15,15 +17,19 @@
     "api:test:e2e": "jest --selectProjects api-e2e -c jest.config.ts",
     "api:test:e2e:watch": "jest -c --selectProjects api-e2e jest.config.ts --watchAll",
     "api:test:unit": "jest --selectProjects api-unit -c jest.config.ts",
+    "api:test:unit:watch": "jest --selectProjects api-unit -c jest.config.ts --watchAll",
     "api:test:infra": "jest --selectProjects api-infra -c jest.config.ts",
     "api:test:infra:watch": "jest --selectProjects api-infra -c jest.config.ts --watchAll",
     "lint": "eslint \"**/*.{ts,tsx}\"",
     "shared:build": "npm run build -w packages/shared",
+    "supabase:status:dev": "supabase status --workdir=packages/api/src/shared/persistence",
+    "supabase:status:test": "supabase status --workdir=packages/shared/tests",
     "tsc:api": "tsc --project packages/api/tsconfig.json --noEmit",
     "tsc:shared": "tsc --project packages/shared/tsconfig.build.json --noEmit",
     "tsc:web": "tsc --project packages/web/tsconfig.node.json --noEmit",
     "tsc": "npm run tsc:shared && npm run tsc:api && npm run tsc:web",
     "web:dev": "npm run dev -w packages/web",
+    "web:dev:test": "npm run dev:test -w packages/web",
     "web:ci": "npm run ci:dev -w packages/web",
     "web:build": "npm run build -w packages/web",
     "web:test": "dotenv -e packages/web/.env.test.local -- jest --selectProjects web -c jest.config.ts",
@@ -63,6 +69,7 @@
     "ts-node": "^10.9.2"
   },
   "dependencies": {
-    "@supabase/auth-js": "^2.64.4"
+    "@supabase/auth-js": "^2.64.4",
+    "uuid": "^10.0.0"
   }
 }

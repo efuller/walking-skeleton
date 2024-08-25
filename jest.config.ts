@@ -7,7 +7,7 @@ export default async (): Promise<Config> => ({
   projects: [
     {
       displayName: 'api-unit',
-      testMatch: ['**/@(src|tests)/**/*.@(test|spec).@(ts|tsx)'],
+      testMatch: ['**/@(src|tests)/**/*.@(unit).@(ts|tsx)'],
       transform: {
         '^.+\\.tsx?$': ['ts-jest', {}],
       },
@@ -39,8 +39,9 @@ export default async (): Promise<Config> => ({
       transform: {
         '^.+\\.tsx?$': ['ts-jest', {}],
       },
+      globalSetup: '../shared/tests/globalSetup.ts',
+      globalTeardown: '../shared/tests/globalTeardown.ts',
       rootDir: '<rootDir>/packages/api',
-      globalSetup: './tests/setupStagingTestingEnv.ts',
     },
     {
       displayName: 'api-staging-infra',
@@ -58,7 +59,7 @@ export default async (): Promise<Config> => ({
       transform: {
         '^.+\\.tsx?$': ['ts-jest', {}],
       },
-      rootDir: '<rootDir>/packages/web'
+      rootDir: '<rootDir>/packages/web',
     },
     {
       displayName: 'web',

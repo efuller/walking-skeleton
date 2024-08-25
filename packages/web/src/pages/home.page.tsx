@@ -31,7 +31,7 @@ export const HomePage = observer(({ authPresenter, authController }: HomePagePro
 
   useEffect(() => {
     if (authPresenter.viewModel.isAuthenticated) {
-      navigate('/app/journals');
+      navigate('/app/load-profile');
     }
   }, [authPresenter.viewModel.isAuthenticated, navigate]);
 

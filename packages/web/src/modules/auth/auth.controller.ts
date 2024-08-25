@@ -22,12 +22,15 @@ export class AuthController {
       const result = await this.authService.register(user);
       if (result) {
         this.authRepo.setAuthenticated(true);
+        this.authRepo.setUser(result.data.data.user);
         return;
       }
       this.authRepo.setAuthenticated(false);
+      this.authRepo.setUser(null);
       return;
     } catch (error) {
       this.authRepo.setAuthenticated(false);
+      this.authRepo.setUser(null);
       console.error('Error logging in', error);
     }
   }
@@ -37,6 +40,7 @@ export class AuthController {
       const result = await this.authService.login(user);
       if (result.success) {
         this.authRepo.setAuthenticated(true);
+        this.authRepo.setUser(result.data.data.user);
       }
     } catch (error) {
       console.error('Error logging in', error);
@@ -57,6 +61,7 @@ export class AuthController {
       const result = await this.authService.getSession();
       if (result.success) {
         this.authRepo.setAuthenticated(true);
+        this.authRepo.setUser(result.data.data.user);
         return true;
       }
       return false

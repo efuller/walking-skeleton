@@ -1,41 +1,89 @@
 import { ApiServer } from '../http/apiServer';
 import { JournalService } from '@efuller/api/src/modules/journals/journal.service';
-import { Database } from '@efuller/api/src/shared/persistence/database';
-import { DrizzleClient } from '@efuller/api/src/shared/persistence/drizzle/drizzleClient';
+import { DrizzleClient } from '@efuller/api/src/shared/persistence/dbConnection/adapters/drizzleClient';
 import { DrizzleJournalRepo } from '@efuller/api/src/modules/journals/adapters/drizzleJournal.repo';
 import { AppInterface } from '@efuller/api/src/shared/application';
+import { JournalRepo } from '@efuller/api/src/modules/journals/journal.repo';
+import { DbConnection } from '@efuller/api/src/shared/persistence/dbConnection/dbConnection';
+import { NodePgDatabase } from 'drizzle-orm/node-postgres/driver';
+import * as schema from '@efuller/api/src/shared/persistence/drizzle/schema';
+import { InMemoryJournalRepo } from '@efuller/api/src/modules/journals/adapters/inMemoryJournal.repo';
+import { FakeDbClient } from '@efuller/api/src/shared/persistence/dbConnection/adapters/fakeDbClient';
+import { MembersService } from '@efuller/api/src/modules/members/members.service';
+import { MembersRepo } from '@efuller/api/src/modules/members/ports/members.repo';
+import { InMemoryMembersRepo } from '@efuller/api/src/modules/members/adapters/inMemoryMembersRepo';
+import { DrizzleMembersRepo } from '@efuller/api/src/modules/members/adapters/drizzleMembers.repo';
+
+type Context = 'test' | 'test:unit' | 'development' | 'production';
 
 export class CompositionRoot {
   private static instance: CompositionRoot;
-  private readonly db: Database;
   private readonly apiServer: ApiServer;
   private readonly application!: AppInterface;
+  private readonly journalsRepo: JournalRepo;
+  private readonly membersRepo: MembersRepo;
 
-  /**
-   * TODO: Create an abstraction for a database client class.
-   */
-  constructor(private readonly drizzleClient: DrizzleClient) {
-    this.db = this.createDatabase(drizzleClient);
+  constructor(
+    private readonly context: Context,
+    private readonly dbClient: DbConnection<NodePgDatabase<typeof schema>>
+  ) {
+    this.journalsRepo = this.createJournalRepo();
+    this.membersRepo = this.createMembersRepo();
     this.application = this.createApplication();
     this.apiServer = this.createApiServer();
   }
 
-  public static async create() {
+  /**
+   * TODO: We could remove this static factory method and use a bootstrap function instead and inject the db client.
+   */
+  public static async create(context: Context = 'development') {
     if (!CompositionRoot.instance) {
-      const drizzleClient = await DrizzleClient.create();
-      CompositionRoot.instance = new CompositionRoot(drizzleClient);
+
+      if (context === 'test:unit') {
+        CompositionRoot.instance = new CompositionRoot(context, new FakeDbClient());
+        return CompositionRoot.instance;
+      }
+
+      const dbClient = await DrizzleClient.create();
+      CompositionRoot.instance = new CompositionRoot(context, dbClient);
     }
     return CompositionRoot.instance;
   }
 
-  private createJournalService() {
-    return new JournalService(this.db);
+  private createJournalRepo() {
+    if (this.context === 'test:unit') {
+      return new InMemoryJournalRepo();
+    }
+    return new DrizzleJournalRepo(this.dbClient.getClient());
+  }
+
+  public getApplication() {
+    return this.application;
   }
 
   private createApplication(): AppInterface {
     return {
       journals: this.getJournalService(),
+      members: this.getMembersService()
     }
+  }
+
+  public getMembersService() {
+    if (!this.application?.members) {
+      return this.createMembersService();
+    }
+    return this.application.members;
+  }
+
+  private createMembersService() {
+    return new MembersService(this.membersRepo);
+  }
+
+  private createMembersRepo() {
+    if (this.context === 'test:unit') {
+      return new InMemoryMembersRepo();
+    }
+    return new DrizzleMembersRepo(this.dbClient.getClient());
   }
 
   public getJournalService() {
@@ -45,10 +93,8 @@ export class CompositionRoot {
     return this.application.journals;
   }
 
-  private createDatabase(drizzleClient: DrizzleClient) {
-    return {
-      journals: new DrizzleJournalRepo(drizzleClient),
-    }
+  private createJournalService() {
+    return new JournalService(this.journalsRepo);
   }
 
   createApiServer() {
@@ -59,10 +105,6 @@ export class CompositionRoot {
     return this.apiServer;
   }
 
-  public getDatabase() {
-    return this.db;
-  }
-
   public static getInstance() {
    if (!CompositionRoot.instance) {
       throw new Error('CompositionRoot not initialized. Call create() first.');
@@ -71,6 +113,6 @@ export class CompositionRoot {
   }
 
   public async disconnectDb() {
-    await this.drizzleClient.disconnect();
+    await this.dbClient.disconnect();
   }
 }

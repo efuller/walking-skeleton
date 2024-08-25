@@ -28,3 +28,26 @@ export const generateDrizzleKit = async (
 
   await sleep(1000);
 };
+
+export const migrateDrizzleKit = async (
+  rootCwd: string,
+) => {
+  console.log('-----------------------------------');
+  console.log('Running Drizzle Migrations...');
+  console.log('-----------------------------------');
+
+  const schemaPath = path.join(rootCwd, 'drizzle.config.ts');
+  const out = await execSh.promise(
+    `drizzle-kit migrate --config=${schemaPath}`,
+    {
+      cwd: rootCwd,
+    },
+  );
+  console.log(out.stdout, out.stderr);
+
+  console.log('-----------------------------------');
+  console.log('Drizzle Migrations Complete!');
+  console.log('-----------------------------------');
+
+  await sleep(1000);
+};

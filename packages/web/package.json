@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "ci:dev": "NODE_ENV=development vite",
+    "dev:test": "NODE_ENV=test TEST_SCRIPT=test-e2e vite",
+    "ci:dev": "NODE_ENV=test TEST_SCRIPT=test-e2e vite",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
