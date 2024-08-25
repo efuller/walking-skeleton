@@ -33,6 +33,6 @@ jobs:
       - name: Current Directory
         run: pwd
       - name: Run Drizzle
-        run: NODE_ENV=production npx drizzle-kit push --dialect=postgresql --schema=${{ github.workspace }}/packages/api/src/shared/persistence/drizzle/schema.ts --url=${{ secrets.DATABASE_URL }}
+        run: NODE_ENV=production npx drizzle-kit push --force --dialect=postgresql --schema=${{ github.workspace }}/packages/api/src/shared/persistence/drizzle/schema.ts --url=${{ secrets.DATABASE_URL }}
       - name: Run Migrations
         run: NODE_ENV=production npx drizzle-kit migrate --config=${{ github.workspace }}/packages/api/drizzle.config.ts
