@@ -1,10 +1,17 @@
 import { Server } from 'http';
-import express, { Application } from 'express';
+import express, { Application, Request } from 'express';
 import cors from 'cors';
 import { JournalController } from '@efuller/api/src/modules/journals/journal.controller';
 import { AppInterface } from '@efuller/api/src/shared/application';
 import { MembersController } from '@efuller/api/src/modules/members/members.controller';
 import { AuthMiddleware } from '@efuller/api/src/shared/http/middleware/auth.middleware';
+import { AuthService } from '@efuller/shared/src/modules/auth/auth.service';
+import { SupabaseAuthenticator } from '@efuller/shared/src/modules/auth/adapters/supabaseAuthenticator';
+import { User } from '@supabase/auth-js';
+
+export interface MeRequest extends Request {
+  user?: User;
+}
 
 export class ApiServer {
   private server: Server | null;
@@ -40,7 +47,9 @@ export class ApiServer {
     const membersService = this.app.members;
     const journalController = new JournalController(journalService);
     const membersController = new MembersController(membersService);
-    const authMiddleware = new AuthMiddleware();
+    const authClient = new SupabaseAuthenticator();
+    const authService = new AuthService(authClient);
+    const authMiddleware = new AuthMiddleware(authService);
 
     this.express.get('/', (req, res) => {
       res.send({ ok: true }).status(200);
@@ -62,8 +71,13 @@ export class ApiServer {
       await membersController.getMemberByEmail(req, res);
     });
 
-    this.express.get('/me', authMiddleware.handle(), async (req, res) => {
-      res.status(401).send({ success: false, data: null, error: 'Unauthorized' });
+    this.express.get('/me', authMiddleware.handle(), async (req: MeRequest, res) => {
+      const user = req?.user;
+
+      if (!user) {
+        return res.status(401).json({ success: false, data: null, error: 'Unauthorized' });
+      }
+      res.status(200).json({ success: true, data: user, error: false });
     });
   }
 

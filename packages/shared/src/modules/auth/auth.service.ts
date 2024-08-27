@@ -1,5 +1,5 @@
 import { ApiResponse } from '@efuller/shared/dist/api';
-import { AuthResponse, AuthTokenResponsePassword } from '@supabase/supabase-js';
+import { AuthResponse, AuthTokenResponsePassword, UserResponse } from '@supabase/supabase-js';
 import { Authenticator } from '@efuller/shared/src/modules/auth/ports/authenticator';
 import { UserLoginDto, UserRegisterDto } from '@efuller/shared/src/modules/auth/auth.dto';
 
@@ -46,6 +46,23 @@ export class AuthService {
 
   async getSession(): Promise<ApiResponse<AuthResponse>> {
     const result = await this.authClient.refreshSession();
+
+    if (result.error) {
+      return {
+        success: false,
+        data: result,
+        error: new Error(result.error.message),
+      };
+    }
+
+    return {
+      success: true,
+      data: result
+    };
+  }
+
+  async authorize(token: string): Promise<ApiResponse<UserResponse>> {
+    const result = await this.authClient.authorize(token);
 
     if (result.error) {
       return {
