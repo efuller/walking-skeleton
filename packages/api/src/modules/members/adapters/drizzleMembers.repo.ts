@@ -13,8 +13,6 @@ export class DrizzleMembersRepo implements MembersRepo {
       .values({...member})
       .returning();
 
-    console.log('result', result);
-
     if (result.length < 1 ) {
       throw new Error('Failed to create member');
     }
