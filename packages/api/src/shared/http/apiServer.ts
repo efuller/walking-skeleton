@@ -4,6 +4,7 @@ import cors from 'cors';
 import { JournalController } from '@efuller/api/src/modules/journals/journal.controller';
 import { AppInterface } from '@efuller/api/src/shared/application';
 import { MembersController } from '@efuller/api/src/modules/members/members.controller';
+import { AuthMiddleware } from '@efuller/api/src/shared/http/middleware/auth.middleware';
 
 export class ApiServer {
   private server: Server | null;
@@ -39,6 +40,7 @@ export class ApiServer {
     const membersService = this.app.members;
     const journalController = new JournalController(journalService);
     const membersController = new MembersController(membersService);
+    const authMiddleware = new AuthMiddleware();
 
     this.express.get('/', (req, res) => {
       res.send({ ok: true }).status(200);
@@ -58,6 +60,10 @@ export class ApiServer {
 
     this.express.get('/members/:email', async (req, res) => {
       await membersController.getMemberByEmail(req, res);
+    });
+
+    this.express.get('/me', authMiddleware.handle(), async (req, res) => {
+      res.status(401).send({ success: false, data: null, error: 'Unauthorized' });
     });
   }
 
