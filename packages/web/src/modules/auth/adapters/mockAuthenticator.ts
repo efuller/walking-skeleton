@@ -1,9 +1,15 @@
 import { Authenticator } from '@/modules/auth/ports/authenticator.ts';
 import { UserLoginDto, UserRegisterDto } from '@/modules/auth/auth.controller.ts';
-import { AuthResponse, AuthTokenResponsePassword } from '@supabase/supabase-js';
+import { AuthResponse, AuthTokenResponsePassword, UserResponse } from '@supabase/supabase-js';
 
 export class MockAuthenticator implements Authenticator {
   private loginResponse!: AuthTokenResponsePassword;
+
+  public constructor() {
+    const defaultResponse = { data: { user: null, session: null } } as AuthTokenResponsePassword;
+    this.loginResponse = defaultResponse;
+  }
+
 
   public async login(user: UserLoginDto): Promise<AuthTokenResponsePassword> {
     console.log('Logging user in', user);
@@ -25,5 +31,10 @@ export class MockAuthenticator implements Authenticator {
   register(user: UserRegisterDto): Promise<AuthResponse> {
     console.log('Registering user', user);
     return Promise.resolve({} as AuthResponse);
+  }
+
+  authorize(token: string): Promise<UserResponse> {
+    console.log('Authorized user token', token);
+    return Promise.resolve({} as UserResponse);
   }
 }

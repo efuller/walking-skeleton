@@ -1,4 +1,10 @@
-import { AuthResponse, AuthTokenResponsePassword, createClient, SupabaseClient } from '@supabase/supabase-js';
+import {
+  AuthResponse,
+  AuthTokenResponsePassword,
+  createClient,
+  SupabaseClient,
+  UserResponse
+} from '@supabase/supabase-js';
 import { Authenticator } from '@/modules/auth/ports/authenticator.ts';
 import { UserLoginDto, UserRegisterDto } from '@/modules/auth/auth.controller.ts';
 
@@ -39,6 +45,12 @@ export class SupabaseAuthenticator implements Authenticator {
 
   async register(user: UserRegisterDto): Promise<AuthResponse> {
     const result = await this.authClient.auth.signUp(user);
+
+    return result;
+  }
+
+  async authorize(token: string): Promise<UserResponse> {
+    const result = await this.authClient.auth.getUser(token);
 
     return result;
   }
