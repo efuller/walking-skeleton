@@ -41,6 +41,7 @@ export class AuthController {
       if (result.success) {
         this.authRepo.setAuthenticated(true);
         this.authRepo.setUser(result.data.data.user);
+        this.authRepo.setAccessToken(result.data.data.session?.access_token || '');
       }
     } catch (error) {
       console.error('Error logging in', error);

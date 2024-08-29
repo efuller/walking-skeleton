@@ -4,6 +4,7 @@ import { User } from '@supabase/auth-js';
 export class AuthRepo {
   public authenticated = false;
   public user: User | null = null;
+  public accessToken = '';
 
   constructor(){
     makeObservable(this, {
@@ -11,6 +12,8 @@ export class AuthRepo {
       user: observable,
       setAuthenticated: action,
       setUser: action,
+      accessToken: observable,
+      setAccessToken: action,
     });
   }
 
@@ -20,5 +23,9 @@ export class AuthRepo {
 
   public setUser(data: User | null): void {
     this.user = data;
+  }
+  
+  public setAccessToken(token: string) {
+    this.accessToken = token;
   }
 }

@@ -7,7 +7,7 @@ export class AuthPresenter {
       isAuthenticated: this.authRepo.authenticated,
       redirectTo: '',
       user: this.authRepo.user,
-      accessToken: '',
+      accessToken: this.authRepo.accessToken,
     };
   }
 

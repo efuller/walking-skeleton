@@ -30,7 +30,10 @@ describe('auth', () => {
     const authenticator = authModule.getAuthenticator() as MockAuthenticator;
     const response = {
       data: {
-        user: { email: 'test@test.com' }
+        user: { email: 'test@test.com' },
+        session: {
+          access_token: 'custom-access-token',
+        }
       },
     }
     authenticator.setLoginResponse(response as AuthTokenResponsePassword);
@@ -38,6 +41,7 @@ describe('auth', () => {
     await authModule.getAuthController().login({ email: 'test@test.com', password: 'password' });
 
     expect(authModule.getAuthPresenter().viewModel.isAuthenticated).toBe(true);
+    expect(authModule.getAuthPresenter().viewModel.accessToken).toBe('custom-access-token');
   });
 
   it('should not log the user in if the user was not found in the DB', async () => {
