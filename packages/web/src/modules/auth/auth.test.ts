@@ -23,6 +23,7 @@ describe('auth', () => {
 
   it('should start with the user as not authenticated', () => {
     expect(authModule.getAuthPresenter().viewModel.isAuthenticated).toBe(false);
+    expect(authModule.getAuthPresenter().viewModel.accessToken).toBe('');
   });
 
   it('should show the user as being authenticated successfully logged in', async () => {
