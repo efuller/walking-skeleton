@@ -1,6 +1,6 @@
-import { Authenticator } from '@/modules/auth/ports/authenticator.ts';
-import { UserLoginDto, UserRegisterDto } from '@/modules/auth/auth.controller.ts';
-import { AuthResponse, AuthTokenResponsePassword } from '@supabase/supabase-js';
+import { Authenticator } from '@efuller/shared/src/modules/auth/ports/authenticator';
+import { AuthResponse, AuthTokenResponsePassword, UserResponse } from '@supabase/supabase-js';
+import { UserLoginDto, UserRegisterDto } from '@efuller/shared/src/modules/auth/auth.dto';
 
 export class MockAuthenticator implements Authenticator {
   private loginResponse!: AuthTokenResponsePassword;
@@ -25,5 +25,10 @@ export class MockAuthenticator implements Authenticator {
   register(user: UserRegisterDto): Promise<AuthResponse> {
     console.log('Registering user', user);
     return Promise.resolve({} as AuthResponse);
+  }
+
+  authorize(token: string): Promise<UserResponse> {
+    console.log('Authorized user token', token);
+    return Promise.resolve({} as UserResponse);
   }
 }

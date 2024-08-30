@@ -14,7 +14,7 @@ import { MembersRepo } from '@efuller/api/src/modules/members/ports/members.repo
 import { InMemoryMembersRepo } from '@efuller/api/src/modules/members/adapters/inMemoryMembersRepo';
 import { DrizzleMembersRepo } from '@efuller/api/src/modules/members/adapters/drizzleMembers.repo';
 
-type Context = 'test' | 'test:unit' | 'development' | 'production';
+export type Context = 'test' | 'test:unit' | 'development' | 'production';
 
 export class CompositionRoot {
   private static instance: CompositionRoot;
@@ -23,7 +23,7 @@ export class CompositionRoot {
   private readonly journalsRepo: JournalRepo;
   private readonly membersRepo: MembersRepo;
 
-  constructor(
+  private constructor(
     private readonly context: Context,
     private readonly dbClient: DbConnection<NodePgDatabase<typeof schema>>
   ) {
@@ -98,7 +98,7 @@ export class CompositionRoot {
   }
 
   createApiServer() {
-    return new ApiServer(this.application);
+    return new ApiServer(this.application, this.context);
   }
 
   public getApiServer() {

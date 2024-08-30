@@ -8,6 +8,9 @@ import { AuthMiddleware } from '@efuller/api/src/shared/http/middleware/auth.mid
 import { AuthService } from '@efuller/shared/src/modules/auth/auth.service';
 import { SupabaseAuthenticator } from '@efuller/shared/src/modules/auth/adapters/supabaseAuthenticator';
 import { User } from '@supabase/auth-js';
+import { Context } from '@efuller/api/src/shared/composition/compositionRoot';
+import { MockAuthenticator } from '@efuller/shared/src/modules/auth/adapters/mockAuthenticator';
+import { Authenticator } from '@efuller/shared/src/modules/auth/ports/authenticator';
 
 export interface MeRequest extends Request {
   user?: User;
@@ -19,7 +22,10 @@ export class ApiServer {
   private readonly port: number;
   private running: boolean;
 
-  constructor(private app: AppInterface) {
+  constructor(
+    private app: AppInterface,
+    private readonly context: Context
+  ) {
     const origin = process.env.NODE_ENV === 'production' ? 'https://ws.efuller.me' : '*';
     this.server = null;
     this.express = express();
@@ -43,12 +49,18 @@ export class ApiServer {
   }
 
   private setupRoutes() {
+    let authenticator: Authenticator;
     const journalService = this.app.journals;
     const membersService = this.app.members;
     const journalController = new JournalController(journalService);
     const membersController = new MembersController(membersService);
-    const authClient = new SupabaseAuthenticator();
-    const authService = new AuthService(authClient);
+    // TODO: for unit:tests we need to use the mock authenticator
+    if (this.context === 'test:unit') {
+      authenticator = new MockAuthenticator();
+    } else {
+      authenticator = new SupabaseAuthenticator();
+    }
+    const authService = new AuthService(authenticator);
     const authMiddleware = new AuthMiddleware(authService);
 
     this.express.get('/', (req, res) => {
@@ -67,9 +79,10 @@ export class ApiServer {
       await journalController.create(req, res);
     });
 
-    this.express.get('/members/:email', async (req, res) => {
-      await membersController.getMemberByEmail(req, res);
-    });
+    // this.express.get('/members/:email', authMiddleware.handle(), async (req, res) => {
+    //   await membersController.getMemberByEmail(req, res);
+    // });
+    this.express.get('/members/:email', authMiddleware.handle(), membersController.getMemberByEmail.bind(membersController));
 
     this.express.get('/me', authMiddleware.handle(), async (req: MeRequest, res) => {
       const user = req?.user;
