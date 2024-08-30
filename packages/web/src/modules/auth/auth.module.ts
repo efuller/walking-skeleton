@@ -41,4 +41,8 @@ export class AuthModule {
   public getAuthController() {
     return this.authController;
   }
+
+  public getAccessToken() {
+    return this.authRepo.getAccessToken();
+  }
 }

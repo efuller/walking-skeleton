@@ -28,4 +28,8 @@ export class AuthRepo {
   public setAccessToken(token: string) {
     this.accessToken = token;
   }
+
+  public getAccessToken() {
+    return this.accessToken;
+  }
 }
