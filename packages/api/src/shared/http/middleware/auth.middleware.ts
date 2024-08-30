@@ -21,8 +21,6 @@ export class AuthMiddleware implements Middleware {
       } catch (error) {
         return res.status(500).json({ success: false, data: null, error: 'Internal server error' });
       }
-
-      next();
     };
   }
 }
