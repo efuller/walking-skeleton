@@ -1,6 +1,5 @@
-import express, { NextFunction, Response } from 'express';
-import { MeRequest } from '@efuller/api/src/shared/http/apiServer';
+import express from 'express';
 
 export interface Middleware {
-  handle(req: MeRequest, res: Response, next: NextFunction): express.Handler
+  handle(): express.Handler
 }
