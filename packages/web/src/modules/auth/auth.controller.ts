@@ -23,14 +23,17 @@ export class AuthController {
       if (result) {
         this.authRepo.setAuthenticated(true);
         this.authRepo.setUser(result.data.data.user);
+        this.authRepo.setAccessToken(result.data.data.session?.access_token || '');
         return;
       }
       this.authRepo.setAuthenticated(false);
       this.authRepo.setUser(null);
+      this.authRepo.setAccessToken('');
       return;
     } catch (error) {
       this.authRepo.setAuthenticated(false);
       this.authRepo.setUser(null);
+      this.authRepo.setAccessToken('');
       console.error('Error logging in', error);
     }
   }
