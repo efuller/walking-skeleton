@@ -10,7 +10,6 @@ export class MockAuthenticator implements Authenticator {
     this.loginResponse = defaultResponse;
   }
 
-
   public async login(user: UserLoginDto): Promise<AuthTokenResponsePassword> {
     console.log('Logging user in', user);
     return this.loginResponse;
