@@ -1,5 +1,5 @@
-import { AuthService } from '@/modules/auth/auth.service.ts';
-import { AuthRepo } from '@/modules/auth/auth.repo.ts';
+import { AuthRepo } from './auth.repo';
+import { AuthService } from './auth.service';
 
 export interface UserLoginDto {
   email: string;

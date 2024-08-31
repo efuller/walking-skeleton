@@ -1,7 +1,7 @@
-import { Authenticator } from '@/modules/auth/ports/authenticator.ts';
-import { ApiResponse } from '@efuller/shared/dist/api';
-import { UserLoginDto, UserRegisterDto } from '@/modules/auth/auth.controller.ts';
 import { AuthResponse, AuthTokenResponsePassword, UserResponse } from '@supabase/supabase-js';
+import { ApiResponse } from '@efuller/shared/src/api';
+import { Authenticator } from './ports/authenticator';
+import { UserLoginDto, UserRegisterDto } from './auth.controller';
 
 export class AuthService {
   constructor(private readonly authClient: Authenticator) {}

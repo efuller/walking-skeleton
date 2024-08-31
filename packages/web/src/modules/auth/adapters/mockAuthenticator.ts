@@ -1,6 +1,6 @@
-import { Authenticator } from '@/modules/auth/ports/authenticator.ts';
-import { UserLoginDto, UserRegisterDto } from '@/modules/auth/auth.controller.ts';
 import { AuthResponse, AuthTokenResponsePassword, UserResponse } from '@supabase/supabase-js';
+import { Authenticator } from '../ports/authenticator';
+import { UserLoginDto, UserRegisterDto } from '../auth.controller';
 
 export class MockAuthenticator implements Authenticator {
   private loginResponse!: AuthTokenResponsePassword;

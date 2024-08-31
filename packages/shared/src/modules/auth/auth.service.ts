@@ -1,4 +1,4 @@
-import { ApiResponse } from '@efuller/shared/dist/api';
+import { ApiResponse } from '@efuller/shared/src/api';
 import { AuthResponse, AuthTokenResponsePassword, UserResponse } from '@supabase/supabase-js';
 import { Authenticator } from '@efuller/shared/src/modules/auth/ports/authenticator';
 import { UserLoginDto, UserRegisterDto } from '@efuller/shared/src/modules/auth/auth.dto';

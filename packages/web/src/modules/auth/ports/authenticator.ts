@@ -1,5 +1,5 @@
-import { UserLoginDto, UserRegisterDto } from '@/modules/auth/auth.controller.ts';
 import { AuthResponse, AuthTokenResponsePassword, UserResponse } from '@supabase/supabase-js';
+import { UserLoginDto, UserRegisterDto } from '../auth.controller';
 
 // @todo we will need to create an abstraction for AuthResponse and AuthTokenResponsePassword
 export interface Authenticator {

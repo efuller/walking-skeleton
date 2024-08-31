@@ -1,5 +1,5 @@
 import { computed, makeObservable } from 'mobx';
-import { AuthRepo } from '@/modules/auth/auth.repo.ts';
+import { AuthRepo } from './auth.repo';
 
 export class AuthPresenter {
   get viewModel() {
