@@ -1,13 +1,14 @@
 import { defineFeature, loadFeature } from 'jest-cucumber';
 import { Server } from 'http';
-import { MemberBuilder } from '@efuller/shared/tests/support/builders/memberBuilder';
 import { CompositionRoot } from '@efuller/api/src/shared/composition/compositionRoot';
-import { CreateMemberCommand } from '@efuller/shared/src/modules/members/commands';
 import { ApiServer } from '@efuller/api/src/shared/http/apiServer';
 import { RestApiDriver } from '@efuller/api/src/shared/http/restApiDriver';
 import { MemberDto } from '@efuller/api/src/modules/members/member.dto';
-import { DbFixture } from '@efuller/shared/tests/support/fixtures/dbFixture';
 import { ApiResponse } from '@efuller/shared/src/api';
+import { UserRegisterDto } from '@efuller/shared/src/modules/auth/auth.dto';
+import { UserBuilder } from '@efuller/shared/tests/support/builders/userBuilder';
+import { AuthService } from '@efuller/shared/src/modules/auth/auth.service';
+import { AuthResponse } from '@supabase/supabase-js';
 
 const feature = loadFeature('./packages/shared/tests/features/registration.feature', { tagFilter: '@api' });
 
@@ -15,17 +16,18 @@ defineFeature(feature, (test) => {
   let compositionRoot: CompositionRoot;
   let apiServer: ApiServer;
   let apiDriver: RestApiDriver;
-  let createMemberCommand: CreateMemberCommand;
-  let dbFixture: DbFixture;
+  let registerUserDto: UserRegisterDto;
   let createdMemberResponse: ApiResponse<MemberDto>;
+  let authService: AuthService;
+  let registerResponse: ApiResponse<AuthResponse>;
 
   beforeAll(async () => {
     compositionRoot = await CompositionRoot.create('test');
+    authService = compositionRoot.getAuthService();
     apiServer = compositionRoot.getApiServer();
     await apiServer.start();
     createdMemberResponse = {} as ApiResponse<MemberDto>;
     apiDriver = new RestApiDriver(apiServer.getServer() as Server);
-    dbFixture = new DbFixture(compositionRoot.getApplication());
   })
 
   afterAll(async () => {
@@ -36,17 +38,20 @@ defineFeature(feature, (test) => {
 
   test('Verify member creation details', ({ given, when, then }) => {
     given('I am a newly registered user', async () => {
-      createMemberCommand = new MemberBuilder()
-        .withId()
-        .withFirstName('John')
-        .withLastName('Doe')
+      registerUserDto = new UserBuilder()
         .withRandomEmail()
+        .withPassword('Password')
         .build();
-      await dbFixture.withUser(createMemberCommand);
+      registerResponse = await authService.register(registerUserDto);
     });
 
     when('I request my member account details by email', async () => {
-      createdMemberResponse = await apiDriver.get<MemberDto>(`/members/${createMemberCommand.email}`);
+      createdMemberResponse = await apiDriver.get<MemberDto>(
+        `/members/${registerUserDto.email}`,
+        {
+          Authorization: `Bearer ${registerResponse.data?.data?.session?.access_token}`
+        }
+      );
 
       expect(createdMemberResponse.success).toBe(true);
       expect(createdMemberResponse.data).not.toBeNull();
@@ -54,9 +59,7 @@ defineFeature(feature, (test) => {
 
     then('I am able to see my member account details', async () => {
       expect(createdMemberResponse.data.id).toEqual(expect.any(String));
-      expect(createdMemberResponse.data.email).toBe(createMemberCommand.email);
-      expect(createdMemberResponse.data.firstName).toEqual(createMemberCommand.firstName);
-      expect(createdMemberResponse.data.lastName).toEqual(createMemberCommand.lastName);
+      expect(createdMemberResponse.data.email).toBe(registerUserDto.email);
     });
   });
 });
