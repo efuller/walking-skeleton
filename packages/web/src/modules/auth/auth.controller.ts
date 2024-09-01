@@ -1,5 +1,5 @@
 import { AuthRepo } from './auth.repo';
-import { AuthService } from './auth.service';
+import { AuthService } from '@efuller/shared/src/modules/auth/auth.service.ts';
 
 export interface UserLoginDto {
   email: string;

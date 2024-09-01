@@ -1,7 +1,7 @@
 import { MembersPresenter } from './members.presenter';
 import { CompositionRoot } from '@/shared/compositionRoot';
-import { AppApiClient } from '@efuller/shared/dist/api';
 import { AppConfig } from '@/shared/appConfig';
+import { AppApiClient } from '@efuller/shared/src/api';
 
 describe('Members', () => {
   let membersPresenter: MembersPresenter;

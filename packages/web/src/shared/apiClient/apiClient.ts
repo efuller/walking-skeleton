@@ -1,4 +1,4 @@
-import { ApiResponse } from '@efuller/shared/dist/api';
+import { ApiResponse } from '@efuller/shared/src/api';
 
 export class ApiClient {
   constructor(private readonly baseUrl: string) {}
