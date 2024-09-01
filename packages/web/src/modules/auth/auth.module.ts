@@ -1,11 +1,11 @@
 import { AuthPresenter } from './auth.presenter';
 import { AuthController } from './auth.controller';
-import { Authenticator } from './ports/authenticator';
-import { AuthService } from './auth.service';
 import { AuthRepo } from './auth.repo';
-import { SupabaseAuthenticator } from './adapters/supabaseAuthenticator';
-import { MockAuthenticator } from './adapters/mockAuthenticator';
 import { AppConfig } from '../../shared/appConfig';
+import { Authenticator } from '@efuller/shared/src/modules/auth/ports/authenticator';
+import { AuthService } from '@efuller/shared/src/modules/auth/auth.service';
+import { SupabaseAuthenticator } from '@efuller/shared/src/modules/auth/adapters/supabaseAuthenticator';
+import { MockAuthenticator } from '@efuller/shared/src/modules/auth/adapters/mockAuthenticator';
 
 export class AuthModule {
   private readonly authPresenter: AuthPresenter;

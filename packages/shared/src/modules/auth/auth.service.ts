@@ -9,7 +9,7 @@ export class AuthService {
   async login(user: UserLoginDto): Promise<ApiResponse<AuthTokenResponsePassword>> {
     const result = await this.authClient.login(user);
 
-    if (!result) {
+    if (result.error) {
       return {
         success: false,
         data: result,
