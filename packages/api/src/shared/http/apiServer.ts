@@ -1,9 +1,15 @@
 import { Server } from 'http';
-import express, { Application } from 'express';
+import express, { Application, Request } from 'express';
 import cors from 'cors';
 import { JournalController } from '@efuller/api/src/modules/journals/journal.controller';
 import { AppInterface } from '@efuller/api/src/shared/application';
 import { MembersController } from '@efuller/api/src/modules/members/members.controller';
+import { User } from '@supabase/auth-js';
+import { Context } from '@efuller/api/src/shared/composition/compositionRoot';
+
+export interface MeRequest extends Request {
+  user?: User;
+}
 
 export class ApiServer {
   private server: Server | null;
@@ -11,7 +17,10 @@ export class ApiServer {
   private readonly port: number;
   private running: boolean;
 
-  constructor(private app: AppInterface) {
+  constructor(
+    private app: AppInterface,
+    private readonly context: Context
+  ) {
     const origin = process.env.NODE_ENV === 'production' ? 'https://ws.efuller.me' : '*';
     this.server = null;
     this.express = express();
@@ -37,6 +46,7 @@ export class ApiServer {
   private setupRoutes() {
     const journalService = this.app.journals;
     const membersService = this.app.members;
+    const authMiddleware = this.app.authMiddleware;
     const journalController = new JournalController(journalService);
     const membersController = new MembersController(membersService);
 
@@ -56,8 +66,15 @@ export class ApiServer {
       await journalController.create(req, res);
     });
 
-    this.express.get('/members/:email', async (req, res) => {
-      await membersController.getMemberByEmail(req, res);
+    this.express.get('/members/:email', authMiddleware.handle(), membersController.getMemberByEmail.bind(membersController));
+
+    this.express.get('/me', authMiddleware.handle(), async (req: MeRequest, res) => {
+      const user = req?.user;
+
+      if (!user) {
+        return res.status(401).json({ success: false, data: null, error: 'Unauthorized' });
+      }
+      res.status(200).json({ success: true, data: user, error: false });
     });
   }
 

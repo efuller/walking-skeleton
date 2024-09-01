@@ -13,8 +13,8 @@ export class CompositionRoot {
   private readonly apiUrl = process.env.API_URL || 'http://localhost:3000';
 
   private constructor(private readonly config: AppConfig) {
-    this.clientApi = ClientApi.create(this.apiUrl, this.config);
     this.authModule = new AuthModule(this.config);
+    this.clientApi = ClientApi.create(this.apiUrl, this.config, this.authModule);
     this.membersModule = new MembersModule(this.config, this.clientApi.app.app.members);
     this.appRouter = new AppRouter(this.authModule, this.membersModule);
   }

@@ -4,30 +4,29 @@ import { CompositionRoot } from '@efuller/api/src/shared/composition/composition
 import { ApiServer } from '@efuller/api/src/shared/http/apiServer';
 import { RestApiDriver } from '@efuller/api/src/shared/http/restApiDriver';
 import { MemberDto } from '@efuller/api/src/modules/members/member.dto';
-import { ApiResponse } from '@efuller/shared/src/api';
+import { SupabaseAuthenticator } from '@efuller/shared/src/modules/auth/adapters/supabaseAuthenticator';
+import { AuthService } from '@efuller/shared/src/modules/auth/auth.service';
 import { UserRegisterDto } from '@efuller/shared/src/modules/auth/auth.dto';
 import { UserBuilder } from '@efuller/shared/tests/support/builders/userBuilder';
-import { AuthService } from '@efuller/shared/src/modules/auth/auth.service';
-import { AuthResponse } from '@supabase/supabase-js';
 
-const feature = loadFeature('./packages/shared/tests/features/registration.feature', { tagFilter: '@api' });
+const feature = loadFeature('./packages/shared/tests/features/auth.feature', { tagFilter: '@api' });
 
 defineFeature(feature, (test) => {
   let compositionRoot: CompositionRoot;
   let apiServer: ApiServer;
   let apiDriver: RestApiDriver;
   let registerUserDto: UserRegisterDto;
-  let createdMemberResponse: ApiResponse<MemberDto>;
+  let supabaseAuthenticator: SupabaseAuthenticator;
   let authService: AuthService;
-  let registerResponse: ApiResponse<AuthResponse>;
+  let token: string;
 
   beforeAll(async () => {
     compositionRoot = await CompositionRoot.create('test');
-    authService = compositionRoot.getAuthService();
     apiServer = compositionRoot.getApiServer();
     await apiServer.start();
-    createdMemberResponse = {} as ApiResponse<MemberDto>;
     apiDriver = new RestApiDriver(apiServer.getServer() as Server);
+    supabaseAuthenticator = new SupabaseAuthenticator();
+    authService = new AuthService(supabaseAuthenticator);
   })
 
   afterAll(async () => {
@@ -36,30 +35,30 @@ defineFeature(feature, (test) => {
   });
 
 
-  test('Verify member creation details', ({ given, when, then }) => {
+  test('Access protected resources', ({ given, when, then }) => {
     given('I am a newly registered user', async () => {
       registerUserDto = new UserBuilder()
         .withRandomEmail()
         .withPassword('Password')
         .build();
-      registerResponse = await authService.register(registerUserDto);
+      await authService.register(registerUserDto);
     });
 
-    when('I request my member account details by email', async () => {
-      createdMemberResponse = await apiDriver.get<MemberDto>(
-        `/members/${registerUserDto.email}`,
+    when('I login with valid credentials', async () => {
+      const response = await authService.login({ email: registerUserDto.email, password: registerUserDto.password });
+      token = response?.data?.data?.session?.access_token || '';
+      expect(response.success).toBe(true);
+    });
+
+    then('I am able to access protected resources', async () => {
+      const response = await apiDriver.get<MemberDto>(
+        `/me`,
         {
-          Authorization: `Bearer ${registerResponse.data?.data?.session?.access_token}`
+          Authorization: `Bearer ${token}`
         }
       );
-
-      expect(createdMemberResponse.success).toBe(true);
-      expect(createdMemberResponse.data).not.toBeNull();
-    });
-
-    then('I am able to see my member account details', async () => {
-      expect(createdMemberResponse.data.id).toEqual(expect.any(String));
-      expect(createdMemberResponse.data.email).toBe(registerUserDto.email);
+      expect(response.success).toBe(true);
+      expect(response.data).not.toBeNull();
     });
   });
 });

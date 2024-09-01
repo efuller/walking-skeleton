@@ -5,8 +5,8 @@ import {
   SupabaseClient,
   UserResponse
 } from '@supabase/supabase-js';
-import { Authenticator } from '../ports/authenticator';
-import { UserLoginDto, UserRegisterDto } from '../auth.controller';
+import { Authenticator } from '@efuller/shared/src/modules/auth/ports/authenticator';
+import { UserLoginDto, UserRegisterDto } from '@efuller/shared/src/modules/auth/auth.dto';
 
 export class SupabaseAuthenticator implements Authenticator {
   private readonly authClient: SupabaseClient;

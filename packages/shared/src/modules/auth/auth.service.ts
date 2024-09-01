@@ -1,7 +1,7 @@
-import { AuthResponse, AuthTokenResponsePassword, UserResponse } from '@supabase/supabase-js';
 import { ApiResponse } from '@efuller/shared/src/api';
-import { Authenticator } from './ports/authenticator';
-import { UserLoginDto, UserRegisterDto } from './auth.controller';
+import { AuthResponse, AuthTokenResponsePassword, UserResponse } from '@supabase/supabase-js';
+import { Authenticator } from '@efuller/shared/src/modules/auth/ports/authenticator';
+import { UserLoginDto, UserRegisterDto } from '@efuller/shared/src/modules/auth/auth.dto';
 
 export class AuthService {
   constructor(private readonly authClient: Authenticator) {}
@@ -9,7 +9,7 @@ export class AuthService {
   async login(user: UserLoginDto): Promise<ApiResponse<AuthTokenResponsePassword>> {
     const result = await this.authClient.login(user);
 
-    if (result.error) {
+    if (!result) {
       return {
         success: false,
         data: result,

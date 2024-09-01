@@ -1,11 +1,11 @@
 import { AuthPresenter } from './auth.presenter';
-import { Authenticator } from '@/modules/auth/ports/authenticator.ts';
-import { AuthService } from '@/modules/auth/auth.service.ts';
-import { SupabaseAuthenticator } from '@/modules/auth/adapters/supabaseAuthenticator.ts';
-import { MockAuthenticator } from '@/modules/auth/adapters/mockAuthenticator.ts';
-import { AuthRepo } from '@/modules/auth/auth.repo.ts';
 import { AuthController } from './auth.controller';
-import { AppConfig } from '@/shared/appConfig';
+import { Authenticator } from './ports/authenticator';
+import { AuthService } from './auth.service';
+import { AuthRepo } from './auth.repo';
+import { SupabaseAuthenticator } from './adapters/supabaseAuthenticator';
+import { MockAuthenticator } from './adapters/mockAuthenticator';
+import { AppConfig } from '../../shared/appConfig';
 
 export class AuthModule {
   private readonly authPresenter: AuthPresenter;
@@ -40,5 +40,9 @@ export class AuthModule {
 
   public getAuthController() {
     return this.authController;
+  }
+
+  public getAccessToken() {
+    return this.authRepo.getAccessToken();
   }
 }

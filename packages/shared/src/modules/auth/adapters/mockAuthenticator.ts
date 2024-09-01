@@ -1,14 +1,9 @@
+import { Authenticator } from '@efuller/shared/src/modules/auth/ports/authenticator';
 import { AuthResponse, AuthTokenResponsePassword, UserResponse } from '@supabase/supabase-js';
-import { Authenticator } from '../ports/authenticator';
-import { UserLoginDto, UserRegisterDto } from '../auth.controller';
+import { UserLoginDto, UserRegisterDto } from '@efuller/shared/src/modules/auth/auth.dto';
 
 export class MockAuthenticator implements Authenticator {
   private loginResponse!: AuthTokenResponsePassword;
-
-  public constructor() {
-    const defaultResponse = { data: { user: null, session: null } } as AuthTokenResponsePassword;
-    this.loginResponse = defaultResponse;
-  }
 
   public async login(user: UserLoginDto): Promise<AuthTokenResponsePassword> {
     console.log('Logging user in', user);

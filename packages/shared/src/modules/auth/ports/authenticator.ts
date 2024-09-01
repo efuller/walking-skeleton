@@ -1,5 +1,5 @@
 import { AuthResponse, AuthTokenResponsePassword, UserResponse } from '@supabase/supabase-js';
-import { UserLoginDto, UserRegisterDto } from '../auth.controller';
+import { UserLoginDto, UserRegisterDto } from '@efuller/shared/src/modules/auth/auth.dto';
 
 // @todo we will need to create an abstraction for AuthResponse and AuthTokenResponsePassword
 export interface Authenticator {

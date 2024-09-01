@@ -8,12 +8,6 @@ export class RestApiDriver {
   async get<Result>(path: string, headers: Record<string, string> = {}): Promise<ApiResponse<Result>> {
     try {
       const response = await request(this.http).get(path).set(headers);
-      if (!response.ok) {
-        if (response.error && response.error.message) {
-          throw new Error(response.error.message);
-        }
-      }
-
       return response.body;
   } catch (error) {
       return {
@@ -30,12 +24,6 @@ export class RestApiDriver {
         .post(path)
         .set('Accept', 'application/json')
         .send(data);
-
-      if (!response.ok) {
-        if (response.error && response.error.message) {
-          throw new Error(response.error.message);
-        }
-      }
 
       return response.body;
     } catch (error) {

@@ -1,5 +1,6 @@
 import { MemberDto } from '@efuller/shared/src/modules/members/commands';
 import { AppConfig } from 'web/src/shared/appConfig';
+import { AuthModule } from 'web/src/modules/auth/auth.module';
 
 export type ApiResponse<T> = {
   success: boolean;
@@ -31,13 +32,17 @@ class MockMembersApiClient implements MembersApi {
 }
 
 class MembersApiClient implements MembersApi {
-  constructor(private readonly baseUrl: string) {}
+  constructor(
+    private readonly baseUrl: string,
+    private readonly authModule: AuthModule
+  ) {}
 
   public async getMemberByEmail(email: string): Promise<ApiResponse<MemberDto | null>> {
     const response = await fetch(`${this.baseUrl}/members/${email}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authModule.getAccessToken()}`,
       },
     });
 
@@ -82,12 +87,13 @@ export class ClientApi {
 
   private constructor(
     private readonly config: AppConfig,
-    app: AppApiClient
+    app: AppApiClient,
+    private readonly authModule: AuthModule,
   ) {
     this.app = app;
   }
 
-  public static create(baseUrl: string, config: AppConfig): ClientApi {
+  public static create(baseUrl: string, config: AppConfig, authModule: AuthModule): ClientApi {
     if (config.useMocks()) {
       const members = new MockMembersApiClient(baseUrl);
       const api = {
@@ -95,16 +101,16 @@ export class ClientApi {
           members
         }
       }
-      return new ClientApi(config, api);
+      return new ClientApi(config, api, authModule);
     }
 
-    const members = new MembersApiClient(baseUrl);
+    const members = new MembersApiClient(baseUrl, authModule);
 
     const api = {
       app: {
         members
       }
     }
-    return new ClientApi(config, api);
+    return new ClientApi(config, api, authModule);
   }
 }

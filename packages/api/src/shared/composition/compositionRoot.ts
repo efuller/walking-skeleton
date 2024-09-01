@@ -13,8 +13,12 @@ import { MembersService } from '@efuller/api/src/modules/members/members.service
 import { MembersRepo } from '@efuller/api/src/modules/members/ports/members.repo';
 import { InMemoryMembersRepo } from '@efuller/api/src/modules/members/adapters/inMemoryMembersRepo';
 import { DrizzleMembersRepo } from '@efuller/api/src/modules/members/adapters/drizzleMembers.repo';
+import { AuthMiddleware } from '@efuller/api/src/shared/http/middleware/auth.middleware';
+import { AuthService } from '@efuller/shared/src/modules/auth/auth.service';
+import { SupabaseAuthenticator } from '@efuller/shared/src/modules/auth/adapters/supabaseAuthenticator';
+import { MockAuthenticator } from '@efuller/shared/src/modules/auth/adapters/mockAuthenticator';
 
-type Context = 'test' | 'test:unit' | 'development' | 'production';
+export type Context = 'test' | 'test:unit' | 'development' | 'production';
 
 export class CompositionRoot {
   private static instance: CompositionRoot;
@@ -22,11 +26,15 @@ export class CompositionRoot {
   private readonly application!: AppInterface;
   private readonly journalsRepo: JournalRepo;
   private readonly membersRepo: MembersRepo;
+  private readonly authService: AuthService;
+  private readonly authMiddleware: AuthMiddleware;
 
-  constructor(
+  private constructor(
     private readonly context: Context,
     private readonly dbClient: DbConnection<NodePgDatabase<typeof schema>>
   ) {
+    this.authService = this.createAuthService();
+    this.authMiddleware = this.createAuthMiddleware();
     this.journalsRepo = this.createJournalRepo();
     this.membersRepo = this.createMembersRepo();
     this.application = this.createApplication();
@@ -64,8 +72,32 @@ export class CompositionRoot {
   private createApplication(): AppInterface {
     return {
       journals: this.getJournalService(),
-      members: this.getMembersService()
+      members: this.getMembersService(),
+      authMiddleware: this.getAuthMiddleware(),
     }
+  }
+
+  public getAuthMiddleware() {
+    return this.authMiddleware;
+  }
+
+  public createAuthMiddleware() {
+    return new AuthMiddleware(this.getAuthService());
+  }
+
+  private createAuthService() {
+    return new AuthService(this.createAuthenticator());
+  }
+
+  private createAuthenticator() {
+    if (this.context === 'test:unit') {
+      return new MockAuthenticator();
+    }
+    return new SupabaseAuthenticator();
+  }
+
+  public getAuthService() {
+    return this.authService;
   }
 
   public getMembersService() {
@@ -98,7 +130,7 @@ export class CompositionRoot {
   }
 
   createApiServer() {
-    return new ApiServer(this.application);
+    return new ApiServer(this.application, this.context);
   }
 
   public getApiServer() {
