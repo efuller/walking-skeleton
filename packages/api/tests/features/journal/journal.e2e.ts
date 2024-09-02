@@ -60,7 +60,12 @@ defineFeature(feature, (test) => {
     });
 
     then(/^I should be able to fetch the journal entry$/, async () => {
-      journalResponse = await apiDriver.get<Journal>(`/journal`);
+      journalResponse = await apiDriver.get<Journal>(
+        `/journal`,
+        {
+          Authorization: `Bearer ${loginResponse.data?.data?.session?.access_token}`
+        }
+      );
       expect(journalResponse.success).toBe(true);
       // expect that the created journal is in the list of journals
       expect(journalResponse.data).toEqual(
