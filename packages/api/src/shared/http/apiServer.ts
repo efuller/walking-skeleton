@@ -62,7 +62,7 @@ export class ApiServer {
       await journalController.getAll(req, res);
     });
 
-    this.express.post('/journal', async (req, res) => {
+    this.express.post('/journal', authMiddleware.handle(), async (req, res) => {
       await journalController.create(req, res);
     });
 
