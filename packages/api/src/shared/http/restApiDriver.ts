@@ -18,11 +18,12 @@ export class RestApiDriver {
     }
   }
 
-  async post<ApiRequest extends object, TData>(path: string, data: ApiRequest): Promise<ApiResponse<TData>> {
+  async post<ApiRequest extends object, TData>(path: string, data: ApiRequest, headers: Record<string, string> = {}): Promise<ApiResponse<TData>> {
     try {
       const response =  await request(this.http)
         .post(path)
         .set('Accept', 'application/json')
+        .set(headers)
         .send(data);
 
       return response.body;
