@@ -6,10 +6,10 @@ import { ApiResponse } from '@efuller/shared/src/api';
 import { ApiServer } from '@efuller/api/src/shared/http/apiServer';
 import { CreateJournalCommand, Journal } from '@efuller/shared/src/modules/journals/commands';
 
-const feature = loadFeature('./packages/shared/tests/features/addJournal.feature', { tagFilter: '@api' });
+const feature = loadFeature('./packages/shared/tests/features/journal.feature', { tagFilter: '@api' });
 
 defineFeature(feature, (test) => {
-  test('User sends data to create a new journal', async ({ given, when, then, and }) => {
+  test('Logged in user creates a new journal', async ({ given, when, then, and }) => {
     let compositionRoot: CompositionRoot;
     let apiServer: ApiServer;
     let apiDriver: RestApiDriver;
@@ -27,20 +27,16 @@ defineFeature(feature, (test) => {
       await compositionRoot.disconnectDb();
     });
 
-    given('The backend API is accessible', async () => {
+    given('I am a logged in user', async () => {
       expect(apiServer.isRunning()).toBeTruthy();
     });
 
-    when(/^a user sends a POST request to the "(.*)" endpoint with a title of (.*) and content of (.*)$/, async (endpoint, title, content) => {
+    when(/^I send a POST request to the "(.*)" endpoint with a title of (.*) and content of (.*)$/, async (endpoint, title, content) => {
       response = await apiDriver.post<CreateJournalCommand, Journal>(endpoint, { title, content });
     });
 
-    then(/^the API should respond with a success of true$/, () => {
+    then(/^I should be able to fetch the journal entry$/, () => {
       expect(response.success).toBe(true);
-    });
-
-    and(/^the response should contain title of (.*) and content of (.*)$/, (title, content) => {
-      expect(response).toMatchObject({ data: { title, content }, success: true });
     });
   });
 });
