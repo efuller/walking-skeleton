@@ -34,7 +34,7 @@
     "web:build": "npm run build -w packages/web",
     "web:test": "dotenv -e packages/web/.env.test.local -- jest --selectProjects web -c jest.config.ts",
     "web:test:watch": "dotenv -e packages/web/.env.test.local -- jest --selectProjects web -c jest.config.ts --watchAll",
-    "web:test:e2e": "jest --selectProjects web-e2e -c jest.config.ts",
+    "web:test:e2e": "dotenv -e packages/web/.env.test.local -- jest --selectProjects web-e2e -c jest.config.ts",
     "web:test:e2e:watch": "jest --selectProjects web-e2e -c jest.config.ts --watchAll"
   },
   "engines": {
