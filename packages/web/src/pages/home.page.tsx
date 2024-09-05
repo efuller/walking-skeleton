@@ -63,7 +63,7 @@ export const HomePage = observer(({ authPresenter, authController }: HomePagePro
               </div>
             </CardContent>
             <CardFooter>
-              <Button className="w-full" type="submit">Sign in</Button>
+              <Button id="submit" className="w-full" type="submit">Sign in</Button>
             </CardFooter>
             <div className="my-4 text-center text-sm">
               Don&apos;t have an account?{" "}
