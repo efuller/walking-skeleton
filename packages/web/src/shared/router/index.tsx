@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { observer } from 'mobx-react';
 import { redirect, RouteObject, useNavigate } from 'react-router-dom';
 import { HomePage } from '@/pages/home.page.tsx';
-import { JournalsPage } from '@/modules/jounals/journals.page';
+import { JournalsPage } from '@/modules/journals/journals.page';
 import { RegisterPage } from '@/pages/register.page.tsx';
 import { AppPage } from '@/pages/app.page.tsx';
 import { AuthModule } from '@/modules/auth/auth.module.ts';
