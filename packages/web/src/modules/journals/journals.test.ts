@@ -3,11 +3,13 @@ import { AppApiClient } from '@efuller/shared/src/api';
 import { AppConfig } from '@/shared/appConfig';
 import { JournalsPresenter } from '@/modules/journals/journals.presenter.ts';
 import { JournalBuilder } from '@efuller/shared/tests/support/builders/journalBuilder.ts';
+import { JournalsController } from '@/modules/journals/journals.controller.ts';
 
 describe('Journals', () => {
   let compositionRoot: CompositionRoot;
   let clientApi: AppApiClient;
   let journalsPresenter: JournalsPresenter;
+  let journalsController: JournalsController;
   const appConfig = new AppConfig({
     environment: 'test',
     script: 'test-unit',
@@ -17,6 +19,7 @@ describe('Journals', () => {
     compositionRoot = await CompositionRoot.create(appConfig);
     clientApi = compositionRoot.getClientApi();
     journalsPresenter = compositionRoot.getJournalsModule().getJournalsPresenter();
+    journalsController = compositionRoot.getJournalsModule().getJournalsController();
   });
 
   it('should be able to add a journal entry', async () => {
@@ -24,16 +27,16 @@ describe('Journals', () => {
 
     expect(journalsPresenter.viewModel.journals.length).toBe(0);
 
-    // const journal = new JournalBuilder()
-    //   .withId()
-    //   .withTitle('Test Journal')
-    //   .withContent('Here is some content')
-    //   .build();
-    //
-    // await journalsController.create(journal);
+    const journal = new JournalBuilder()
+      .withId()
+      .withTitle('Test Journal')
+      .withContent('Here is some content')
+      .build();
 
-    // const journalEntries = await clientApi.app.journals.getJournalEntries();
+    await journalsController.create(journal);
 
-    // expect(journalsPresenter.viewModel.journals.length).toBe(0);
+    expect(journalsPresenter.viewModel.journals.length).toBe(1);
+    expect(journalsPresenter.viewModel.journals[0].title).toBe('Test Journal');
+    expect(journalsPresenter.viewModel.journals[0].content).toBe('Here is some content');
   })
 });
