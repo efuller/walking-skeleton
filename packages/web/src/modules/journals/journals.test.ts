@@ -1,7 +1,8 @@
 import { CompositionRoot } from '@/shared/compositionRoot';
-import { AppApiClient } from '@efuller/shared/dist/api';
+import { AppApiClient } from '@efuller/shared/src/api';
 import { AppConfig } from '@/shared/appConfig';
-import { JournalsPresenter } from '@/modules/jounals/journals.presenter.ts';
+import { JournalsPresenter } from '@/modules/journals/journals.presenter.ts';
+import { JournalBuilder } from '@efuller/shared/tests/support/builders/journalBuilder.ts';
 
 describe('Journals', () => {
   let compositionRoot: CompositionRoot;
@@ -19,13 +20,20 @@ describe('Journals', () => {
   });
 
   it('should be able to add a journal entry', async () => {
-    // await clientApi.app.journals.create({
-    //   title: 'Test Journal Entry',
-    //   content: 'This is a test journal entry',
-    // });
-    //
-    // const journalEntries = await clientApi.app.journals.getJournalEntries();
+    await journalsPresenter.load();
 
     expect(journalsPresenter.viewModel.journals.length).toBe(0);
+
+    // const journal = new JournalBuilder()
+    //   .withId()
+    //   .withTitle('Test Journal')
+    //   .withContent('Here is some content')
+    //   .build();
+    //
+    // await journalsController.create(journal);
+
+    // const journalEntries = await clientApi.app.journals.getJournalEntries();
+
+    // expect(journalsPresenter.viewModel.journals.length).toBe(0);
   })
 });
