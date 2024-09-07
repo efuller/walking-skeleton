@@ -61,7 +61,7 @@ defineFeature(feature, (test) => {
 
     then(/^I should be able to fetch the journal entry$/, async () => {
       journalResponse = await apiDriver.get<Journal>(
-        `/journal`,
+        `/journals`,
         {
           Authorization: `Bearer ${loginResponse.data?.data?.session?.access_token}`
         }

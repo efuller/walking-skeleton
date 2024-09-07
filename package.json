@@ -14,6 +14,7 @@
     "api:ci:start:e2e": "npm run staging:start:e2e -w packages/api",
     "api:ci:test:e2e": "jest --selectProjects api-staging-e2e -c jest.config.ts",
     "api:ci:test:infra": "jest --selectProjects api-staging-infra -c jest.config.ts",
+    "api:test:all": "npm run api:test:unit && npm run api:test:infra && npm run api:test:e2e",
     "api:test:e2e": "jest --selectProjects api-e2e -c jest.config.ts",
     "api:test:e2e:watch": "jest -c --selectProjects api-e2e jest.config.ts --watchAll",
     "api:test:unit": "jest --selectProjects api-unit -c jest.config.ts",

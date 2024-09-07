@@ -4,7 +4,7 @@ Feature: Journaling
   @api
   Scenario Outline: Logged in user creates a new journal
     Given I am a logged in user
-    When I send a POST request to the "/journal" endpoint with a title of <title> and content of <content>
+    When I send a POST request to the "/journals" endpoint with a title of <title> and content of <content>
     Then I should be able to fetch the journal entry
 
     Examples:
