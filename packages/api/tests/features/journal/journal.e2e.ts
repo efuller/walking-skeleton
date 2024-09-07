@@ -13,7 +13,7 @@ import { AuthService } from '@efuller/shared/src/modules/auth/auth.service';
 const feature = loadFeature('./packages/shared/tests/features/journal.feature', { tagFilter: '@api' });
 
 defineFeature(feature, (test) => {
-  test('Logged in user creates a new journal', async ({ given, when, then, and }) => {
+  test('Logged in user creates a new journal', async ({ given, when, then}) => {
     let compositionRoot: CompositionRoot;
     let apiServer: ApiServer;
     let apiDriver: RestApiDriver;

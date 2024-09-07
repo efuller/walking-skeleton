@@ -14,7 +14,7 @@ interface LoadingProfileProps {
   presenter: MembersPresenter;
 }
 
-const LoadingProfile = observer(({presenter}: LoadingProfileProps) => {
+export const LoadingProfile = observer(({presenter}: LoadingProfileProps) => {
   const navigate = useNavigate();
 
   useEffect(() => {
