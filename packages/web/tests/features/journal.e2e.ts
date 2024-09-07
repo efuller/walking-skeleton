@@ -32,7 +32,7 @@ defineFeature(feature, (test) => {
   let journal: JournalDto;
 
   beforeAll(async () => {
-    driver = await PuppeteerPageDriver.create({ headless: false, slowMo: 25 });
+    driver = await PuppeteerPageDriver.create({ headless: true, slowMo: 25 });
     webApp = await WebApp.create(driver);
     authenticator = new SupabaseAuthenticator();
     authService = new AuthService(authenticator);
