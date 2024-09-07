@@ -11,6 +11,7 @@ export type ApiResponse<T> = {
 
 export interface JournalsApi {
   create(journal: CreateJournalDto): Promise<ApiResponse<JournalDto>>;
+  getJournals(): Promise<ApiResponse<JournalDto[]>>;
 }
 
 export interface MembersApi {
@@ -24,6 +25,13 @@ class MockJournalsApiClient implements JournalsApi {
     return {
       success: true,
       data: journal
+    }
+  }
+
+  public async getJournals(): Promise<ApiResponse<JournalDto[]>> {
+    return {
+      success: true,
+      data: []
     }
   }
 }
@@ -52,6 +60,27 @@ class JournalsApiClient implements JournalsApi {
     private readonly baseUrl: string,
     private readonly authModule: AuthModule
   ) {}
+
+  public async getJournals(): Promise<ApiResponse<JournalDto[]>> {
+    const response = await fetch(`${this.baseUrl}/journals`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authModule.getAccessToken()}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error fetching journals: ${response.statusText}`);
+    }
+
+    const result = await response.json() as ApiResponse<JournalDto[]>;
+
+    return {
+      success: true,
+      data: result.data,
+    }
+  }
 
   public async create(journal: JournalDto): Promise<ApiResponse<JournalDto>> {
     const response = await fetch(`${this.baseUrl}/journals`, {
