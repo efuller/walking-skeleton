@@ -58,11 +58,11 @@ export class ApiServer {
       res.send({ success: true, data: null, error: false }).status(200);
     });
 
-    this.express.get('/journal', async (req, res) => {
+    this.express.get('/journals', authMiddleware.handle(), async (req, res) => {
       await journalController.getAll(req, res);
     });
 
-    this.express.post('/journal', async (req, res) => {
+    this.express.post('/journals', authMiddleware.handle(), async (req, res) => {
       await journalController.create(req, res);
     });
 

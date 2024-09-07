@@ -6,6 +6,8 @@ import { PuppeteerPageDriver } from '../shared/webDriver/puppeteerPageDriver';
 import { RegisterForm } from '../shared/pageComponents/forms/registerForm';
 import { RegisterPage } from '../shared/pages/registerPage';
 import { SidebarComponent } from '../shared/pageComponents/sidebar/sidebarComponent';
+import { UserRegisterDto } from '@efuller/shared/src/modules/auth/auth.dto';
+import { UserBuilder } from '@efuller/shared/tests/support/builders/userBuilder';
 
 const feature = loadFeature(
   path.join(__dirname, '../../../../packages/shared/tests/features/registration.feature'),
@@ -22,9 +24,10 @@ defineFeature(feature, (test) => {
   let registerPage: RegisterPage;
   let registerForm: RegisterForm;
   let sidebar: SidebarComponent;
+  let registerUserDto: UserRegisterDto;
 
   beforeAll(async () => {
-    driver = await PuppeteerPageDriver.create({ headless: true, slowMo: 75 });
+    driver = await PuppeteerPageDriver.create({ headless: true, slowMo: 25 });
     webApp = await WebApp.create(driver);
     registerPage = webApp.getPageObject('registerPage');
     registerForm = registerPage.$('registerForm');
@@ -43,13 +46,15 @@ defineFeature(feature, (test) => {
     });
 
     when('I register with valid credentials', async () => {
-      await registerForm.fillAndSubmitForm();
+      registerUserDto = new UserBuilder()
+        .withRandomEmail()
+        .withPassword('Password')
+        .build();
+      await registerForm.fillAndSubmitForm(registerUserDto);
     });
 
     then('My member profile is loaded', async () => {
-      console.log('member profile before', registerPage.getUrl());
       await registerPage.waitForNavigation();
-      console.log('member profile after', registerPage.getUrl());
       expect(registerPage.getUrl()).toContain('load-profile');
     });
 
@@ -61,7 +66,7 @@ defineFeature(feature, (test) => {
     and('My member email is present on the page', async () => {
       // we can check for username in header for FE.
       expect(await sidebar.isValid()).toBe(true);
-      expect(await sidebar.getUserText()).toBe('hi: e2e@test.com');
+      expect(await sidebar.getUserText()).toBe(`hi: ${registerUserDto.email}`);
     });
   });
 });

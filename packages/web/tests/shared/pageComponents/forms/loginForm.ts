@@ -2,16 +2,16 @@ import { PuppeteerPageDriver } from '../../webDriver/puppeteerPageDriver';
 import { BasePageComponent } from '../basePageComponent';
 import { UserRegisterDto } from '@efuller/shared/src/modules/auth/auth.dto';
 
-type RegisterFormElements = {
+type LoginFormElements = {
   userName: { selector: string };
   password: { selector: string };
   submitBtn: { selector: string };
 };
 
-export class RegisterForm extends BasePageComponent<RegisterFormElements> {
+export class LoginForm extends BasePageComponent<LoginFormElements> {
   constructor(
     protected pageDriver: PuppeteerPageDriver,
-    protected componentConfig: RegisterFormElements,
+    protected componentConfig: LoginFormElements,
   ) {
     super(pageDriver, componentConfig);
   }

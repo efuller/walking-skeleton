@@ -16,7 +16,6 @@ describe('Members', () => {
     compositionRoot = await CompositionRoot.create(appConfig);
     membersPresenter = compositionRoot.getMembersModule().getMembersPresenter();
     clientApi = compositionRoot.getClientApi();
-    // membersController = compositionRoot.getMembersModule().getMembersController();
   });
 
   it('should be able to load member details by email address', async () => {
