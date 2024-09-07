@@ -2,8 +2,10 @@ import { PuppeteerPageDriver } from '../webDriver/puppeteerPageDriver';
 import { JournalList } from '../pageComponents/journal/journalList';
 import { AddJournalFormComponent } from '../pageComponents/journal/addJournalForm';
 import { BasePage } from './basePage';
+import { LoginForm } from '../pageComponents/forms/loginForm';
 
 type HomepageComponents = {
+  loginForm: LoginForm;
   addJournalForm: AddJournalFormComponent;
   journalList: JournalList;
 };
@@ -29,6 +31,12 @@ export class HomePage extends BasePage<HomepageComponents> {
       submitBtn: { selector: '#submit' },
     });
 
+    const loginForm = new LoginForm(this.pageDriver, {
+      userName: { selector: '#email' },
+      password: { selector: '#password' },
+      submitBtn: { selector: '#submit' }
+    });
+
     const journalList = new JournalList(this.pageDriver, {
       journalList: { selector: '#journal-list' },
       journalEntries: { selector: '.journal-entry' },
@@ -36,6 +44,11 @@ export class HomePage extends BasePage<HomepageComponents> {
       journalContent: { selector: '.journal-content' },
     });
 
-    return { addJournalForm, journalList };
+    return { addJournalForm, journalList, loginForm };
   }
+
+  async waitForNavigation() {
+    await this.pageDriver.page.waitForNavigation();
+  }
+
 }
