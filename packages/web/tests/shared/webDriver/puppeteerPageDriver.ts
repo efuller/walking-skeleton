@@ -6,6 +6,7 @@ export class PuppeteerPageDriver {
   static async create(driverProps: PuppeteerLaunchOptions) {
     const browser = await puppeteer.launch(driverProps);
     const page = await browser.newPage();
+    await page.setViewport({ width: 1280, height: 720 });
     return new PuppeteerPageDriver(browser, page);
   }
 }
