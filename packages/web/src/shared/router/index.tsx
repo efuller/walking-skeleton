@@ -8,6 +8,7 @@ import { AppPage } from '@/pages/app.page.tsx';
 import { AuthModule } from '@/modules/auth/auth.module.ts';
 import { MembersModule } from '@/modules/members/members.module.ts';
 import { MembersPresenter } from '@/modules/members/members.presenter.ts';
+import { JournalsModule } from '@/modules/journals/journals.module.ts';
 
 interface LoadingProfileProps {
   presenter: MembersPresenter;
@@ -31,7 +32,8 @@ const LoadingProfile = observer(({presenter}: LoadingProfileProps) => {
 export class AppRouter {
   constructor(
     private readonly authModule: AuthModule,
-    private readonly membersModule: MembersModule
+    private readonly membersModule: MembersModule,
+    private readonly journalsModule: JournalsModule
   ) {}
 
   private async protectedLoader() {
@@ -86,7 +88,7 @@ export class AppRouter {
           },
           {
             path: 'journals',
-            element: <JournalsPage />,
+            element: <JournalsPage presenter={this.journalsModule.getJournalsPresenter()} controller={this.journalsModule.getJournalsController()} />,
           }
         ]
       }

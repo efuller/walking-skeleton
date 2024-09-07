@@ -19,7 +19,7 @@ export class CompositionRoot {
     this.clientApi = ClientApi.create(this.apiUrl, this.config, this.authModule);
     this.membersModule = new MembersModule(this.config, this.clientApi.app.app.members);
     this.journalsModule = new JournalsModule(this.config, this.clientApi.app.app.journals);
-    this.appRouter = new AppRouter(this.authModule, this.membersModule);
+    this.appRouter = new AppRouter(this.authModule, this.membersModule, this.journalsModule);
   }
 
   public static async create(config: AppConfig) {
