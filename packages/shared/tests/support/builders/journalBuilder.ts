@@ -14,6 +14,16 @@ export class JournalBuilder {
     };
   }
 
+  withRandomTitle(): JournalBuilder {
+    this.journalProps.title = `Test Journal ${Math.random()}`;
+    return this;
+  }
+
+  withRandomContent(): JournalBuilder {
+    this.journalProps.content = `This is a test journal entry ${Math.random()}`;
+    return this;
+  }
+
   withId(id: string = ''): JournalBuilder {
     if (!id) {
       id = uuidv4();

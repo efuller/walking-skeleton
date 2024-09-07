@@ -12,12 +12,8 @@ Feature: Journaling
       | Test Journal| Sample journal content |
 
   @web
-  Scenario Outline: Registered user creates a new journal
+  Scenario: Registered user creates a new journal
     Given I am a logged in user
     And the form for adding a new journal is visible
-    When I enter a title of <title> and content of <content> and click the submit button
-    Then the page should display the title of <title> and content of <content>
-
-    Examples:
-      | title       | content                |
-      | Test Journal| Sample journal content |
+    When I enter a new journal
+    Then the page should display the journal

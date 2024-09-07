@@ -11,6 +11,8 @@ import { Authenticator } from '@efuller/shared/src/modules/auth/ports/authentica
 import { AuthService } from '@efuller/shared/src/modules/auth/auth.service';
 import { SupabaseAuthenticator } from '@efuller/shared/src/modules/auth/adapters/supabaseAuthenticator';
 import { UserBuilder } from '@efuller/shared/tests/support/builders/userBuilder';
+import { JournalDto } from '@efuller/api/src/modules/journals/journal.dto';
+import { JournalBuilder } from '@efuller/shared/tests/support/builders/journalBuilder';
 
 const feature = loadFeature(
   path.join(__dirname, '../../../../packages/shared/tests/features/journal.feature'),
@@ -27,9 +29,10 @@ defineFeature(feature, (test) => {
   let registerUserDto: UserRegisterDto;
   let authenticator: Authenticator;
   let authService: AuthService;
+  let journal: JournalDto;
 
   beforeAll(async () => {
-    driver = await PuppeteerPageDriver.create({ headless: false, slowMo: 50 });
+    driver = await PuppeteerPageDriver.create({ headless: false, slowMo: 25 });
     webApp = await WebApp.create(driver);
     authenticator = new SupabaseAuthenticator();
     authService = new AuthService(authenticator);
@@ -38,6 +41,13 @@ defineFeature(feature, (test) => {
     loginForm = homePage.$('loginForm');
     journalList = homePage.$('journalList');
   });
+
+  beforeEach(() => {
+    journal = new JournalBuilder()
+      .withRandomTitle()
+      .withRandomContent()
+      .build();
+  })
 
   afterAll(async () => {
     await webApp.close();
@@ -60,14 +70,13 @@ defineFeature(feature, (test) => {
       expect(await addJournalForm.isValid()).toBe(true);
     });
 
-    when(/^I enter a title of (.*) and content of (.*) and click the submit button$/, async (title, content) => {
-      await addJournalForm.addAndSubmit(title, content);
+    when(/^I enter a new journal$/, async () => {
+      await addJournalForm.addAndSubmit(journal.title, journal.content);
     });
 
-    then(/^the page should display the title of (.*) and content of (.*)$/, async (title, content) => {
-      const firstJournal = await journalList.getFirstJournal();
-      expect(firstJournal.title).toBe(title);
-      expect(firstJournal.content).toBe(content);
+    then(/^the page should display the journal$/, async () => {
+      const journalIsValid = await journalList.containsJournal(journal);
+      expect(journalIsValid).toBe(true);
     });
   });
 });

@@ -1,5 +1,6 @@
 import { PuppeteerPageDriver } from '../../webDriver/puppeteerPageDriver';
 import { BasePageComponent } from '../basePageComponent';
+import { JournalDto } from '@efuller/api/src/modules/journals/journal.dto';
 
 type JournalListFormElements = {
   journalList: { selector: string };
@@ -16,11 +17,12 @@ export class JournalList extends BasePageComponent<JournalListFormElements> {
     super(pageDriver, componentConfig);
   }
 
-  async getFirstJournal() {
+  async containsJournal(journal: JournalDto) {
+    let result = false;
     const journalList = await this.$('journalList');
 
     if (!journalList) {
-      throw new Error('Add journal form is not visible');
+      throw new Error('The journal list is not visible');
     }
 
     const journalEntries = await journalList.$$(this.componentConfig.journalEntries.selector);
@@ -29,14 +31,18 @@ export class JournalList extends BasePageComponent<JournalListFormElements> {
       throw new Error('Journal entries are not visible');
     }
 
-    const [firstJournal] = journalEntries;
+    // loop over journal entries and check if any of them match the title and content of the journal object
+    for (const journalEntry of journalEntries) {
+      const title = await journalEntry.$eval(this.componentConfig.journalTitle.selector, (el) => el.textContent);
+      const content = await journalEntry.$eval(this.componentConfig.journalContent.selector, (el) => el.textContent);
 
-    const title = await firstJournal.$eval(this.componentConfig.journalTitle.selector, (el) => el.textContent);
-    const content = await firstJournal.$eval(this.componentConfig.journalContent.selector, (el) => el.textContent);
+      console.log({ title, content });
 
-    return {
-      title,
-      content,
-    };
+      if (title === journal.title && content === journal.content) {
+        result = true;
+      }
+    }
+
+    return result;
   }
 }

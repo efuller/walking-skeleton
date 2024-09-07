@@ -27,7 +27,7 @@ defineFeature(feature, (test) => {
   let registerUserDto: UserRegisterDto;
 
   beforeAll(async () => {
-    driver = await PuppeteerPageDriver.create({ headless: true, slowMo: 75 });
+    driver = await PuppeteerPageDriver.create({ headless: true, slowMo: 25 });
     webApp = await WebApp.create(driver);
     registerPage = webApp.getPageObject('registerPage');
     registerForm = registerPage.$('registerForm');
