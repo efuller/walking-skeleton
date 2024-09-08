@@ -70,7 +70,7 @@ export default async (): Promise<Config> => ({
         '^.+\\.tsx?$': ['ts-jest', {}],
       },
       moduleNameMapper: {
-        '^@/(.*)$': '<rootDir>/src/$1',
+        '^@efuller/web/(.*)$': '<rootDir>/src/$1',
       },
       rootDir: '<rootDir>/packages/web'
     },

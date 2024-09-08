@@ -21,7 +21,7 @@
     "noFallthroughCasesInSwitch": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": [
+      "@efuller/web/*": [
         "./src/*"
       ]
     }

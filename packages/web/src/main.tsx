@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import './index.css';
-import { CompositionRoot } from '@/shared/compositionRoot';
-import { AppConfig, Environment, TestScript } from '@/shared/appConfig';
+import { AppConfig, Environment, TestScript } from '@efuller/web/shared/appConfig';
+import { CompositionRoot } from '@efuller/web/shared/compositionRoot';
 
 const environment: Environment = process.env.NODE_ENV as Environment;
 const script: TestScript = process.env.TEST_SCRIPT as TestScript || 'test-unit';

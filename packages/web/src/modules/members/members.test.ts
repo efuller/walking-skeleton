@@ -1,6 +1,6 @@
 import { MembersPresenter } from './members.presenter';
-import { CompositionRoot } from '@/shared/compositionRoot';
-import { AppConfig } from '@/shared/appConfig';
+import { CompositionRoot } from '@efuller/web/shared/compositionRoot';
+import { AppConfig } from '@efuller/web/shared/appConfig';
 import { AppApiClient } from '@efuller/shared/src/api';
 
 describe('Members', () => {

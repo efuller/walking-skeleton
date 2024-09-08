@@ -1,8 +1,8 @@
-import { AppConfig } from '@/shared/appConfig';
-import { JournalsPresenter } from '@/modules/journals/journals.presenter.ts';
-import { JournalsRepo } from '@/modules/journals/journals.repo.ts';
-import { JournalsController } from '@/modules/journals/journals.controller.ts';
+import { JournalsPresenter } from '@efuller/web/modules/journals/journals.presenter.ts';
+import { JournalsRepo } from '@efuller/web/modules/journals/journals.repo.ts';
+import { JournalsController } from '@efuller/web/modules/journals/journals.controller.ts';
 import { JournalsApi } from '@efuller/shared/dist/api';
+import { AppConfig } from '@efuller/web/shared/appConfig';
 
 export class JournalsModule {
   private readonly journalsController: JournalsController;

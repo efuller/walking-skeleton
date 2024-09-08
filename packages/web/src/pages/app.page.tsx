@@ -12,14 +12,14 @@ import {
   Users,
 } from "lucide-react"
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@efuller/web/components/ui/button"
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card.tsx'
+} from '@efuller/web/components/ui/card.tsx'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -27,12 +27,12 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { Badge } from '@/components/ui/badge.tsx';
-import { Input } from '@/components/ui/input.tsx';
-import { AuthController } from '@/modules/auth/auth.controller.ts';
-import { MembersPresenter } from '@/modules/members/members.presenter.ts';
+} from "@efuller/web/components/ui/dropdown-menu"
+import { Sheet, SheetContent, SheetTrigger } from "@efuller/web/components/ui/sheet"
+import { Badge } from '@efuller/web/components/ui/badge.tsx';
+import { Input } from '@efuller/web/components/ui/input.tsx';
+import { AuthController } from '@efuller/web/modules/auth/auth.controller.ts';
+import { MembersPresenter } from '@efuller/web/modules/members/members.presenter.ts';
 
 interface AppPageProps {
   authController: AuthController;

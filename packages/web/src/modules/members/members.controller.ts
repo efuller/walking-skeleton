@@ -1,4 +1,4 @@
-import { MembersRepo } from '@/modules/members/members.repo.ts';
+import { MembersRepo } from '@efuller/web/modules/members/members.repo.ts';
 import { MemberDto } from '@efuller/shared/src/modules/members/members.dto';
 
 export class MembersController {

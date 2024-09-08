@@ -1,11 +1,11 @@
 import { useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card.tsx';
-import { Button } from '@/components/ui/button.tsx';
-import { Label } from '@/components/ui/label.tsx';
-import { Input } from '@/components/ui/input.tsx';
-import { AuthController } from '@/modules/auth/auth.controller.ts';
-import { AuthPresenter } from '@/modules/auth/auth.presenter.ts';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@efuller/web/components/ui/card.tsx';
+import { Button } from '@efuller/web/components/ui/button.tsx';
+import { Label } from '@efuller/web/components/ui/label.tsx';
+import { Input } from '@efuller/web/components/ui/input.tsx';
+import { AuthController } from '@efuller/web/modules/auth/auth.controller.ts';
+import { AuthPresenter } from '@efuller/web/modules/auth/auth.presenter.ts';
 import { observer } from 'mobx-react';
 
 interface HomePageProps {
