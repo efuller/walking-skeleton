@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import { CreateMemberCommand } from '@efuller/shared/src/modules/members/commands';
+import { CreateMemberCommand } from '@efuller/shared/src/modules/members/members.dto';
 
 export class MemberBuilder {
   private memberProps: CreateMemberCommand;

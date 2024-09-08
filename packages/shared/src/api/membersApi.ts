@@ -1,5 +1,5 @@
 import { AuthModule } from 'web/src/modules/auth/auth.module';
-import { MemberDto } from '@efuller/shared/src/modules/members/commands';
+import { MemberDto } from '@efuller/shared/src/modules/members/members.dto';
 import { ApiResponse } from '@efuller/shared/src/api/index';
 
 export interface MembersApi {

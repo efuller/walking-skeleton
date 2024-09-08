@@ -3,7 +3,7 @@ import { DrizzleClient } from '@efuller/api/src/shared/persistence/dbConnection/
 import { MembersRepo } from '@efuller/api/src/modules/members/ports/members.repo';
 import { InMemoryMembersRepo } from '@efuller/api/src/modules/members/adapters/inMemoryMembersRepo';
 import { MemberBuilder } from '@efuller/shared/tests/support/builders/memberBuilder';
-import { CreateMemberCommand } from '@efuller/shared/src/modules/members/commands';
+import { CreateMemberCommand } from '@efuller/shared/src/modules/members/members.dto';
 import { DrizzleMembersRepo } from '@efuller/api/src/modules/members/adapters/drizzleMembers.repo';
 
 describe('MembersRepo', () => {

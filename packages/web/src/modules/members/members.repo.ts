@@ -1,6 +1,6 @@
 import { makeObservable, observable } from 'mobx';
-import { MemberDto } from '@efuller/shared/src/modules/members/commands.ts';
 import { MembersApi } from '@efuller/shared/src/api/membersApi';
+import { MemberDto } from '@efuller/shared/src/modules/members/members.dto';
 
 export class MembersRepo {
   public member: MemberDto | null = null;

@@ -1,7 +1,7 @@
 import { defineFeature, loadFeature } from 'jest-cucumber';
 import { MemberBuilder } from '@efuller/shared/tests/support/builders/memberBuilder';
 import { CompositionRoot } from '@efuller/api/src/shared/composition/compositionRoot';
-import { CreateMemberCommand } from '@efuller/shared/src/modules/members/commands';
+import { CreateMemberCommand } from '@efuller/shared/src/modules/members/members.dto';
 import { MemberDto } from '@efuller/api/src/modules/members/member.dto';
 import { AppInterface } from '@efuller/api/src/shared/application';
 

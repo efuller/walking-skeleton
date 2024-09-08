@@ -1,4 +1,4 @@
-import { CreateMemberCommand, Member } from '@efuller/shared/src/modules/members/commands';
+import { CreateMemberCommand, Member } from '@efuller/shared/src/modules/members/members.dto';
 
 export interface MembersRepo {
   createMember(member: CreateMemberCommand): Promise<Member>;
