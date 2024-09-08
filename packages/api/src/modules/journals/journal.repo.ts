@@ -1,5 +1,5 @@
 import { ApiResponse } from '@efuller/shared/src/api';
-import { CreateJournalCommand, Journal } from '@efuller/shared/src/modules/journals/commands';
+import { CreateJournalCommand, Journal } from '@efuller/shared/src/modules/journals/journals.dto';
 
 export interface JournalRepo {
   createJournal(user: CreateJournalCommand): Promise<ApiResponse<Journal | null>>;

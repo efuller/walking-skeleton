@@ -3,7 +3,7 @@ import { ApiResponse } from '@efuller/shared/src/api';
 import { DbClient } from '@efuller/api/src/shared/persistence/dbConnection/adapters/drizzleClient';
 import { journal } from '@efuller/api/src/shared/persistence/drizzle/schema';
 import { eq } from 'drizzle-orm';
-import { CreateJournalCommand, Journal } from '@efuller/shared/src/modules/journals/commands';
+import { CreateJournalCommand, Journal } from '@efuller/shared/src/modules/journals/journals.dto';
 
 export class DrizzleJournalRepo implements JournalRepo {
   constructor(private readonly db: DbClient) {}

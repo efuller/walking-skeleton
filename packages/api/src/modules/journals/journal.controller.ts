@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { JournalService } from './journal.service';
-import { CreateJournalCommand } from '@efuller/shared/src/modules/journals/commands';
+import { CreateJournalCommand } from '@efuller/shared/src/modules/journals/journals.dto';
 
 export class JournalController {
   constructor(private readonly journalService: JournalService) {}

@@ -3,7 +3,7 @@ import { InMemoryJournalRepo } from '@efuller/api/src/modules/journals/adapters/
 import { DrizzleClient } from '@efuller/api/src/shared/persistence/dbConnection/adapters/drizzleClient';
 import { DrizzleJournalRepo } from '@efuller/api/src/modules/journals/adapters/drizzleJournal.repo';
 import { JournalRepo } from '@efuller/api/src/modules/journals/journal.repo';
-import { CreateJournalCommand } from '@efuller/shared/src/modules/journals/commands';
+import { CreateJournalCommand } from '@efuller/shared/src/modules/journals/journals.dto';
 
 describe('JournalRepo', () => {
   let drizzleClient: DrizzleClient;
