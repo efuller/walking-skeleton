@@ -11,7 +11,8 @@
     "skipLibCheck": true,
     "paths": {
       "@efuller/api/*": ["./packages/api/*"],
-      "@efuller/shared/*": ["./packages/shared/*"]
+      "@efuller/shared/*": ["./packages/shared/*"],
+      "@efuller/web/*": ["./packages/web/*"]
     },
   },
   "include": [
