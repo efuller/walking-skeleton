@@ -36,8 +36,6 @@ export class JournalList extends BasePageComponent<JournalListFormElements> {
       const title = await journalEntry.$eval(this.componentConfig.journalTitle.selector, (el) => el.textContent);
       const content = await journalEntry.$eval(this.componentConfig.journalContent.selector, (el) => el.textContent);
 
-      console.log({ title, content });
-
       if (title === journal.title && content === journal.content) {
         result = true;
       }

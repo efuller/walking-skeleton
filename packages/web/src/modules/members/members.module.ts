@@ -1,8 +1,8 @@
 import { MembersPresenter } from '@/modules/members/members.presenter.ts';
 import { MembersRepo } from './members.repo';
 import { MembersController } from './members.controller';
-import { MembersApi } from '@efuller/shared/src/api';
 import { AppConfig } from '@/shared/appConfig';
+import { MembersApi } from '@efuller/shared/dist/api';
 
 export class MembersModule {
   private readonly membersPresenter: MembersPresenter;
