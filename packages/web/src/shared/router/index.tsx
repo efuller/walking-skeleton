@@ -1,14 +1,14 @@
 import { useEffect } from 'react';
 import { observer } from 'mobx-react';
 import { redirect, RouteObject, useNavigate } from 'react-router-dom';
-import { HomePage } from '@/pages/home.page.tsx';
-import { JournalsPage } from '@/modules/journals/journals.page';
-import { RegisterPage } from '@/pages/register.page.tsx';
-import { AppPage } from '@/pages/app.page.tsx';
-import { AuthModule } from '@/modules/auth/auth.module.ts';
-import { MembersModule } from '@/modules/members/members.module.ts';
-import { MembersPresenter } from '@/modules/members/members.presenter.ts';
-import { JournalsModule } from '@/modules/journals/journals.module.ts';
+import { JournalsPage } from '@efuller/web/modules/journals/journals.page';
+import { RegisterPage } from '@efuller/web/pages/register.page.tsx';
+import { AppPage } from '@efuller/web/pages/app.page.tsx';
+import { AuthModule } from '@efuller/web/modules/auth/auth.module.ts';
+import { MembersModule } from '@efuller/web/modules/members/members.module.ts';
+import { MembersPresenter } from '@efuller/web/modules/members/members.presenter.ts';
+import { JournalsModule } from '@efuller/web/modules/journals/journals.module.ts';
+import { HomePage } from '@efuller/web/pages/home.page.tsx';
 
 interface LoadingProfileProps {
   presenter: MembersPresenter;

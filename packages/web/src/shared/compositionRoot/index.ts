@@ -1,9 +1,9 @@
-import { AuthModule } from '@/modules/auth/auth.module.ts';
-import { AppRouter } from '@/shared/router';
-import { MembersModule } from '@/modules/members/members.module.ts';
+import { AuthModule } from '@efuller/web/modules/auth/auth.module.ts';
+import { AppRouter } from '@efuller/web/shared/router';
+import { MembersModule } from '@efuller/web/modules/members/members.module.ts';
 import { ClientApi } from '@efuller/shared/src/api';
-import { AppConfig } from '@/shared/appConfig';
-import { JournalsModule } from '@/modules/journals/journals.module.ts';
+import { AppConfig } from '@efuller/web/shared/appConfig';
+import { JournalsModule } from '@efuller/web/modules/journals/journals.module.ts';
 
 export class CompositionRoot {
   private static instance: CompositionRoot;

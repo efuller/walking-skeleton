@@ -1,6 +1,6 @@
 import { MembersRepo } from '@efuller/api/src/modules/members/ports/members.repo';
 import { members } from '@efuller/api/src/shared/persistence/drizzle/schema';
-import { CreateMemberCommand, Member } from '@efuller/shared/src/modules/members/commands';
+import { CreateMemberCommand, Member } from '@efuller/shared/src/modules/members/members.dto';
 import { DbClient } from '@efuller/api/src/shared/persistence/dbConnection/adapters/drizzleClient';
 import { eq } from 'drizzle-orm';
 

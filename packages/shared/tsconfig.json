@@ -5,5 +5,5 @@
     "lib": ["esnext"],
     "types": ["jest", "node"],
   },
-  "include": ["./src"],
+  "include": ["src"],
 }

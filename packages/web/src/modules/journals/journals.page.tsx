@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { AddJournalForm } from './components/addJournal.form';
-import { JournalsPresenter } from '@/modules/journals/journals.presenter.ts';
-import { JournalsController } from '@/modules/journals/journals.controller.ts';
+import { JournalsPresenter } from '@efuller/web/modules/journals/journals.presenter.ts';
+import { JournalsController } from '@efuller/web/modules/journals/journals.controller.ts';
 import { observer } from 'mobx-react';
 
 export interface Journal {

@@ -1,8 +1,8 @@
-import { CompositionRoot } from '@/shared/compositionRoot';
-import { AuthModule } from '@/modules/auth/auth.module.ts';
 import { AuthTokenResponsePassword } from '@supabase/supabase-js';
-import { AppConfig } from '@/shared/appConfig';
 import { MockAuthenticator } from '@efuller/shared/src/modules/auth/adapters/mockAuthenticator.ts';
+import { CompositionRoot } from '@efuller/web/shared/compositionRoot';
+import { AuthModule } from '@efuller/web/modules/auth/auth.module.ts';
+import { AppConfig } from '@efuller/web/shared/appConfig';
 
 describe('auth', () => {
   let compositionRoot: CompositionRoot;

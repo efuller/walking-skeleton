@@ -1,4 +1,4 @@
-import { JournalsRepo } from '@/modules/journals/journals.repo.ts';
+import { JournalsRepo } from '@efuller/web/modules/journals/journals.repo.ts';
 import { computed, makeObservable } from 'mobx';
 
 export class JournalsPresenter {

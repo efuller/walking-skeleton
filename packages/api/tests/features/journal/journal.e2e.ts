@@ -4,7 +4,7 @@ import { Server } from 'http';
 import { CompositionRoot } from '@efuller/api/src/shared/composition/compositionRoot';
 import { ApiResponse } from '@efuller/shared/src/api';
 import { ApiServer } from '@efuller/api/src/shared/http/apiServer';
-import { CreateJournalCommand, Journal } from '@efuller/shared/src/modules/journals/commands';
+import { CreateJournalCommand, Journal } from '@efuller/shared/src/modules/journals/journals.dto';
 import { UserBuilder } from '@efuller/shared/tests/support/builders/userBuilder';
 import { UserRegisterDto } from '@efuller/shared/src/modules/auth/auth.dto';
 import { AuthResponse } from '@supabase/supabase-js';

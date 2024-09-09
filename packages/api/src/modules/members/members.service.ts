@@ -1,4 +1,4 @@
-import { CreateMemberCommand } from '@efuller/shared/src/modules/members/commands';
+import { CreateMemberCommand } from '@efuller/shared/src/modules/members/members.dto';
 import { MemberDto } from '@efuller/api/src/modules/members/member.dto';
 import { MembersRepo } from '@efuller/api/src/modules/members/ports/members.repo';
 

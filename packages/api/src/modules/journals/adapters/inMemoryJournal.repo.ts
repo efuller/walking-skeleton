@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import { JournalRepo } from '@efuller/api/src/modules/journals/journal.repo';
 import { ApiResponse } from '@efuller/shared/src/api';
-import { CreateJournalCommand, Journal } from '@efuller/shared/src/modules/journals/commands';
+import { CreateJournalCommand, Journal } from '@efuller/shared/src/modules/journals/journals.dto';
 
 export function generateRandomNumber() {
   return Math.floor(Math.random() * 1000);

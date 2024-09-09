@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { MembersService } from '@efuller/api/src/modules/members/members.service';
-import { CreateMemberCommand } from '@efuller/shared/src/modules/members/commands';
+import { CreateMemberCommand } from '@efuller/shared/src/modules/members/members.dto';
 import { ApiResponse } from '@efuller/shared/src/api';
 import { MemberDto } from '@efuller/api/src/modules/members/member.dto';
 

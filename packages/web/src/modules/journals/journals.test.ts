@@ -1,8 +1,8 @@
-import { CompositionRoot } from '@/shared/compositionRoot';
-import { AppConfig } from '@/shared/appConfig';
-import { JournalsPresenter } from '@/modules/journals/journals.presenter.ts';
+import { CompositionRoot } from '@efuller/web/shared/compositionRoot';
+import { AppConfig } from '@efuller/web/shared/appConfig';
+import { JournalsPresenter } from '@efuller/web/modules/journals/journals.presenter.ts';
 import { JournalBuilder } from '@efuller/shared/tests/support/builders/journalBuilder.ts';
-import { JournalsController } from '@/modules/journals/journals.controller.ts';
+import { JournalsController } from '@efuller/web/modules/journals/journals.controller.ts';
 
 describe('Journals', () => {
   let compositionRoot: CompositionRoot;
