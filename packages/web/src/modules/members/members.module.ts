@@ -2,7 +2,7 @@ import { MembersPresenter } from '@efuller/web/modules/members/members.presenter
 import { MembersRepo } from './members.repo';
 import { MembersController } from './members.controller';
 import { AppConfig } from '@efuller/web/shared/appConfig';
-import { MembersApi } from '@efuller/shared/dist/api';
+import { MembersApi } from '@efuller/shared/src/api/membersApi';
 
 export class MembersModule {
   private readonly membersPresenter: MembersPresenter;

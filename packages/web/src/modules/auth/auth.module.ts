@@ -5,7 +5,7 @@ import { Authenticator } from '@efuller/shared/src/modules/auth/ports/authentica
 import { AuthService } from '@efuller/shared/src/modules/auth/auth.service';
 import { SupabaseAuthenticator } from '@efuller/shared/src/modules/auth/adapters/supabaseAuthenticator';
 import { MockAuthenticator } from '@efuller/shared/src/modules/auth/adapters/mockAuthenticator';
-import { AppConfig } from '@efuller/web/shared/appConfig';
+import { AppConfig } from '../../shared/appConfig';
 
 export class AuthModule {
   private readonly authPresenter: AuthPresenter;
