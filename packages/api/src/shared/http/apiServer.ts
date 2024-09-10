@@ -25,9 +25,18 @@ export class ApiServer {
     private app: AppInterface,
     private readonly context: Context
   ) {
-    const origin = process.env.NODE_ENV === 'production' ? 'https://ws.efuller.me' : '*';
     this.server = null;
     this.express = express();
+    this.setupMiddleware();
+
+    this.port = process.env.PORT ? Number(process.env.PORT) : 0;
+    this.running = false;
+
+    this.setupRoutes();
+  }
+
+  private setupMiddleware() {
+    const origin = process.env.NODE_ENV === 'production' ? 'https://ws.efuller.me' : '*';
     this.express.use(helmet());
     this.express.use(express.json());
     this.express.use(cors({
@@ -43,11 +52,6 @@ export class ApiServer {
     }));
     this.express.use(compression())
     this.express.use(morgan('combined'));
-
-    this.port = process.env.PORT ? Number(process.env.PORT) : 0;
-    this.running = false;
-
-    this.setupRoutes();
   }
 
   private setupRoutes() {
@@ -60,21 +64,12 @@ export class ApiServer {
     this.express.get('/', (req, res) => {
       res.send({ ok: true }).status(200);
     });
-
     this.express.get('/health', (req, res) => {
       res.send({ success: true, data: null, error: false }).status(200);
     });
-
-    this.express.get('/journals', authMiddleware.handle(), async (req, res) => {
-      await journalController.getAll(req, res);
-    });
-
-    this.express.post('/journals', authMiddleware.handle(), async (req, res) => {
-      await journalController.create(req, res);
-    });
-
+    this.express.get('/journals', authMiddleware.handle(), journalController.getAll.bind(journalController));
+    this.express.post('/journals', authMiddleware.handle(), journalController.create.bind(journalController));
     this.express.get('/members/:email', authMiddleware.handle(), membersController.getMemberByEmail.bind(membersController));
-
     this.express.get('/me', authMiddleware.handle(), async (req: MeRequest, res) => {
       const user = req?.user;
 
