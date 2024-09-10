@@ -3,6 +3,7 @@ import express, { Application, Request } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import compression from 'compression';
+import morgan from 'morgan';
 
 import { JournalController } from '@efuller/api/src/modules/journals/journal.controller';
 import { AppInterface } from '@efuller/api/src/shared/application';
@@ -40,7 +41,8 @@ export class ApiServer {
       methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
       allowedHeaders: ['Content-Type', 'Authorization'],
     }));
-    this.express.use(compression());
+    this.express.use(compression())
+    this.express.use(morgan('combined'));
 
     this.port = process.env.PORT ? Number(process.env.PORT) : 0;
     this.running = false;
