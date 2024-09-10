@@ -1,6 +1,8 @@
 import { Server } from 'http';
 import express, { Application, Request } from 'express';
 import cors from 'cors';
+import helmet from 'helmet';
+
 import { JournalController } from '@efuller/api/src/modules/journals/journal.controller';
 import { AppInterface } from '@efuller/api/src/shared/application';
 import { MembersController } from '@efuller/api/src/modules/members/members.controller';
@@ -24,6 +26,7 @@ export class ApiServer {
     const origin = process.env.NODE_ENV === 'production' ? 'https://ws.efuller.me' : '*';
     this.server = null;
     this.express = express();
+    this.express.use(helmet());
     this.express.use(express.json());
     this.express.use(cors({
       origin,
