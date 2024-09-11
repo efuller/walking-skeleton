@@ -10,6 +10,8 @@ import { AppInterface } from '@efuller/api/src/shared/application';
 import { MembersController } from '@efuller/api/src/modules/members/members.controller';
 import { User } from '@supabase/auth-js';
 import { Context } from '@efuller/api/src/shared/composition/compositionRoot';
+import { Logger } from '@efuller/api/src/shared/logger/logger';
+import { ErrorHandler } from '@efuller/api/src/shared/errors/globalHandler';
 
 export interface MeRequest extends Request {
   user?: User;
@@ -33,6 +35,7 @@ export class ApiServer {
     this.running = false;
 
     this.setupRoutes();
+    this.setupErrorHandler();
   }
 
   private setupMiddleware() {
@@ -52,6 +55,12 @@ export class ApiServer {
     }));
     this.express.use(compression())
     this.express.use(morgan('combined'));
+  }
+
+  private setupErrorHandler() {
+    const loggerService = new Logger();
+    const errorHandler = new ErrorHandler(loggerService);
+    this.express.use(errorHandler.handle());
   }
 
   private setupRoutes() {
