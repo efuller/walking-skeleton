@@ -1,8 +1,7 @@
 import { defineFeature, loadFeature } from 'jest-cucumber';
 import { MemberBuilder } from '@efuller/shared/tests/support/builders/memberBuilder';
 import { CompositionRoot } from '@efuller/api/src/shared/composition/compositionRoot';
-import { CreateMemberDto } from '@efuller/shared/src/modules/members/members.dto';
-import { MemberDto } from '@efuller/api/src/modules/members/member.dto';
+import { CreateMemberDto, MemberDto } from '@efuller/shared/src/modules/members/members.dto';
 import { AppInterface } from '@efuller/api/src/shared/application';
 
 const feature = loadFeature('./packages/shared/tests/features/registration.feature', { tagFilter: '@api' });

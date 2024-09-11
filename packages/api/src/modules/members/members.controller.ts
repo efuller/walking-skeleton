@@ -1,8 +1,7 @@
 import { Request, Response } from 'express';
 import { MembersService } from '@efuller/api/src/modules/members/members.service';
-import { CreateUserSchema } from '@efuller/shared/src/modules/members/members.dto';
+import { CreateUserSchema, MemberDto } from '@efuller/shared/src/modules/members/members.dto';
 import { ApiResponse } from '@efuller/shared/src/api';
-import { MemberDto } from '@efuller/api/src/modules/members/member.dto';
 
 type CreateMemberResponse = ApiResponse<MemberDto | null>;
 

@@ -1,5 +1,4 @@
-import { CreateMemberDto } from '@efuller/shared/src/modules/members/members.dto';
-import { MemberDto } from '@efuller/api/src/modules/members/member.dto';
+import { CreateMemberDto, MemberDto } from '@efuller/shared/src/modules/members/members.dto';
 import { MembersRepo } from '@efuller/api/src/modules/members/ports/members.repo';
 
 export class MembersService {
@@ -12,6 +11,9 @@ export class MembersService {
       firstName: member.firstName,
       lastName: member.lastName,
       email: member.email,
+      userId: member.userId,
+      createdAt: member.createdAt,
+      updatedAt: member.updatedAt,
     };
     return memberDto;
   }
@@ -26,6 +28,9 @@ export class MembersService {
       firstName: member.firstName,
       lastName: member.lastName,
       email: member.email,
+      userId: member.userId,
+      createdAt: member.createdAt,
+      updatedAt: member.updatedAt,
     };
     return memberDto;
   }
