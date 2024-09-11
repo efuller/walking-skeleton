@@ -1,11 +1,11 @@
 import { ApiResponse } from '@efuller/shared/src/api';
 import { JournalRepo } from '@efuller/api/src/modules/journals/journal.repo';
-import { CreateJournalCommand, Journal } from '@efuller/shared/src/modules/journals/journals.dto';
+import { CreateJournalDto, Journal } from '@efuller/shared/src/modules/journals/journals.dto';
 
 export class JournalService {
   constructor(private readonly journalRepo: JournalRepo) {}
 
-  async createJournal(journal: CreateJournalCommand): Promise<ApiResponse<Journal | null>> {
+  async createJournal(journal: CreateJournalDto): Promise<ApiResponse<Journal | null>> {
     const result = await this.journalRepo.createJournal(journal);
 
     return result;

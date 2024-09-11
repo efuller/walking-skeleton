@@ -3,7 +3,7 @@ import { InMemoryJournalRepo } from '@efuller/api/src/modules/journals/adapters/
 import { DrizzleClient } from '@efuller/api/src/shared/persistence/dbConnection/adapters/drizzleClient';
 import { DrizzleJournalRepo } from '@efuller/api/src/modules/journals/adapters/drizzleJournal.repo';
 import { JournalRepo } from '@efuller/api/src/modules/journals/journal.repo';
-import { CreateJournalCommand } from '@efuller/shared/src/modules/journals/journals.dto';
+import { CreateJournalDto } from '@efuller/shared/src/modules/journals/journals.dto';
 
 describe('JournalRepo', () => {
   let drizzleClient: DrizzleClient;
@@ -22,7 +22,7 @@ describe('JournalRepo', () => {
   });
 
   it('can retrieve a journal by its id', async () => {
-    const journalDto: CreateJournalCommand = {
+    const journalDto: CreateJournalDto = {
       id: uuidv4(),
       title: 'Test',
       content: 'Test Content',

@@ -3,12 +3,12 @@ import { ApiResponse } from '@efuller/shared/src/api';
 import { DbClient } from '@efuller/api/src/shared/persistence/dbConnection/adapters/drizzleClient';
 import { journal } from '@efuller/api/src/shared/persistence/drizzle/schema';
 import { eq } from 'drizzle-orm';
-import { CreateJournalCommand, Journal } from '@efuller/shared/src/modules/journals/journals.dto';
+import { CreateJournalDto, Journal } from '@efuller/shared/src/modules/journals/journals.dto';
 
 export class DrizzleJournalRepo implements JournalRepo {
   constructor(private readonly db: DbClient) {}
 
-  async createJournal(journalDto: CreateJournalCommand): Promise<ApiResponse<Journal | null>> {
+  async createJournal(journalDto: CreateJournalDto): Promise<ApiResponse<Journal | null>> {
 
     const result = await this.db.insert(journal).values({
       ...journalDto,
