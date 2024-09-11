@@ -1,4 +1,5 @@
 import { Server } from 'http';
+import 'express-async-errors';
 import express, { Application, Request } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
