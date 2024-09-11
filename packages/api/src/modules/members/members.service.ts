@@ -1,11 +1,11 @@
-import { CreateMemberCommand } from '@efuller/shared/src/modules/members/members.dto';
+import { CreateMemberDto } from '@efuller/shared/src/modules/members/members.dto';
 import { MemberDto } from '@efuller/api/src/modules/members/member.dto';
 import { MembersRepo } from '@efuller/api/src/modules/members/ports/members.repo';
 
 export class MembersService {
   constructor(private membersRepo: MembersRepo) {}
 
-  async createMember(command: CreateMemberCommand): Promise<MemberDto> {
+  async createMember(command: CreateMemberDto): Promise<MemberDto> {
     const member = await this.membersRepo.createMember(command);
     const memberDto: MemberDto = {
       id: member.id,

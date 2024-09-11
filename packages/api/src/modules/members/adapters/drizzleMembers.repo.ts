@@ -1,13 +1,13 @@
 import { MembersRepo } from '@efuller/api/src/modules/members/ports/members.repo';
 import { members } from '@efuller/api/src/shared/persistence/drizzle/schema';
-import { CreateMemberCommand, Member } from '@efuller/shared/src/modules/members/members.dto';
+import { CreateMemberDto, Member } from '@efuller/shared/src/modules/members/members.dto';
 import { DbClient } from '@efuller/api/src/shared/persistence/dbConnection/adapters/drizzleClient';
 import { eq } from 'drizzle-orm';
 
 export class DrizzleMembersRepo implements MembersRepo {
   constructor(private readonly client: DbClient) {}
 
-  async createMember(member: CreateMemberCommand): Promise<Member> {
+  async createMember(member: CreateMemberDto): Promise<Member> {
     const result = await this.client
       .insert(members)
       .values({...member})

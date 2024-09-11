@@ -1,12 +1,12 @@
 import { v4 as uuidv4 } from 'uuid';
 
 import { MembersRepo } from '@efuller/api/src/modules/members/ports/members.repo';
-import { CreateMemberCommand, Member } from '@efuller/shared/src/modules/members/members.dto';
+import { CreateMemberDto, Member } from '@efuller/shared/src/modules/members/members.dto';
 
 export class InMemoryMembersRepo implements MembersRepo {
   private members: Member[] = [];
 
-  async createMember(command: CreateMemberCommand): Promise<Member> {
+  async createMember(command: CreateMemberDto): Promise<Member> {
     const member: Member = {
       id: uuidv4(),
       userId: uuidv4(),
