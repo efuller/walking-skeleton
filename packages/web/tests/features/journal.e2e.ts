@@ -11,8 +11,8 @@ import { Authenticator } from '@efuller/shared/src/modules/auth/ports/authentica
 import { AuthService } from '@efuller/shared/src/modules/auth/auth.service';
 import { SupabaseAuthenticator } from '@efuller/shared/src/modules/auth/adapters/supabaseAuthenticator';
 import { UserBuilder } from '@efuller/shared/tests/support/builders/userBuilder';
-import { JournalDto } from '@efuller/api/src/modules/journals/journal.dto';
 import { JournalBuilder } from '@efuller/shared/tests/support/builders/journalBuilder';
+import { JournalDto } from '@efuller/shared/src/modules/journals/journals.dto';
 
 const feature = loadFeature(
   path.join(__dirname, '../../../../packages/shared/tests/features/journal.feature'),
@@ -71,7 +71,7 @@ defineFeature(feature, (test) => {
     });
 
     when(/^I enter a new journal$/, async () => {
-      await addJournalForm.addAndSubmit(journal.title, journal.content);
+      await addJournalForm.addAndSubmit(journal.title, journal.content || '');
     });
 
     then(/^the page should display the journal$/, async () => {

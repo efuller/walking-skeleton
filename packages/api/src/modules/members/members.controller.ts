@@ -9,7 +9,7 @@ export class MembersController {
   constructor(private readonly membersService: MembersService) {}
 
   async create(req: Request, res: Response) {
-    const createMemberDto = CreateUserSchema.parse((req.body));
+    const createMemberDto = CreateUserSchema.parse(req.body);
 
     const result = await this.membersService.createMember(createMemberDto);
 

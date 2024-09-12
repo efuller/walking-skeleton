@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import { JournalDto } from '@efuller/api/src/modules/journals/journal.dto';
+import { JournalDto } from '@efuller/shared/src/modules/journals/journals.dto';
 
 export class JournalBuilder {
   private readonly journalProps: JournalDto;
@@ -9,8 +9,8 @@ export class JournalBuilder {
       id: '',
       title: 'Test Journal',
       content: 'This is a test journal entry',
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      createdAt: new Date().toString(),
+      updatedAt: new Date().toString(),
     };
   }
 

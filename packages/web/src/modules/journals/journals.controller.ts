@@ -1,5 +1,5 @@
+import { CreateJournalDto } from '@efuller/shared/src/modules/journals/journals.dto';
 import { JournalsRepo } from './journals.repo';
-import { CreateJournalDto } from '@efuller/api/src/modules/journals/journal.dto';
 
 export class JournalsController {
   constructor(private readonly journalsRepo: JournalsRepo) {}

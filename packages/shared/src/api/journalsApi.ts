@@ -1,6 +1,6 @@
 import { ApiResponse } from '@efuller/shared/src/api/index';
 import { AuthModule } from 'web/src/modules/auth/auth.module';
-import { CreateJournalDto, JournalDto } from '@efuller/api/src/modules/journals/journal.dto';
+import { CreateJournalDto, JournalDto } from '@efuller/shared/src/modules/journals/journals.dto';
 
 export interface JournalsApi {
   create(journal: CreateJournalDto): Promise<ApiResponse<JournalDto>>;
