@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response } from 'express';
 import { Logger } from '@efuller/api/src/shared/logger/logger';
 import { ERRORS_EXCEPTIONS } from '@efuller/api/src/shared/errors/constants';
 import { ZodError } from 'zod';
@@ -7,7 +7,7 @@ export class ErrorHandler {
   constructor(private readonly logger: Logger) {}
 
   handle() {
-    return (err: Error, req: Request, res: Response, next: NextFunction) => {
+    return (err: Error, req: Request, res: Response) => {
       if (err instanceof ZodError) {
         return res.status(400).json({
           error: ERRORS_EXCEPTIONS.VALIDATION_ERROR,
