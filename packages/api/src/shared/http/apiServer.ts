@@ -1,11 +1,18 @@
 import { Server } from 'http';
+import 'express-async-errors';
 import express, { Application, Request } from 'express';
 import cors from 'cors';
+import helmet from 'helmet';
+import compression from 'compression';
+import morgan from 'morgan';
+
 import { JournalController } from '@efuller/api/src/modules/journals/journal.controller';
 import { AppInterface } from '@efuller/api/src/shared/application';
 import { MembersController } from '@efuller/api/src/modules/members/members.controller';
 import { User } from '@supabase/auth-js';
 import { Context } from '@efuller/api/src/shared/composition/compositionRoot';
+import { Logger } from '@efuller/api/src/shared/logger/logger';
+import { ErrorHandler } from '@efuller/api/src/shared/errors/globalHandler';
 
 export interface MeRequest extends Request {
   user?: User;
@@ -21,9 +28,20 @@ export class ApiServer {
     private app: AppInterface,
     private readonly context: Context
   ) {
-    const origin = process.env.NODE_ENV === 'production' ? 'https://ws.efuller.me' : '*';
     this.server = null;
     this.express = express();
+    this.setupMiddleware();
+
+    this.port = process.env.PORT ? Number(process.env.PORT) : 0;
+    this.running = false;
+
+    this.setupRoutes();
+    this.setupErrorHandler();
+  }
+
+  private setupMiddleware() {
+    const origin = process.env.NODE_ENV === 'production' ? 'https://ws.efuller.me' : '*';
+    this.express.use(helmet());
     this.express.use(express.json());
     this.express.use(cors({
       origin,
@@ -36,11 +54,14 @@ export class ApiServer {
       methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
       allowedHeaders: ['Content-Type', 'Authorization'],
     }));
+    this.express.use(compression())
+    this.express.use(morgan('combined'));
+  }
 
-    this.port = process.env.PORT ? Number(process.env.PORT) : 0;
-    this.running = false;
-
-    this.setupRoutes();
+  private setupErrorHandler() {
+    const loggerService = new Logger();
+    const errorHandler = new ErrorHandler(loggerService);
+    this.express.use(errorHandler.handle());
   }
 
   private setupRoutes() {
@@ -53,21 +74,12 @@ export class ApiServer {
     this.express.get('/', (req, res) => {
       res.send({ ok: true }).status(200);
     });
-
     this.express.get('/health', (req, res) => {
       res.send({ success: true, data: null, error: false }).status(200);
     });
-
-    this.express.get('/journals', authMiddleware.handle(), async (req, res) => {
-      await journalController.getAll(req, res);
-    });
-
-    this.express.post('/journals', authMiddleware.handle(), async (req, res) => {
-      await journalController.create(req, res);
-    });
-
+    this.express.get('/journals', authMiddleware.handle(), journalController.getAll.bind(journalController));
+    this.express.post('/journals', authMiddleware.handle(), journalController.create.bind(journalController));
     this.express.get('/members/:email', authMiddleware.handle(), membersController.getMemberByEmail.bind(membersController));
-
     this.express.get('/me', authMiddleware.handle(), async (req: MeRequest, res) => {
       const user = req?.user;
 

@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import { JournalRepo } from '@efuller/api/src/modules/journals/journal.repo';
 import { ApiResponse } from '@efuller/shared/src/api';
-import { CreateJournalCommand, Journal } from '@efuller/shared/src/modules/journals/journals.dto';
+import { CreateJournalDto, Journal } from '@efuller/shared/src/modules/journals/journals.dto';
 
 export function generateRandomNumber() {
   return Math.floor(Math.random() * 1000);
@@ -10,7 +10,7 @@ export function generateRandomNumber() {
 export class InMemoryJournalRepo implements JournalRepo {
   private journals: Journal[] = [];
 
-  async createJournal(journal: CreateJournalCommand): Promise<ApiResponse<Journal | null>> {
+  async createJournal(journal: CreateJournalDto): Promise<ApiResponse<Journal | null>> {
     const newJournal = {
       ...journal,
       id: uuidv4(),

@@ -1,8 +1,8 @@
 import { v4 as uuidv4 } from 'uuid';
-import { CreateMemberCommand } from '@efuller/shared/src/modules/members/members.dto';
+import { CreateMemberDto } from '@efuller/shared/src/modules/members/members.dto';
 
 export class MemberBuilder {
-  private memberProps: CreateMemberCommand;
+  private memberProps: CreateMemberDto;
 
   constructor() {
     this.memberProps = {
@@ -41,7 +41,7 @@ export class MemberBuilder {
     return this;
   }
 
-  build(): CreateMemberCommand {
+  build(): CreateMemberDto {
     return this.memberProps;
   }
 }

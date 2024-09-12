@@ -1,6 +1,6 @@
 import { PuppeteerPageDriver } from '../../webDriver/puppeteerPageDriver';
 import { BasePageComponent } from '../basePageComponent';
-import { JournalDto } from '@efuller/api/src/modules/journals/journal.dto';
+import { JournalDto } from '@efuller/shared/src/modules/journals/journals.dto';
 
 type JournalListFormElements = {
   journalList: { selector: string };
@@ -17,9 +17,13 @@ export class JournalList extends BasePageComponent<JournalListFormElements> {
     super(pageDriver, componentConfig);
   }
 
-  async containsJournal(journal: JournalDto) {
+  async containsJournal(journal: JournalDto | null) {
     let result = false;
     const journalList = await this.$('journalList');
+
+    if (!journal) {
+      throw new Error('The journal list is not visible');
+    }
 
     if (!journalList) {
       throw new Error('The journal list is not visible');

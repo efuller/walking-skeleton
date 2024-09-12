@@ -1,6 +1,6 @@
 import { JournalsApi } from '@efuller/shared/src/api/journalsApi';
-import { JournalDto } from '@efuller/api/src/modules/journals/journal.dto';
 import { ApiResponse } from '@efuller/shared/src/api/index';
+import { JournalDto } from '@efuller/shared/src/modules/journals/journals.dto';
 
 export class MockJournalsApiClient implements JournalsApi {
   constructor(private readonly baseUrl: string) {}

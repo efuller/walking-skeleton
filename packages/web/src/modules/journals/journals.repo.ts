@@ -1,6 +1,6 @@
-import { JournalDto, CreateJournalDto } from '@efuller/api/src/modules/journals/journal.dto';
 import { action, makeObservable, observable } from 'mobx';
 import { JournalsApi } from '@efuller/shared/src/api/journalsApi';
+import { CreateJournalDto, JournalDto } from '@efuller/shared/src/modules/journals/journals.dto';
 
 export class JournalsRepo {
   public journals: JournalDto[] = [];

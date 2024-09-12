@@ -3,12 +3,12 @@ import { Server } from 'http';
 import { CompositionRoot } from '@efuller/api/src/shared/composition/compositionRoot';
 import { ApiServer } from '@efuller/api/src/shared/http/apiServer';
 import { RestApiDriver } from '@efuller/api/src/shared/http/restApiDriver';
-import { MemberDto } from '@efuller/api/src/modules/members/member.dto';
 import { ApiResponse } from '@efuller/shared/src/api';
 import { UserRegisterDto } from '@efuller/shared/src/modules/auth/auth.dto';
 import { UserBuilder } from '@efuller/shared/tests/support/builders/userBuilder';
 import { AuthService } from '@efuller/shared/src/modules/auth/auth.service';
 import { AuthResponse } from '@supabase/supabase-js';
+import { MemberDto } from '@efuller/shared/src/modules/members/members.dto';
 
 const feature = loadFeature('./packages/shared/tests/features/registration.feature', { tagFilter: '@api' });
 

@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "dotenv-cli": "^7.4.2",
+    "drizzle-zod": "^0.5.1",
     "exec-sh": "^0.4.0"
   }
 }
