@@ -14,9 +14,6 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "rimraf": "^6.0.1"
-  },
   "dependencies": {
     "dotenv-cli": "^7.4.2",
     "drizzle-zod": "^0.5.1",
