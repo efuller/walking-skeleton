@@ -65,7 +65,7 @@
     "jest-cucumber": "^4.4.0",
     "prettier": "^3.3.3",
     "rimraf": "^5.0.7",
-    "supabase": "^1.183.5",
+    "supabase": "^1.192.5",
     "ts-jest": "^29.1.5",
     "ts-node": "^10.9.2"
   },
