@@ -18,6 +18,7 @@ export class AuthMiddleware implements Middleware {
         const result = await this.authService.authorize(token);
         req.user = result?.data?.data?.user || undefined;
         next();
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (error) {
         return res.status(500).json({ success: false, data: null, error: 'Internal server error' });
       }
