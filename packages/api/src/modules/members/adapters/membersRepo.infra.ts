@@ -1,50 +1,61 @@
-import { v4 as uuidv4 } from 'uuid';
 import { DrizzleClient } from '@efuller/api/src/shared/persistence/dbConnection/adapters/drizzleClient';
 import { MembersRepo } from '@efuller/api/src/modules/members/ports/members.repo';
 import { InMemoryMembersRepo } from '@efuller/api/src/modules/members/adapters/inMemoryMembersRepo';
-import { MemberBuilder } from '@efuller/shared/tests/support/builders/memberBuilder';
-import { CreateMemberDto } from '@efuller/shared/src/modules/members/members.dto';
 import { DrizzleMembersRepo } from '@efuller/api/src/modules/members/adapters/drizzleMembers.repo';
+import { UserRegisterDto } from '@efuller/shared/src/modules/auth/auth.dto';
+import { AuthService } from '@efuller/shared/src/modules/auth/auth.service';
+import { SupabaseAuthenticator } from '@efuller/shared/src/modules/auth/adapters/supabaseAuthenticator';
+import { UserBuilder } from '@efuller/shared/tests/support/builders/userBuilder';
+import { ApiResponse } from '@efuller/shared/src/api';
+import { AuthResponse } from '@supabase/supabase-js';
+import { MembersDbFixture } from '@efuller/shared/tests/support/fixtures/membersDbFixture';
 
 describe('MembersRepo', () => {
+  let membersDbFixture: MembersDbFixture;
   let drizzleClient: DrizzleClient;
   let membersRepos: MembersRepo[];
+  let registerUserDto: UserRegisterDto;
   let inMemoryMembersRepo: InMemoryMembersRepo;
   let drizzleMembersRepo: DrizzleMembersRepo;
-  let createMemberCommand: CreateMemberDto;
+  // let createMemberCommand: CreateMemberDto;
+  let authService: AuthService;
+  let registerResponse: ApiResponse<AuthResponse>;
 
   beforeAll(async () => {
     drizzleClient = await DrizzleClient.create();
     inMemoryMembersRepo = new InMemoryMembersRepo();
     drizzleMembersRepo = new DrizzleMembersRepo(drizzleClient.getClient())
+    authService = new AuthService(new SupabaseAuthenticator());
+    membersDbFixture = new MembersDbFixture(inMemoryMembersRepo);
     membersRepos = [
       inMemoryMembersRepo,
       drizzleMembersRepo,
     ];
   })
 
+  afterEach(() => {
+    membersDbFixture.reset();
+  });
+
   afterAll(async () => {
     inMemoryMembersRepo.reset();
     await drizzleClient.disconnect();
   });
 
-  it('Can create a new member and retrieve them by their email', async () => {
-    createMemberCommand = new MemberBuilder()
-      .withId(uuidv4())
-      .withFirstName('John')
-      .withLastName('Doe')
+  it('Can retrieve a member by their email', async () => {
+    registerUserDto = new UserBuilder()
       .withRandomEmail()
+      .withPassword('Password')
       .build();
+    await membersDbFixture.withMember(registerUserDto);
+    registerResponse = await authService.register(registerUserDto);
 
     for (const membersRepo of membersRepos) {
-      await membersRepo.createMember(createMemberCommand);
-      const retrievedMember = await membersRepo.getMemberByEmail(createMemberCommand.email);
+      const retrievedMember = await membersRepo.getMemberByEmail(registerResponse.data?.data?.user?.email || '');
 
       expect(retrievedMember).not.toBeNull();
       expect(retrievedMember?.id).toEqual(expect.any(String));
-      expect(retrievedMember!.email).toEqual(createMemberCommand.email);
-      expect(retrievedMember?.firstName).toBe(createMemberCommand.firstName);
-      expect(retrievedMember?.lastName).toBe(createMemberCommand.lastName);
+      expect(retrievedMember!.email).toEqual(registerUserDto.email);
     }
   });
 });
