@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import { CreateMemberDto } from '@efuller/shared/src/modules/members/members.dto';
+import { UserRegisterDto } from '@efuller/shared/src/modules/auth/auth.dto';
 
 export class MemberBuilder {
   private memberProps: CreateMemberDto;
@@ -7,6 +8,7 @@ export class MemberBuilder {
   constructor() {
     this.memberProps = {
       id: '',
+      userId: '',
       firstName: '',
       lastName: '',
       email: '',
@@ -18,6 +20,14 @@ export class MemberBuilder {
       id = uuidv4();
     }
     this.memberProps.id = id;
+    return this;
+  }
+
+  withUserId(id: string = ''): MemberBuilder {
+    if (!id) {
+      id = uuidv4();
+    }
+    this.memberProps.userId = id;
     return this;
   }
 
@@ -39,6 +49,18 @@ export class MemberBuilder {
   withEmail(email: string): MemberBuilder {
     this.memberProps.email = email;
     return this;
+  }
+
+  fromUser(user: UserRegisterDto): MemberBuilder {
+    this.withId();
+    this.withUserId(user.id);
+    this.memberProps.email = user.email;
+
+    return this;
+  }
+
+  toDto(): CreateMemberDto {
+    return this.memberProps;
   }
 
   build(): CreateMemberDto {
