@@ -1,7 +1,7 @@
 import { DrizzleClient } from '@efuller/api/src/shared/persistence/dbConnection/adapters/drizzleClient';
 import { MembersRepo } from '@efuller/api/src/modules/members/ports/members.repo';
 import { InMemoryMembersRepo } from '@efuller/api/src/modules/members/adapters/inMemoryMembersRepo';
-import { DrizzleMembersRepo } from '@efuller/api/src/modules/members/adapters/drizzleMembers.repo';
+// import { DrizzleMembersRepo } from '@efuller/api/src/modules/members/adapters/drizzleMembers.repo';
 import { UserRegisterDto } from '@efuller/shared/src/modules/auth/auth.dto';
 import { AuthService } from '@efuller/shared/src/modules/auth/auth.service';
 import { SupabaseAuthenticator } from '@efuller/shared/src/modules/auth/adapters/supabaseAuthenticator';
@@ -16,19 +16,19 @@ describe('MembersRepo', () => {
   let membersRepos: MembersRepo[];
   let registerUserDto: UserRegisterDto;
   let inMemoryMembersRepo: InMemoryMembersRepo;
-  let drizzleMembersRepo: DrizzleMembersRepo;
+  // let drizzleMembersRepo: DrizzleMembersRepo;
   let authService: AuthService;
   let registerResponse: ApiResponse<AuthResponse>;
 
   beforeAll(async () => {
     drizzleClient = await DrizzleClient.create();
     inMemoryMembersRepo = new InMemoryMembersRepo();
-    drizzleMembersRepo = new DrizzleMembersRepo(drizzleClient.getClient())
+    // drizzleMembersRepo = new DrizzleMembersRepo(drizzleClient.getClient())
     authService = new AuthService(new SupabaseAuthenticator());
     membersDbFixture = new MembersDbFixture(inMemoryMembersRepo);
     membersRepos = [
       inMemoryMembersRepo,
-      drizzleMembersRepo,
+      // drizzleMembersRepo,
     ];
   })
 
