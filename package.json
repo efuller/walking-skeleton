@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "supabase:dev": "supabase start -x realtime,storage-api,imgproxy,inbucket,postgrest,edge-runtime,logflare,vector --workdir=packages/api/src/shared/persistence",
-    "supabase:test": "supabase start -x realtime,storage-api,imgproxy,inbucket,postgrest,edge-runtime,logflare,vector --workdir=packages/shared/tests",
+    "supabase:test": "supabase start -x realtime,imgproxy,inbucket,postgrest,edge-runtime,logflare,vector --workdir=packages/shared/tests",
     "supabase:dev:down": "supabase stop --workdir=packages/api/src/shared/persistence",
     "supabase:test:down": "supabase stop --workdir=packages/shared/tests",
     "api:build": "npm run shared:build && npm run build -w packages/api",
