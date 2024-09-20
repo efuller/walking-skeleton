@@ -17,7 +17,6 @@ describe('MembersRepo', () => {
   let registerUserDto: UserRegisterDto;
   let inMemoryMembersRepo: InMemoryMembersRepo;
   let drizzleMembersRepo: DrizzleMembersRepo;
-  // let createMemberCommand: CreateMemberDto;
   let authService: AuthService;
   let registerResponse: ApiResponse<AuthResponse>;
 
