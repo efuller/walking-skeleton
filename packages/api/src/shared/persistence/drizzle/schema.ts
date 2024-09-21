@@ -1,7 +1,7 @@
 import { pgSchema, pgTable, text, timestamp, uuid, varchar } from 'drizzle-orm/pg-core';
 const authSchema = pgSchema("auth");
 
-const users = authSchema.table("users", {
+export const users = authSchema.table("users", {
 	id: uuid("id").primaryKey(),
 });
 
@@ -15,7 +15,7 @@ export const journal = pgTable("journal", {
 
 export const members = pgTable("members", {
 	id: uuid("id").primaryKey().defaultRandom(),
-	userId: uuid("user_id").references(() => users.id, { onDelete: 'cascade' }),
+	userId: uuid("user_id").references(() => users.id, { onDelete: 'cascade' }).notNull(),
 	firstName: varchar("first_name", { length: 50 }),
 	lastName: varchar("last_name", { length: 50 }),
 	email: varchar("email", { length: 255 }).unique().notNull(),

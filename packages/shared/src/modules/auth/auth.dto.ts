@@ -4,6 +4,7 @@ export interface UserLoginDto {
 }
 
 export interface UserRegisterDto {
+  id?: string,
   email: string;
   password: string;
 }

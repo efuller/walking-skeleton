@@ -1,10 +1,12 @@
+import { v4 as uuidv4 } from 'uuid';
 import { UserRegisterDto } from '@efuller/shared/src/modules/auth/auth.dto';
 
 export class UserBuilder {
-  private userProps: UserRegisterDto ;
+  private userProps: UserRegisterDto;
 
   constructor() {
     this.userProps = {
+      id: '',
       email: '',
       password: '',
     };
@@ -12,6 +14,15 @@ export class UserBuilder {
 
   withRandomEmail() {
     this.userProps.email = `test-email-${Math.random().toString(36).substring(7)}@test.com`;
+    return this;
+  }
+
+  withId(id: string = ''): UserBuilder {
+    if (!id) {
+      id = uuidv4();
+    }
+
+    this.userProps.id = id;
     return this;
   }
 
