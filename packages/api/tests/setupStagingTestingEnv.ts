@@ -8,8 +8,9 @@ async function sleep(ms: number) {
 
 export default async () => {
   const rootCwd = path.join(__dirname, '../');
+  const envFile = path.join(__dirname, '../../', 'shared/tests/', '.env.test');
 
-  setupEnvVars('./packages/shared/tests/.env.test');
+  setupEnvVars(envFile);
   await generateDrizzleKit(rootCwd);
   await migrateDrizzleKit(rootCwd);
   await sleep(1000);
